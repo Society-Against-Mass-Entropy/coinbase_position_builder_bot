@@ -1,0 +1,37 @@
+{
+  "name": "coinbase_position_builder_bot",
+  "version": "1.0.0",
+  "description": "Position Building Bot for Accumulating Bitcoin (or other assets) via Coinbase Pro, while taking advantage of pumps",
+  "main": "index.js",
+  "scripts": {
+    "setup": "npm i -g pm2 && npm i",
+    "start": "node .",
+    "start:1": "CPBB_FREQ='5 * * * *' node .",
+    "start:2": "CPBB_FREQ='5 */2 * * *' node .",
+    "start:3": "CPBB_FREQ='5 */3 * * *' node .",
+    "start:4": "CPBB_FREQ='5 */4 * * *' node .",
+    "test": "node node_modules/eslint/bin/eslint.js ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonedison/coinbase_position_builder_bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasonedison/coinbase_position_builder_bot/issues"
+  },
+  "homepage": "https://github.com/jasonedison/coinbase_position_builder_bot#readme",
+  "dependencies": {
+    "async": "3.1.0",
+    "cli-table3": "github:cli-table/cli-table3",
+    "cron": "1.8.1",
+    "lodash.map": "4.6.0",
+    "mathjs": "6.5.0",
+    "moment": "2.24.0",
+    "request": "2.88.0"
+  },
+  "devDependencies": {
+    "eslint": "6.8.0"
+  }
+}
