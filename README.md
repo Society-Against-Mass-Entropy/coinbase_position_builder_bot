@@ -14,6 +14,7 @@ This tool is built for my own personal use--and while I have published it public
 ## Getting Started
 
 Assuming you already have node installed. If not, use [nvm](https://github.com/nvm-sh/nvm)
+This also assumes you are running in a Linux/Mac environment with a shell.
 
 ```
 git clone git@github.com:jasonedison/coinbase_position_builder_bot.git
@@ -36,7 +37,7 @@ Note: the default settings will take a $10 action every 8 hours on BTCUSD. If Bi
 
 The defaults can be overridden with envronmental variables:
 ```
-export CPBB_APY=10 # 10% APY (sell above this gain)
+export CPBB_APY=15 # 15% APY (sell above this gain)
 export CPBB_VOL=10 # take $10 actions at configured frequency
 export CPBB_FREQ="05 */8 * * *" # crontab description of task frequency (every 8 hours, on the 33rd minute) - https://crontab.guru/every-8-hours
 export CPBB_TICKER=BTC

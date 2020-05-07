@@ -6,8 +6,8 @@ const config = {
   freq: process.env.CPBB_TEST ? '* * * * *' : (process.env.CPBB_FREQ || '05 */12 * * *'),
   // default $10 action
   vol: Number(process.env.CPBB_VOL || 10),
-  // default 10% APY target (we aim to shave off any excess from this gain)
-  apy: Number(process.env.CPBB_APY || 10) / 100,
+  // default 15% APY target (we aim to shave off any excess from this gain)
+  apy: Number(process.env.CPBB_APY || 15) / 100,
   // default ticker currency is BTC
   ticker: process.env.CPBB_TICKER || 'BTC',
   // default home currency is USD
