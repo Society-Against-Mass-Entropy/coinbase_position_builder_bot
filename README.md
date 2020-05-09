@@ -7,6 +7,7 @@ This bot will make a market taker action of the configured funding level at the 
 Here is a view of my first 1 BTC purchased via this method (in a Google Sheet for charting):
 ![history](docs/cbpp_charts.png "First 1 BTC Accumulated")
 
+After running this engine for a bit, you can copy the data in your local log file (e.g. `./data/history.BTC-USD.tsv`) and paste it into the spreadsheet template: [./docs/CBPP_BTC-Template.xlsx](./docs/CBPP_BTC-Template.xlsx). This template can be saved locally and periodically updated or saved to Google Docs or some other service for backup.
 
 ## WARNING
 This tool is built for my own personal use--and while I have published it publically for others to use/enjoy, please beware that usage of this tool is at your own risk. I have not accounted for all edge cases as I watch and tune this code as an experiment in-progress.
@@ -33,7 +34,7 @@ node .
 ## Settings
 
 ### Default Configuration
-Note: the default settings will take a $10 action every 8 hours on BTCUSD. If Bitcoin sustains a bear market for a full year, this would amount to spending $30/day = $210/week = $10,950/year on Bitcoin (always accumulating).
+Note: the default settings will take a $10 action every 12 hours on BTCUSD. If Bitcoin sustains a bear market for a full year, this would amount to spending $20/day = $140/week = $7,300/year on Bitcoin (always accumulating). If the price fluctuates enough to cross the profitability threshold (default 15% APY), it may sell upward and sustain itself with a floating balance for a while.
 
 The defaults can be overridden with envronmental variables:
 ```
@@ -118,6 +119,24 @@ Time	Price	Holding	Value	Funds	Shares	PeriodRate	ExpectedGain	TotalInput	Target	
 2020-01-21T03:33:02.693Z	8651.56	0.01153894	99.83	10	0.00115355	0.00000344	0	110	110	-10.12	109.83	0	109.83	-0.17	-0.13%
 2020-01-21T04:35:02.496Z	8670	0.01269249	110.04	10	0.0011511	0.00001123	0	120	120	-9.96	120.04	0	120.04	0.04	0.04%
 ```
+
+# Projecting Future Gains
+
+We can't predict the future, but we can take historical data and backtest it
+as if it will go that way again. The easiest way to do this from our existing history
+is to model the price reversing course from the last log back to the start of our history.
+
+There is another provided tool for taking an existing history file and running a projection based on that history repeating in reverse from the last log.
+
+It can be used to examine what it might look like if we alter the volume or APY target in th event that the price reverses in the same pattern as our current log of transactions.
+
+  Note: this model runs using the existing engine log with the price/timestamps listed in the history. So it will model those prices and intervals in reverse. You will need to have run this engine for some amount of time prior to running the future projection tool in order to project from your particular history:
+
+```
+CPBB_VOL=20 CPBB_APY=20 node project.forward.js
+```
+
+This will examine your current history file (e.g. `./data/history.BTC-USD.tsv`), reverse the data, and run it as projected future events. Then it will save the result in a coorsponding projection file (e.g. `./data/projection.BTC-USD.tsv`).
 
 # Disclaimer
 This software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement. In no event shall the authors, copyright holders, or Coinbase Inc. be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
