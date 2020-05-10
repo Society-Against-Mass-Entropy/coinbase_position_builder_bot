@@ -14,12 +14,7 @@ const config = {
   currency: process.env.CPBB_CURRENCY || 'USD',
   pjson: require('./package')
 }
-// the way Coinbase orders the current-ticker is inconsistent
-if(['USD','EUR','GBP','USDC'].includes(config.currency)){
-  config.productID = config.ticker + '-' + config.currency
-}else{
-  config.productID = config.currency + '-' + config.ticker
-}
+config.productID = config.ticker + '-' + config.currency
 config.history_file = `${__dirname}/data/history.${config.productID}${process.env.CPBB_DRY_RUN?'.dryrun':''}.tsv`
 if(!fs.existsSync(config.history_file)){
   // copy the template

@@ -16,7 +16,7 @@ module.exports = {
       CPBB_APY: 15,
     }
   }, {
-    name: "cpbb_ltcbtc",
+    name: "cpbb_ltcusd",
     script: '.',
     watch: ['*.js','coinbase','lib'],
     env: {
@@ -26,9 +26,9 @@ module.exports = {
       CPBB_APISEC: process.env.CPBB_APISEC||'load your keys via real environmental vars or replace this quoted string',
       CPBB_DRY_RUN: true,
       CPBB_FREQ: "* * * * *",
-      CPBB_TICKER: "BTC",
-      CPBB_CURRENCY: "LTC",
-      CPBB_VOL: 1,
+      CPBB_TICKER: "LTC",
+      CPBB_CURRENCY: "USD",
+      CPBB_VOL: 10,
       CPBB_APY: 10,
     }
   }]
