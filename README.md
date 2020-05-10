@@ -20,22 +20,23 @@ This project is written in Node.js. You will need to have Node installed on the 
 
 This is all much easier on a Linux/Mac environment with a shell. I have not tried installing and running this on Windows.
 
-### Manual run:
+1. Install [Node.js](https://nodejs.org/en/) or via NVM
+2. Optional: Install a good text editor (like https://code.visualstudio.com/)
+  - After install, F1 and type "shell command"
+  - install shell extension so you can type `code .` in a terminal to open the project up in the editor
+2. git clone this project (via terminal) -- or download zip file and unzip
 ```
 git clone git@github.com:jasonedison/coinbase_position_builder_bot.git
 cd coinbase_position_builder_bot;
-npm run setup;
-
-# add Coinbase Pro API Key & password
-export CPBB_APIPASS="GET API Password FROM COINBASE PRO"
-export CPBB_APIKEY="GET Access Key FROM COINBASE PRO"
-export CPBB_APISEC="GET Secret Key FROM COINBASE PRO"
-
-# default start (see below for more options)
-node .
 ```
-
-  NOTE: `CPBB_APIKEY` must have `view`+`trade` permissions--there is no need to allow `transfers`. I also recommend limiting the API keys to IP address whitelists.
+3. Install dependencies and PM2 (process manager)
+```
+npm run setup;
+```
+4. Create API Key, pass, and secret on Coinbase Pro: https://pro.coinbase.com/profile/api
+  - must have `view`+`trade` permissions
+  - there is no need to allow `transfers`
+  - recommended to limit the API keys to IP address whitelists
 
 ### Running with PM2 (keep alive with computer restarts)
 
@@ -47,6 +48,17 @@ node .
 4. save current configuration `pm2 save`
 
 More info on PM2 startup: https://pm2.keymetrics.io/docs/usage/startup/
+
+### Manual run (without PM2):
+```
+# add Coinbase Pro API Key & password
+export CPBB_APIPASS="GET API Password FROM COINBASE PRO"
+export CPBB_APIKEY="GET Access Key FROM COINBASE PRO"
+export CPBB_APISEC="GET Secret Key FROM COINBASE PRO"
+
+# default start (see below for more options)
+node .
+```
 
 ## Settings
 
