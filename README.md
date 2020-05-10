@@ -92,6 +92,12 @@ The real coinbase API can also be run in a dry run mode, which will calculate an
 CPBB_DRY_RUN=1 CPBB_FREQ='* * * * *' node .
 ```
 
+### Test Using PM2
+More info on the pm2 ecosystem config: https://pm2.keymetrics.io/docs/usage/application-declaration/#cli
+```
+pm2 start ecosystem.config.dryrun.js
+```
+
 ## Keeping Alive: PM2
 You can keep this process running on your computer, even across restarts with the help of [PM2](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/)
 

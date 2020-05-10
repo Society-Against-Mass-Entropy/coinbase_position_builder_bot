@@ -18,6 +18,7 @@ config.productID = config.ticker + '-' + config.currency
 config.history_file = `${__dirname}/data/history.${config.productID}.tsv`
 if(!fs.existsSync(config.history_file)){
   // copy the template
+  console.log('creating log file from template',config.history_file)
   fs.copyFileSync(`${__dirname}/data/history.tsv`, config.history_file)
 }
 module.exports = config
