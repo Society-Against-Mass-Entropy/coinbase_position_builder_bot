@@ -64,8 +64,8 @@ If you've got an extra $87K/year to build a position into Bitcoin, `more power t
   - `CPBB_FREQ='0 */8 * * *' node .`
 - $10/(12 hours) = $20/day = $140/week = $7,300/year
   - `CPBB_FREQ='0 */12 * * *' node .`
-- $10/day = $70/week = $3,650/year
-  - `CPBB_FREQ='0 * * * *' node .`
+- $10/day = $70/week = $3,650/year (runs at 1am every day)
+  - `CPBB_FREQ='0 1 * * *' node .`
 - etc...
 
 Additionally, could alter the dollar amount and act with `$15` twice a day (for example) like so:
