@@ -38,14 +38,23 @@ npm run setup;
   - there is no need to allow `transfers`
   - recommended to limit the API keys to IP address whitelists
 
+5. Add the key, pass, and secret to your environment via environmental variables, or add them to the `./api.key.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
+
+6. Test all the configs in dry run mode at 1 minute intervals:
+```
+pm2 start run.dry.all.minute.config.js
+```
+
 ### Running with PM2 (keep alive with computer restarts)
 
 [PM2 Docs](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/)
 
 1. edit one of the run.*.config.js or create your own
-2. run pm2 (e.g. `pm2 start run.btcusd.config.js`)
+2. run pm2 (e.g. `pm2 start run.default.btcusd.config.js`)
 3. make pm2 save this as a startup task: `pm2 startup`
 4. save current configuration `pm2 save`
+
+ > WARNING: if you put your keys directly in the `./api.keys.js` files, DO NOT COMMIT THEM TO GITHUB (if you forked this repo and are pushing changes, add the config files to .gitignore)
 
 More info on PM2 startup: https://pm2.keymetrics.io/docs/usage/startup/
 
@@ -134,15 +143,15 @@ CPBB_TEST=1 node .
 
 The real coinbase API can also be run in a "dry run" mode, which will calculate and record transactions into a special dry run history log as if actions were taken, even though no buy/sell orders are made against the API.
 
-1. Edit the `run.dry.multi.config.js` file to have your APIPASS, APIKEY, and APISEC (or add them as environmental variables)
+1. Edit the `./api.keys.js` file to have your APIPASS, APIKEY, and APISEC (or add them as environmental variables)
 2. start pm2
 ```
-pm2 start run.dry.multi.config.js
+pm2 start run.dry.all.minute.config.js
 ```
 3. observe the logs: `pm2 logs`
 4. Let it run for a few minutes
-5. kill it: `pm2 stop run.dry.multi.config.js`
-6. look at the log files: `./data/history.BTC-USD.dryrun.tsv` and `./data/history.LTC-BTC.dryrun.tsv`
+5. kill it: `pm2 stop run.dry.all.minute.config.js`
+6. look at the log files: `./data/history.BTC-USD.dryrun.tsv` and `./data/history.LTC-BTC.dryrun.tsv`, etc
 
 ## History / Logs
 This app is built to be entirely self-contained. There is no database or 3rd party (aside from Coinbase as the market source). Activity is logged to a tsv file in the local `./data` directory on disk. 

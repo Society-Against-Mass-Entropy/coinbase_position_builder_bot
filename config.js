@@ -3,7 +3,7 @@ const config = {
   api: process.env.CPBB_TEST ? 'https://api-public.sandbox.pro.coinbase.com' : 'https://api.pro.coinbase.com',
   // default run once per 12 hours at the 5th minute (crontab syntax)
   // testing mode will run every minute
-  freq: process.env.CPBB_TEST ? '* * * * *' : (process.env.CPBB_FREQ || '05 */12 * * *'),
+  freq: process.env.CPBB_TEST ? '* * * * *' : (process.env.CPBB_FREQ || '5 */12 * * *'),
   // default $10 action
   vol: Number(process.env.CPBB_VOL || 10),
   // default 15% APY target (we aim to shave off any excess from this gain)
