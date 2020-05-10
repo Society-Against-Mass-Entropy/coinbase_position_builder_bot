@@ -23,14 +23,15 @@ cd coinbase_position_builder_bot;
 npm run setup;
 
 # add Coinbase Pro API Key & password
-export CPBB_APISEC="GET SECRET KEY FROM COINBASE PRO"
-export CPBB_APIPASS="API Password"
+export CPBB_APIPASS="GET API Password FROM COINBASE PRO"
+export CPBB_APIKEY="GET Access Key FROM COINBASE PRO"
+export CPBB_APISEC="GET Secret Key FROM COINBASE PRO"
 
 # default start (see below for more options)
 node .
 ```
 
-  NOTE: `CPBB_APISEC` must have `view`+`trade` permissions--there is no need to allow `transfers`. I also recommend limiting the API keys to IP address whitelists.
+  NOTE: `CPBB_APIKEY` must have `view`+`trade` permissions--there is no need to allow `transfers`. I also recommend limiting the API keys to IP address whitelists.
 
 ## Settings
 
@@ -78,8 +79,9 @@ CPBB_VOL=15 CPBB_FREQ='0 */12 * * *' node .
 Create a Sandbox API account and API Keyset here: https://public.sandbox.pro.coinbase.com/profile/api
 Then run the app against the Sandbox API
 ```
-export CPBB_APISEC="SANDBOX API SECRET"
 export CPBB_APIPASS="API Password"
+export CPBB_APIKEY="SANDBOX API KEY"
+export CPBB_APISEC="SANDBOX API SECRET"
 CPBB_TEST=1 node .
 ```
 
