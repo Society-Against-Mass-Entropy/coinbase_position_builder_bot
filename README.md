@@ -1,6 +1,8 @@
 # Coinbase Position Builder Bot
 
-Position Building Bot for Accumulating Bitcoin (or other currencies) via Coinbase Pro, while taking advantage of pumps.
+> Position Building Bot for Accumulating Bitcoin (or other currencies) via Coinbase Pro, while taking advantage of pumps.
+
+We don't need to look at charts. The trendlines and price predictions don't matter. All that matters is your current cost-basis and investment. Are you in profit? Is the price a dip relative to your current holdings? These questions are easy to answer without having to be an oracle. You just have to keep track of your investments, calculate where you fall at the current moment, and automate an action. That's what this project does!
 
 This bot will make a market taker action of the configured funding level at the configured interval. If the current holdings that that bot has accumulated is at a profit point higher than a target APY, then it will make a sell action, else it makes a buy action.
 
@@ -14,8 +16,9 @@ This tool is built for my own personal use--and while I have published it public
 
 ## Getting Started
 
-Assuming you already have node installed. If not, use [nvm](https://github.com/nvm-sh/nvm)
-This also assumes you are running in a Linux/Mac environment with a shell.
+This project is written in Node.js. You will need to have Node installed on the machine that will run this app. If you don't have it, I recommend using [nvm](https://github.com/nvm-sh/nvm) to install Node.js.
+
+This is all much easier on a Linux/Mac environment with a shell. I have not tried installing and running this on Windows.
 
 ### Manual run:
 ```
@@ -36,17 +39,25 @@ node .
 
 ### Running with PM2 (keep alive with computer restarts)
 
+[PM2 Docs](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/)
+
 1. edit one of the run.*.config.js or create your own
 2. run pm2 (e.g. `pm2 start run.btcusd.config.js`)
 3. make pm2 save this as a startup task: `pm2 startup`
 4. save current configuration `pm2 save`
 
+More info on PM2 startup: https://pm2.keymetrics.io/docs/usage/startup/
+
 ## Settings
+
+> The best way to run the app and manage settings is using one of the pm2 run.*.config.js files in the project root.
+
+More info on the pm2 ecosystem config: https://pm2.keymetrics.io/docs/usage/application-declaration/#cli
 
 ### Default Configuration
 Note: the default settings will take a $10 action every 12 hours on BTCUSD. If Bitcoin sustains a bear market for a full year, this would amount to spending $20/day = $140/week = $7,300/year on Bitcoin (always accumulating). If the price fluctuates enough to cross the profitability threshold (default 15% APY), it may sell upward and sustain itself with a floating balance for a while.
 
-The defaults can be overridden with envronmental variables:
+The defaults can be overridden with envronmental variables (or update in the run.*.config.js files with pm2):
 ```
 export CPBB_APY=15 # 15% APY (sell above this gain)
 export CPBB_VOL=10 # take $10 actions at configured frequency
@@ -86,7 +97,19 @@ CPBB_VOL=15 CPBB_FREQ='0 */12 * * *' node .
 ```
 
 ## Test
-Create a Sandbox API account and API Keyset here: https://public.sandbox.pro.coinbase.com/profile/api
+
+There are two ways to test:
+
+### 1. Using the Coinbase Sandbox API
+
+The first option is not great because it requires a different API key, and is probably more headache than it's worth, but I've included support for it in case you want to try it.
+
+> The second option is the recommended path
+> The Coinbase Pro Sandbox API does not support LTC-BTC and many other trading pairs
+
+1. Create a Sandbox API account and API Keyset here: https://public.sandbox.pro.coinbase.com/profile/api
+2. You will also need to fake transfer USD from Coinbase into the Sandbox
+
 Then run the app against the Sandbox API
 ```
 export CPBB_APIPASS="API Password"
@@ -95,30 +118,19 @@ export CPBB_APISEC="SANDBOX API SECRET"
 CPBB_TEST=1 node .
 ```
 
-The real coinbase API can also be run in a dry run mode, which will calculate and record transactions into the history log as if actions were taken, even though no buy/sell orders are made against the API.
-```
-CPBB_DRY_RUN=1 CPBB_FREQ='* * * * *' node .
-```
+### 2. Using CPBB_DRY_RUN feature
 
-### Test Using PM2
-More info on the pm2 ecosystem config: https://pm2.keymetrics.io/docs/usage/application-declaration/#cli
+The real coinbase API can also be run in a "dry run" mode, which will calculate and record transactions into a special dry run history log as if actions were taken, even though no buy/sell orders are made against the API.
+
+1. Edit the `run.dry.multi.config.js` file to have your APIPASS, APIKEY, and APISEC (or add them as environmental variables)
+2. start pm2
 ```
 pm2 start run.dry.multi.config.js
 ```
-
-## Keeping Alive: PM2
-You can keep this process running on your computer, even across restarts with the help of [PM2](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/)
-
-```
-# example 
-CPBB_FREQ='5 */2 * * *' pm2 start npm --name "cpbb" -- start
-```
-Then you can use `pm2 startup` and `pm2 save` https://pm2.keymetrics.io/docs/usage/startup/
-```
-pm2 startup
-# paste what it says, then...
-pm2 save
-```
+3. observe the logs: `pm2 logs`
+4. Let it run for a few minutes
+5. kill it: `pm2 stop run.dry.multi.config.js`
+6. look at the log files: `./data/history.BTC-USD.dryrun.tsv` and `./data/history.LTC-BTC.dryrun.tsv`
 
 ## History / Logs
 This app is built to be entirely self-contained. There is no database or 3rd party (aside from Coinbase as the market source). Activity is logged to a tsv file in the local `./data` directory on disk. 
