@@ -42,7 +42,7 @@ The defaults can be overridden with envronmental variables:
 ```
 export CPBB_APY=15 # 15% APY (sell above this gain)
 export CPBB_VOL=10 # take $10 actions at configured frequency
-export CPBB_FREQ="05 */8 * * *" # crontab description of task frequency (every 8 hours, on the 33rd minute) - https://crontab.guru/every-8-hours
+export CPBB_FREQ="5 */8 * * *" # crontab description of task frequency (every 8 hours, on the 33rd minute) - https://crontab.guru/every-8-hours
 export CPBB_TICKER=BTC
 export CPBB_CURRENCY=USD # this is the account we will take buy/sell actions on (money will move in and out of this, exchanged for CPBB_TICKER)
 ```
@@ -69,6 +69,8 @@ If you've got an extra $87K/year to build a position into Bitcoin, `more power t
 - $10/day = $70/week = $3,650/year (runs at 1am every day)
   - `CPBB_FREQ='0 1 * * *' node .`
 - etc...
+
+If you want more crontab frequency options, you can construct your own via https://crontab.guru/
 
 Additionally, could alter the dollar amount and act with `$15` twice a day (for example) like so:
 ```
