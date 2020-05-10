@@ -22,8 +22,9 @@ git clone git@github.com:jasonedison/coinbase_position_builder_bot.git
 cd coinbase_position_builder_bot;
 npm run setup;
 
-# add Coinbase Pro API Key
+# add Coinbase Pro API Key & password
 export CPBB_APISEC="GET SECRET KEY FROM COINBASE PRO"
+export CPBB_APIPASS="API Password"
 
 # default start (see below for more options)
 node .
@@ -78,6 +79,7 @@ Create a Sandbox API account and API Keyset here: https://public.sandbox.pro.coi
 Then run the app against the Sandbox API
 ```
 export CPBB_APISEC="SANDBOX API SECRET"
+export CPBB_APIPASS="API Password"
 CPBB_TEST=1 node .
 ```
 
