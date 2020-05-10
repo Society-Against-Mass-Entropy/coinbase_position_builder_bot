@@ -17,6 +17,7 @@ This tool is built for my own personal use--and while I have published it public
 Assuming you already have node installed. If not, use [nvm](https://github.com/nvm-sh/nvm)
 This also assumes you are running in a Linux/Mac environment with a shell.
 
+### Manual run:
 ```
 git clone git@github.com:jasonedison/coinbase_position_builder_bot.git
 cd coinbase_position_builder_bot;
@@ -32,6 +33,13 @@ node .
 ```
 
   NOTE: `CPBB_APIKEY` must have `view`+`trade` permissions--there is no need to allow `transfers`. I also recommend limiting the API keys to IP address whitelists.
+
+### Running with PM2 (keep alive with computer restarts)
+
+1. edit one of the run.*.config.js or create your own
+2. run pm2 (e.g. `pm2 start run.btcusd.config.js`)
+3. make pm2 save this as a startup task: `pm2 startup`
+4. save current configuration `pm2 save`
 
 ## Settings
 
@@ -95,7 +103,7 @@ CPBB_DRY_RUN=1 CPBB_FREQ='* * * * *' node .
 ### Test Using PM2
 More info on the pm2 ecosystem config: https://pm2.keymetrics.io/docs/usage/application-declaration/#cli
 ```
-pm2 start ecosystem.config.dryrun.js
+pm2 start run.dry.multi.config.js
 ```
 
 ## Keeping Alive: PM2

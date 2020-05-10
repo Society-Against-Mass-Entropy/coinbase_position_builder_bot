@@ -14,8 +14,13 @@ const config = {
   currency: process.env.CPBB_CURRENCY || 'USD',
   pjson: require('./package')
 }
-config.productID = config.ticker + '-' + config.currency
-config.history_file = `${__dirname}/data/history.${config.productID}.tsv`
+// the way Coinbase orders the current-ticker is inconsistent
+if(['USD','EUR','GBP','USDC'].includes(config.currency)){
+  config.productID = config.ticker + '-' + config.currency
+}else{
+  config.productID = config.currency + '-' + config.ticker
+}
+config.history_file = `${__dirname}/data/history.${config.productID}${process.env.CPBB_DRY_RUN?'.dryrun':''}.tsv`
 if(!fs.existsSync(config.history_file)){
   // copy the template
   console.log('creating log file from template',config.history_file)
