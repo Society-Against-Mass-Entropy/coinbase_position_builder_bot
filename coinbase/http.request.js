@@ -1,20 +1,31 @@
 const http = require("https");
-module.exports = (params, postData) => {
+const log = require("../lib/log");
+module.exports = (params) => {
   return new Promise(function (resolve, reject) {
+    console.log({ params });
     const req = http.request(params, function (res) {
-      if (res.statusCode < 200 || res.statusCode >= 300) {
-        return reject(new Error("statusCode=" + res.statusCode));
-      }
       const body = [];
       res.on("data", function (chunk) {
         body.push(chunk);
       });
       res.on("end", function () {
+        const responseBody = Buffer.concat(body).toString();
+        let json;
         try {
-          resolve(JSON.parse(Buffer.concat(body).toString()));
+          json = JSON.parse(responseBody);
         } catch (e) {
           reject(e);
         }
+        if (res.statusCode < 200 || res.statusCode >= 300) {
+          if (json && json.message === "invalid signature") {
+            log.error(
+              "invalid signature. Check your CPBB_APIKEY, CPBB_APISEC, CPBB_APIPASS settings!"
+            );
+            process.exit();
+          }
+          return reject(new Error("statusCode=" + res.statusCode));
+        }
+        resolve(json);
       });
     });
     // reject on request error
@@ -22,8 +33,9 @@ module.exports = (params, postData) => {
       // This is not a "Second reject", just a different sort of failure
       reject(err);
     });
-    if (postData) {
-      req.write(postData);
+    if (params.body) {
+      console.log(`write body`, params.body);
+      req.write(params.body);
     }
     req.end();
   });

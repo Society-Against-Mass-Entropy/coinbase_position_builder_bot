@@ -13,7 +13,7 @@ const job = new CronJob(config.freq, action);
 (async () => {
   // log history
   history.logRecent(5);
-  console.log(
+  log.now(
     `🤖 Position Builder Engine ${config.pjson.version} running against ${
       config.api
     } in ${process.env.CPBB_DRY_RUN ? "DRY RUN" : "LIVE"} mode, using ${
@@ -28,7 +28,7 @@ const job = new CronJob(config.freq, action);
   // find the trading account we care about
   // eslint-disable-next-line prefer-destructuring
   memory.account = accounts.filter((a) => a.currency === config.currency)[0];
-  log(`${config.currency} account loaded with ${memory.account.available}`);
+  log.ok(`$${config.currency} account loaded with ${memory.account.available}`);
 
   // immediate kick off (testing mode)
   if (process.env.CPBB_TEST || process.env.CPBB_DRY_RUN) action();
@@ -36,5 +36,5 @@ const job = new CronJob(config.freq, action);
   // start the cronjob
   job.start();
   const nextDate = job.nextDates();
-  console.log(`⚡ next run ${nextDate.fromNow()}, on ${nextDate.format()}`);
+  log.ok(`next run ${nextDate.fromNow()}, on ${nextDate.format()}`);
 })();

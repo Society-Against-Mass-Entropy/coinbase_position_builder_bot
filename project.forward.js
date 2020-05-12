@@ -21,7 +21,7 @@ const projectedFile = `./data/projected.${ticker}.tsv`;
 // to the new projectedFile
 config.history_file = projectedFile;
 
-log(`projecting ${ticker}`);
+log.now(`projecting ${ticker}`);
 // copy existing history file to new projected file
 fs.copyFileSync(historyFile, projectedFile);
 
