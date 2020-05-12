@@ -1,8 +1,8 @@
 const http = require("https");
 const log = require("../lib/log");
 module.exports = (params) => {
-  return new Promise(function (resolve, reject) {
-    console.log({ params });
+  const makeRequest = function (resolve, reject) {
+    // console.log({ params });
     const req = http.request(params, function (res) {
       const body = [];
       res.on("data", function (chunk) {
@@ -34,9 +34,10 @@ module.exports = (params) => {
       reject(err);
     });
     if (params.body) {
-      console.log(`write body`, params.body);
+      // log.info(`write body`, params.body);
       req.write(params.body);
     }
     req.end();
-  });
+  };
+  return new Promise(makeRequest);
 };

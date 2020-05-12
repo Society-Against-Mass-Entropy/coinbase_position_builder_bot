@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const log = require("../lib/log");
 // https://docs.pro.coinbase.com/?javascript#signing-a-message
 module.exports = (opts) => {
   // create the prehash string by concatenating required parts
@@ -10,7 +11,6 @@ module.exports = (opts) => {
   // sign the require message with the hmac
   // and finally base64 encode the result
   const signature = hmac.update(what).digest("base64");
-  console.log(what);
-  // console.log(signature)
+  log.debug(`signature`, what, signature);
   return signature;
 };
