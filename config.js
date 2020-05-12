@@ -1,24 +1,33 @@
-const fs = require('fs')
+const fs = require("fs");
+const pjson = require("./package");
+
 const config = {
-  api: process.env.CPBB_TEST ? 'https://api-public.sandbox.pro.coinbase.com' : 'https://api.pro.coinbase.com',
+  api: process.env.CPBB_TEST
+    ? "https://api-public.sandbox.pro.coinbase.com"
+    : "https://api.pro.coinbase.com",
   // default run once per 12 hours at the 5th minute (crontab syntax)
   // testing mode will run every minute
-  freq: process.env.CPBB_TEST ? '* * * * *' : (process.env.CPBB_FREQ || '5 */12 * * *'),
+  freq: process.env.CPBB_TEST
+    ? "* * * * *"
+    : process.env.CPBB_FREQ || "5 */12 * * *",
   // default $10 action
   vol: Number(process.env.CPBB_VOL || 10),
   // default 15% APY target (we aim to shave off any excess from this gain)
   apy: Number(process.env.CPBB_APY || 15) / 100,
   // default ticker currency is BTC
-  ticker: process.env.CPBB_TICKER || 'BTC',
+  ticker: process.env.CPBB_TICKER || "BTC",
   // default home currency is USD
-  currency: process.env.CPBB_CURRENCY || 'USD',
-  pjson: require('./package')
-}
-config.productID = config.ticker + '-' + config.currency
-config.history_file = `${__dirname}/data/history.${config.productID}${process.env.CPBB_DRY_RUN?'.dryrun':''}.tsv`
-if(!fs.existsSync(config.history_file)){
+  currency: process.env.CPBB_CURRENCY || "USD",
+  pjson,
+};
+config.productID = `${config.ticker}-${config.currency}`;
+let historySubName = "";
+if (process.env.CPBB_TEST) historySubName = ".sandbox";
+if (process.env.CPBB_DRY_RUN) historySubName = ".dryrun";
+config.history_file = `${__dirname}/data/history.${config.productID}${historySubName}.tsv`;
+if (!fs.existsSync(config.history_file)) {
   // copy the template
-  console.log('creating log file from template',config.history_file)
-  fs.copyFileSync(`${__dirname}/data/history.tsv`, config.history_file)
+  console.log("creating log file from template", config.history_file);
+  fs.copyFileSync(`${__dirname}/data/history.tsv`, config.history_file);
 }
-module.exports = config
+module.exports = config;

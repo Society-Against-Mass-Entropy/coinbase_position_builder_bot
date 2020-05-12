@@ -1,13 +1,13 @@
-const request = require('./request')
-const config = require('../config')
-const memory = require('../data/memory')
+const request = require("./cb.request");
+const config = require("../config");
+const memory = require("../data/memory");
 
-module.exports = cb => {
-  request({
+module.exports = async () => {
+  const data = await request({
     requestPath: `/products/${config.productID}/ticker`,
-    method: 'GET'
-  }, (err, data)=>{
-    memory.price = Number(data.price)
-    cb(err, data)
-  })
-}
+    method: "GET",
+  });
+  // store the latest price
+  memory.price = Number(data.price);
+  return data;
+};

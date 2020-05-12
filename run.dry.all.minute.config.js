@@ -9,20 +9,27 @@
  * pm2 start run.dry.all.config.js
  */
 
-const fs = require('fs')
-const files = fs.readdirSync('.').filter(f=>f.includes('run.default') && f.includes('config.js') && f!=='run.default.all.config.js')
+const fs = require("fs");
+const files = fs
+  .readdirSync(".")
+  .filter(
+    (f) =>
+      f.includes("run.default") &&
+      f.includes("config.js") &&
+      f !== "run.default.all.config.js"
+  );
 
 const apps = [];
-files.forEach(f=>{
-  const config = require(`./${f}`).apps.map(a=>{
+files.forEach((f) => {
+  const config = require(`./${f}`).apps.map((a) => {
     // add DRY RUN mode to each app config
-    a.env.CPBB_DRY_RUN = true
-    a.env.CPBB_FREQ = '* * * * *'
-    return a
-  })
-  apps.push(...config)
-})
+    a.env.CPBB_DRY_RUN = true;
+    a.env.CPBB_FREQ = "* * * * *";
+    return a;
+  });
+  apps.push(...config);
+});
 
 module.exports = {
-  apps: apps
-}
+  apps: apps,
+};

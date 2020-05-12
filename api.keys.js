@@ -8,7 +8,13 @@
  * but DO NOT commit this file changed with keys to github
  */
 module.exports = {
-  CPBB_APIPASS: process.env.CPBB_APIPASS||'load your keys via real environmental vars or replace this quoted string',
-  CPBB_APIKEY: process.env.CPBB_APIKEY||'load your keys via real environmental vars or replace this quoted string',
-  CPBB_APISEC: process.env.CPBB_APISEC||'load your keys via real environmental vars or replace this quoted string',
-}
+  CPBB_APIPASS:
+    process.env.CPBB_APIPASS ||
+    "load your keys via real environmental vars or replace this quoted string",
+  CPBB_APIKEY:
+    process.env.CPBB_APIKEY ||
+    "load your keys via real environmental vars or replace this quoted string",
+  CPBB_APISEC:
+    process.env.CPBB_APISEC ||
+    "load your keys via real environmental vars or replace this quoted string",
+};

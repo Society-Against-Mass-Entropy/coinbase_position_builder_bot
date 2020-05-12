@@ -123,10 +123,9 @@ There are two ways to test:
 
 ### 1. Using the Coinbase Sandbox API
 
-The first option is not great because it requires a different API key, and is probably more headache than it's worth, but I've included support for it in case you want to try it.
+The first option is not great for testing strategies because it uses the sandbox API network which does not support many trading pairs and has fake liquidity and transactions. This path exists, only for testing code updates (to make sure the app still works after big code refactors). This option also requires a different API key, and is probably more headache than it's worth for regular testing.
 
-> The second option is the recommended path
-> The Coinbase Pro Sandbox API does not support LTC-BTC and many other trading pairs
+> The second option is the recommended path for users
 
 1. Create a Sandbox API account and API Keyset here: https://public.sandbox.pro.coinbase.com/profile/api
 2. You will also need to fake transfer USD from Coinbase into the Sandbox

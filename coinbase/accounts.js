@@ -1,8 +1,7 @@
-const request = require('./request')
+const request = require("./cb.request");
 
-module.exports = (cb) => {
+module.exports = async () =>
   request({
-    requestPath: '/accounts',
-    method: 'GET'
-  }, cb)
-}
+    requestPath: "/accounts",
+    method: "GET",
+  });

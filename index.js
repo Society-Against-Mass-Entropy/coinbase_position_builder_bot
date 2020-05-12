@@ -1,27 +1,40 @@
-const config = require('./config')
-const action = require('./lib/action')
-const CronJob = require('cron').CronJob
-const getAccounts = require('./coinbase/accounts')
-const history = require('./lib/history')
-const job = new CronJob(config.freq, action)
-const log = require('./lib/log')
-const memory = require('./data/memory')
+const { CronJob } = require("cron");
 
-// log history
-history.logRecent(5)
-console.log(`🤖 Position Builder Engine ${config.pjson.version} running against ${config.api} in ${process.env.CPBB_DRY_RUN?'DRY RUN':'LIVE'} mode, using ${config.vol} $${config.currency} ➡️  $${config.ticker} at cron(${config.freq}) with target ${config.apy * 100}% APY`)
+const config = require("./config");
 
-getAccounts((err, data) => {
-  if (err || !data.length) return console.error(err, data)
+const action = require("./lib/action");
+const getAccounts = require("./coinbase/accounts");
+const history = require("./lib/history");
+const log = require("./lib/log");
+const memory = require("./data/memory");
+
+const job = new CronJob(config.freq, action);
+
+(async () => {
+  // log history
+  history.logRecent(5);
+  console.log(
+    `🤖 Position Builder Engine ${config.pjson.version} running against ${
+      config.api
+    } in ${process.env.CPBB_DRY_RUN ? "DRY RUN" : "LIVE"} mode, using ${
+      config.vol
+    } $${config.currency} ➡️  $${config.ticker} at cron(${
+      config.freq
+    }) with target ${config.apy * 100}% APY`
+  );
+
+  const accounts = await getAccounts().catch((e) => console.error(e));
+
   // find the trading account we care about
-  memory.account = data.filter(a => a.currency === config.currency)[0]
-  log(`${config.currency} account loaded with ${memory.account.available}`)
+  // eslint-disable-next-line prefer-destructuring
+  memory.account = accounts.filter((a) => a.currency === config.currency)[0];
+  log(`${config.currency} account loaded with ${memory.account.available}`);
 
   // immediate kick off (testing mode)
-  if (process.env.CPBB_TEST || process.env.CPBB_DRY_RUN) action()
+  if (process.env.CPBB_TEST || process.env.CPBB_DRY_RUN) action();
 
   // start the cronjob
-  job.start()
-  const nextDate = job.nextDates()
-  console.log(`⚡ next run ${nextDate.fromNow()}, on ${nextDate.format()}`)
-})
+  job.start();
+  const nextDate = job.nextDates();
+  console.log(`⚡ next run ${nextDate.fromNow()}, on ${nextDate.format()}`);
+})();
