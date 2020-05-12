@@ -4,15 +4,12 @@ const config = require("./config");
 
 const action = require("./lib/action");
 const getAccounts = require("./coinbase/accounts");
-const history = require("./lib/history");
 const log = require("./lib/log");
 const memory = require("./data/memory");
 
 const job = new CronJob(config.freq, action);
 
 (async () => {
-  // log history
-  history.logRecent(5);
   log.now(
     `🤖 Position Builder Engine ${config.pjson.version} running against ${
       config.api
