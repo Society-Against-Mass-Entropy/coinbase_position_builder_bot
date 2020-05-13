@@ -7,7 +7,6 @@ const request = require("./cb.request");
 
 module.exports = async (opts) => {
   if (process.env.CPBB_DRY_RUN) {
-    console.log("dry run, fake", opts.side);
     // fake out a .002 fee subtraction
     const converted = multiply(Number(opts.funds), 0.998);
     return {

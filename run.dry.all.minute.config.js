@@ -25,6 +25,7 @@ files.forEach((f) => {
     // add DRY RUN mode to each app config
     a.env.CPBB_DRY_RUN = true;
     a.env.CPBB_FREQ = "* * * * *";
+    a.name = `${a.name}_dryrun`;
     return a;
   });
   apps.push(...config);

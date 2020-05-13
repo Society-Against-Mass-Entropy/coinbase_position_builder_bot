@@ -11,13 +11,13 @@ const job = new CronJob(config.freq, action);
 
 (async () => {
   log.now(
-    `🤖 Position Builder Engine ${config.pjson.version} running against ${
-      config.api
-    } in ${process.env.CPBB_DRY_RUN ? "DRY RUN" : "LIVE"} mode, using ${
-      config.vol
+    `🤖 Position Builder Bot ${config.pjson.version} using ${
+    config.api
+    } in ${process.env.CPBB_DRY_RUN ? "DRY RUN" : "LIVE"} mode, with ${
+    config.vol
     } $${config.currency} ➡️  $${config.ticker} at cron(${
-      config.freq
-    }) with target ${config.apy * 100}% APY`
+    config.freq
+    }), ${config.apy * 100}% APY target`
   );
 
   const accounts = await getAccounts().catch((e) => console.error(e));

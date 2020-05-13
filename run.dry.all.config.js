@@ -22,6 +22,7 @@ files.forEach((f) => {
   const config = require(`./${f}`).apps.map((a) => {
     // add DRY RUN mode to each app config
     a.env.CPBB_DRY_RUN = true;
+    a.name = `${a.name}_dryrun`;
     return a;
   });
   apps.push(...config);
