@@ -20,6 +20,8 @@ const job = new CronJob(config.freq, action);
     }), ${config.apy * 100}% APY target`
   );
 
+  log.ok(`history loaded: holding ${memory.lastLog.Holding} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`)
+
   const accounts = await getAccounts().catch((e) => console.error(e));
 
   // find the trading account we care about

@@ -36,22 +36,6 @@ module.exports = {
         CPBB_VOL: 25,
         CPBB_APY: 12,
       },
-    },
-    {
-      name: "cpbb_xtzusd",
-      script,
-      watch: watch,
-      env: {
-        NODE_ENV: "production",
-        CPBB_APIPASS: apiKeys.CPBB_APIPASS,
-        CPBB_APIKEY: apiKeys.CPBB_APIKEY,
-        CPBB_APISEC: apiKeys.CPBB_APISEC,
-        CPBB_FREQ: "20 12 * * 6",
-        CPBB_TICKER: "XTZ",
-        CPBB_CURRENCY: "USD",
-        CPBB_VOL: 25,
-        CPBB_APY: 12,
-      },
     }
   ],
 };
