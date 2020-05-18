@@ -23,7 +23,7 @@ module.exports = (params) => {
             );
             process.exit();
           }
-          return reject(new Error("statusCode=" + res.statusCode));
+          return reject(res.statusCode);
         }
         resolve(json);
       });

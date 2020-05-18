@@ -4,11 +4,11 @@ const sleep = require("../lib/sleep");
 const RETRY_TIMES = 10;
 const RETRY_MULTIPLIER = 2;
 module.exports = async (id) => {
-  let retryCount = 1;
+  let retryCount = 0;
   let time = 100;
   const getCompletedOrder = async () => {
-    if (retryCount > 5)
-      log.now(`status attempt #${retryCount} on order #${id}`);
+    if (retryCount)
+      log.debug(`retry #${retryCount} on order #${id}`);
     const orderResponse = await request({
       requestPath: `/orders/${id}`,
       method: "GET",

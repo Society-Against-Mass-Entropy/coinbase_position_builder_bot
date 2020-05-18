@@ -1,6 +1,6 @@
 {
   "name": "coinbase_position_builder_bot",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Position Building Bot for Accumulating Bitcoin (or other assets) via Coinbase Pro, while taking advantage of pumps",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,8 @@
     "cron": "1.8.1",
     "lodash.map": "4.6.0",
     "mathjs": "6.5.0",
-    "moment": "2.24.0"
+    "moment": "2.24.0",
+    "stable": "0.1.8"
   },
   "devDependencies": {
     "eslint": "6.8.0"

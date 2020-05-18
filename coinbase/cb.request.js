@@ -38,6 +38,6 @@ module.exports = async (opts) => {
   }
   // log.debug({ requestConfig });
   return request(requestConfig).catch((e) =>
-    console.error(opts.requestPath, `error`, e.statusCode, e)
+    log.error(opts.requestPath, `status error`, e)
   );
 };
