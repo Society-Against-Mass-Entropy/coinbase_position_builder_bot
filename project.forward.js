@@ -11,11 +11,11 @@ const calcAction = require("./lib/calculate.action");
 const history = require("./lib/history");
 const log = require("./lib/log");
 const logSave = require("./lib/log.save");
-
+const memory = require('./data/memory')
 const ticker = `${config.ticker}-${config.currency}`;
 
 const historyFile = `./data/history.${ticker}.tsv`;
-const projectedFile = `./data/projected.${ticker}.tsv`;
+const projectedFile = `./data/history.${ticker}.projected.tsv`;
 
 // override config.historyFile so we save new logs in this script
 // to the new projectedFile
@@ -31,14 +31,16 @@ const reverseHistory = history.all().reverse();
 const now = new Date().getTime();
 
 const processLog = async (idx) => {
-  if (idx >= reverseHistory.length) return log(`projection complete`);
+  if (idx >= reverseHistory.length) return log.ok(`projection complete`);
   const d = reverseHistory[idx];
   // calculate the projected future date when this will occur
-  const overrideDate = new Date(now + (now - new Date(d.Time).getTime()));
+  const dateOverride = new Date(now + (now - new Date(d.Time).getTime()));
   const action = await calcAction({
     price: d.Price,
-    overrideDate,
+    reverse: true,
+    dateOverride,
   });
+  action.dateNow = dateOverride
   logSave({
     action,
     response: {
