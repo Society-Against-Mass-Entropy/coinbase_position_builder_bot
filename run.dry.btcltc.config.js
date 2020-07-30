@@ -1,5 +1,7 @@
 /**
  * buys BTC with LTC at interval (accumulates BTC using LTC)
+ * WARNING, this is HIGHLY experimental and may not be tracking fees properly
+ * DO NOT TRADE ALTCOINS!
  */
 const apiKeys = require("./api.keys");
 module.exports = {

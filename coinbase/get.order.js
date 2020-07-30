@@ -1,16 +1,15 @@
 const log = require("../lib/log");
 const request = require("./cb.request");
 const sleep = require("../lib/sleep");
-const RETRY_TIMES = 10;
-const RETRY_MULTIPLIER = 2;
-module.exports = async (id) => {
+const RETRY_TIMES = 720; // 60 minutes worth of 5 second intervals
+module.exports = async (order) => {
   let retryCount = 0;
-  let time = 100;
+  let time = 5000;
   const getCompletedOrder = async () => {
     if (retryCount)
-      log.debug(`retry #${retryCount} on order #${id}`);
+      log.debug(`retry #${retryCount} on order #${order.id}`);
     const orderResponse = await request({
-      requestPath: `/orders/${id}`,
+      requestPath: `/orders/${order.id}`,
       method: "GET",
     });
     if (
@@ -20,10 +19,9 @@ module.exports = async (id) => {
     ) {
       retryCount++;
       if (retryCount > RETRY_TIMES) {
-        log.error(`failed to get order ${id}`);
+        log.error(`failed to get order ${order.id}`, JSON.stringify(order));
         return Promise.reject("failed to get complete order");
       }
-      time = time * RETRY_MULTIPLIER;
       await sleep(time);
       return getCompletedOrder();
     }
