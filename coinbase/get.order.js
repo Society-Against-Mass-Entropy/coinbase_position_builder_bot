@@ -35,7 +35,7 @@ module.exports = async (order) => {
     if (retryCount) {
       const elapsed = retryCount * time / 1000;
       const timeString = elapsed > 60 ? `${elapsed / 60} minutes` : `${elapsed} seconds`;
-      log.warn(`API slowdown: Order ${order.id} took ${timeString} to update status!`);
+      log.action(`API slowdown: Order ${order.id} took ${timeString} to update status!`);
     }
     return orderResponse;
   };

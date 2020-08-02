@@ -8,7 +8,7 @@ module.exports = {
       script,
       watch,
       env: {
-        VERBOSE: true,
+        // VERBOSE: true,
         NODE_ENV: "production",
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
