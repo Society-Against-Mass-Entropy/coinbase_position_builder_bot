@@ -14,6 +14,7 @@ module.exports = (params) => {
         try {
           json = JSON.parse(responseBody);
         } catch (e) {
+          log.error('failed to parse response from API', e)
           reject(e);
         }
         if (res.statusCode < 200 || res.statusCode >= 300) {
@@ -31,6 +32,7 @@ module.exports = (params) => {
     // reject on request error
     req.on("error", function (err) {
       // This is not a "Second reject", just a different sort of failure
+      log.error(`error in API request/response`, err)
       reject(err);
     });
     if (params.body) {
