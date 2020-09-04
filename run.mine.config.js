@@ -1,9 +1,10 @@
 const apiKeys = require("./api.keys");
 const script = ".";
-const watch = ["*.js", "coinbase", "lib"];
+const watch = ["./*.js", "coinbase/*.js", "lib/*.js"];
 module.exports = {
   apps: [
     {
+      // CPBB_FREQ="35 */4 * * *" CPBB_VOL=50 CPBB_APY=15 node project.forward.js
       name: "cpbb_btcusd",
       script,
       watch,
@@ -13,10 +14,10 @@ module.exports = {
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
-        CPBB_FREQ: "35 */2 * * *",
+        CPBB_FREQ: "35 */4 * * *",
         CPBB_TICKER: "BTC",
         CPBB_CURRENCY: "USD",
-        CPBB_VOL: 20,
+        CPBB_VOL: 50,
         CPBB_APY: 15,
       },
     },
@@ -32,7 +33,7 @@ module.exports = {
         CPBB_FREQ: "34 12 * * 6",
         CPBB_TICKER: "ETH",
         CPBB_CURRENCY: "USD",
-        CPBB_VOL: 25,
+        CPBB_VOL: 50,
         CPBB_APY: 15,
       },
     },
