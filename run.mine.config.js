@@ -9,7 +9,7 @@ module.exports = {
       script,
       watch,
       env: {
-        // VERBOSE: true,
+        // VERBOSE: false,
         NODE_ENV: "production",
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
@@ -18,7 +18,7 @@ module.exports = {
         CPBB_TICKER: "BTC",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 50,
-        CPBB_APY: 15,
+        CPBB_APY: 20,
       },
     },
     {
@@ -34,7 +34,7 @@ module.exports = {
         CPBB_TICKER: "ETH",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 50,
-        CPBB_APY: 15,
+        CPBB_APY: 20,
       },
     },
     // {

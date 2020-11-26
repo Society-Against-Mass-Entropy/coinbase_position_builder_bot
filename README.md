@@ -190,6 +190,15 @@ CPBB_VOL=20 CPBB_APY=20 node project.forward.js
 
 This will examine your current history file (e.g. `./data/history.BTC-USD.tsv`), reverse the data, and run it as projected future events. Then it will save the result in a coorsponding projection file (e.g. `./data/history.BTC-USD.projection.tsv`).
 
+# Adding Missing Records
+I have noticed sometimes the API will fail to complete an order and timeout. However, the order does complete. When I notice this, I can see in Coinbase that the order went through and get the price and shares traded--but the engine is still running without that info!
+To correct this, I've added a manual log entry tool. In order to use this, you will need to load your keys as env vars and then execute like the following:
+
+```
+# node addLog.js $TICKER $CURRENCY $VOLUME $APY $DATEISO $PRICE $SHARES
+node addLog.js BTC USD 50 20 2020-11-26T16:35:00.706Z 16915.52 0.00295586
+```
+
 # Disclaimer
 This software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement. In no event shall the authors, copyright holders, or Coinbase Inc. be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
 

@@ -2,6 +2,7 @@ const { CronJob } = require("cron");
 
 const config = require("./config");
 
+const { add } = require("mathjs");
 const action = require("./lib/action");
 const getAccounts = require("./coinbase/accounts");
 const log = require("./lib/log");
@@ -11,16 +12,16 @@ const job = new CronJob(config.freq, action);
 
 (async () => {
   log.now(
-    `🤖 Position Builder Bot ${config.pjson.version} using ${
+    `🤖 Position Builder Bot ${config.pjson.version}, ${
     config.api
-    } in ${process.env.CPBB_DRY_RUN ? "DRY RUN" : "LIVE"} mode, with ${
+    } in ${process.env.CPBB_DRY_RUN ? "DRY RUN" : "LIVE"} mode, ${
     config.vol
-    } $${config.currency} ➡️  $${config.ticker} at cron(${
+    } $${config.currency} ➡️  $${config.ticker} @ cron(${
     config.freq
-    }), ${config.apy * 100}% APY target`
+    }), ${config.apy * 100}% APY target, ${process.env.VERBOSE ? `verbose` : 'ledger'} logging`
   );
 
-  log.ok(`history loaded: holding ${memory.lastLog.Holding} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`)
+  log.ok(`history loaded: holding ${add(memory.lastLog.Holding, memory.lastLog.Shares)} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`)
 
   const accounts = await getAccounts().catch((e) => console.error(e));
 

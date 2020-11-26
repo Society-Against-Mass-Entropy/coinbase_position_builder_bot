@@ -12,7 +12,7 @@ module.exports = async (order) => {
       // we may need to wait a while
       // sometimes this takes up to 15 minutes if the API is super bogged down
       time = 10000;
-      log.zap(`API is slow! Order ${order.id} is pending! It is normal to get a 404 trying to fetch the order details until the order is out of pending status. Normally, even though the status doesn't update, it seems to go through at the time/price when we made the request. We will retry every 10 seconds for up to 1 hour...`);
+      log.zap(`API is slow! Order ${order.id} is pending! 404 is normal. We will retry every 10 seconds for up to 1 hour...`);
       log.debug(`retry #${retryCount} on order #${order.id}`);
     }
     const orderResponse = await request({
