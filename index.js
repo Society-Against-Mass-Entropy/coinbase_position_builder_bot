@@ -5,7 +5,9 @@ const config = require("./config");
 const { add } = require("mathjs");
 const action = require("./lib/action");
 const getAccounts = require("./coinbase/accounts");
+const loadLastLog = require('./lib/load.lastLog');
 const log = require("./lib/log");
+const logOutput = require('./lib/log.output');
 const memory = require("./data/memory");
 
 const job = new CronJob(config.freq, action);
@@ -35,6 +37,9 @@ const job = new CronJob(config.freq, action);
 
   // start the cronjob
   job.start();
+  memory.logData = loadLastLog();
+  log.ok(`last transaction for ${config.productID}:`);
+  logOutput(memory.logData);
   const nextDate = job.nextDates();
   log.ok(`next run ${nextDate.fromNow()}, on ${nextDate.format()}`);
 })();
