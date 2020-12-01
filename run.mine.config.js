@@ -1,6 +1,6 @@
 const apiKeys = require("./api.keys");
 const script = ".";
-const watch = ["./*.js", "coinbase/*.js", "lib/*.js"];
+const watch = ["./index.js", "./config.js", "coinbase/*.js", "lib/*.js"];
 module.exports = {
   apps: [
     {
