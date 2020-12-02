@@ -24,7 +24,7 @@ module.exports = (params) => {
             );
             process.exit();
           }
-          log.error(`${res.statusCode} error:`, responseBody);
+          log.debug(`${res.statusCode} error:`, responseBody);
           return reject(res.statusCode);
         }
         resolve(json);
