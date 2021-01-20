@@ -13,7 +13,7 @@ module.exports = async (order) => {
       // sometimes this takes up to 15 minutes if the API is super bogged down
       time = 10000; // extend future retries to 10 seconds
     }
-    if (retryCount === 1) {
+    if (retryCount === 2) {
       log.zap(`API is slow! Order ${order.id} is pending! 404 is normal. We will retry every 10 seconds for up to 1 hour...`);
       log.debug(`retry #${retryCount} on order #${order.id}`);
     }
