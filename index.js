@@ -43,5 +43,5 @@ const job = new CronJob(config.freq, action);
   log.ok(`last transaction for ${config.productID}:`);
   logOutput(memory.logData);
   const nextDate = job.nextDates();
-  log.ok(`next run ${nextDate.fromNow()}, on ${nextDate.format()}`);
+  log.ok(`next run ${nextDate.fromNow()}, on ${nextDate.local().format()}`);
 })();
