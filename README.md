@@ -4,10 +4,13 @@
 
 We don't need to look at charts. The trendlines and price predictions don't matter. All that matters is your current cost-basis and investment. Are you in profit? Is the price a dip relative to your current holdings? These questions are easy to answer without having to be an oracle. You just have to keep track of your investments, calculate where you fall at the current moment, and automate an action. That's what this project does!
 
-This bot will make a market taker action of the configured funding level at the configured interval. If the current holdings that that bot has accumulated is at a profit point higher than a target APY, then it will make a sell action, else it makes a buy action.
+This bot will make a market taker action of the configured funding level at the configured interval. If the current holdings that the bot has accumulated is at a profit point higher than a target APY (and the action volume will keep the holdings at a value higher than the APY), then it will make a sell action, else it makes a buy action.
 
 Here is a view of my first 1 BTC purchased via this method (in a Google Sheet for charting):
 ![history](docs/cbpp_charts.png "First 1 BTC Accumulated")
+
+And here is a view of the bot running for a full year (in a Google Sheet for charting):
+![history](docs/cbpp_year.png "First year of automation")
 
 After running this engine for a bit, you can copy the data in your local log file (e.g. `./data/history.BTC-USD.tsv`) and paste it into the spreadsheet template: [./docs/CBPP_BTC-Template.xlsx](./docs/CBPP_BTC-Template.xlsx). This template can be saved locally and periodically updated or saved to Google Docs or some other service for backup.
 
@@ -191,7 +194,10 @@ CPBB_VOL=20 CPBB_APY=20 node project.forward.js
 This will examine your current history file (e.g. `./data/history.BTC-USD.tsv`), reverse the data, and run it as projected future events. Then it will save the result in a coorsponding projection file (e.g. `./data/history.BTC-USD.projection.tsv`).
 
 # Adding Missing Records
-I have noticed sometimes the API will fail to complete an order and timeout. However, the order does complete. When I notice this, I can see in Coinbase that the order went through and get the price and shares traded--but the engine is still running without that info!
+I have noticed that in extreme situations, the Coinbase API will be so overloaded that the API will fail to complete an order and timeout. However, the order does complete. When I notice this, I can see in Coinbase that the order went through and get the price and shares traded--but the engine is still running without that info!
+
+> NOTE: I believe we have addressed this in retry logic. If you see this happen, please file an issue.
+
 To correct this, I've added a manual log entry tool. In order to use this, you will need to load your keys as env vars and then execute like the following:
 
 ```
@@ -204,6 +210,6 @@ This software is provided "as is", without warranty of any kind, express or impl
 
 # Who Am I?
 
-I'm a double-major economics and app development student in NY. I like to play with code as a way of exploring and proving economic theories.
+I'm a recent NYU grad and Microsoft Intern. I like to play with code as a way of exploring and proving economic theories.
 
 I am not a financial advisor but you can find my occasional takes on twitter: https://twitter.com/cryptecon
