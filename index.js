@@ -25,6 +25,7 @@ const job = new CronJob(config.freq, action);
 
   // console.log(memory.lastLog);
 
+
   log.ok(`history loaded: holding ${add(memory.lastLog.Holding, memory.lastLog.Shares)} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`)
 
   const accounts = await getAccounts().catch((e) => console.error(e));

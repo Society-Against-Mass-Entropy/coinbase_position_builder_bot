@@ -1,5 +1,6 @@
 /**
- * just a tool for me to update the log schema
+ * just a tool for me to update the log schema or tweak the calculated values
+ * if new rules take effect
  */
 console.log(`🤖 Position Builder Engine Updater`);
 
@@ -22,9 +23,9 @@ for (let i = 0; i < all.length; i++) {
   all[i].InProfit = !i
     ? 0
     : multiply(
-        subtract(divide(all[i].Value, all[i - 1].TotalInput), 1),
-        100
-      ).toFixed(2) + "%";
+      subtract(divide(all[i].Value, all[i - 1].TotalInput), 1),
+      100
+    ).toFixed(2) + "%";
 
   // add elapsed ms
   all[i].Elapsed = !i ? 0 : new Date(all[i].Time).getTime() - start;
@@ -37,15 +38,15 @@ for (let i = 0; i < all.length; i++) {
   all[i].InAPY = !i
     ? 0
     : format(
-        multiply(
-          subtract(
-            pow(add(all[i].RealPeriodRate, 1), all[i].PeriodsPerYear),
-            1
-          ),
-          100
+      multiply(
+        subtract(
+          pow(add(all[i].RealPeriodRate, 1), all[i].PeriodsPerYear),
+          1
         ),
-        2
-      ) + "%";
+        100
+      ),
+      2
+    ) + "%";
 
   // console.log(all[i])
   // if(i) console.log(all[i-1].Holding, '+',all[i-1].Shares, '=',all[i].Holding)

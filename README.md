@@ -195,6 +195,20 @@ To correct this, I've added a manual log entry tool. In order to use this, you w
 node addLog.js BTC USD 50 20 2020-11-26T16:35:00.706Z 16915.52 0.00295586
 ```
 
+# Updating to Version 2.0.0
+
+Version `2.0.0` contains a change to the `Target` growth calculation. In older versions, the `Target` growth is calculated as `Prior Target` + `Period Gain` + `Funds` for this round. This makes sense when you are always buying because we are adding to the account, and we want to make sure that if we are over our `Target`, we only sell if the `Value` of the account is greater than `Target` by more than the `Funds` we would be cashing out. However, if you sold on the last round, we now have a target on record that includes `Funds` we didn't add into the system. This still gave us a good algorithmic result since it manifests as a higher than configured `APY` growth in our target calculation, but this creates confusion because the APY isn't the only thing being used to calculate the long term `Target`.
+
+In 2.0.0+, we only add `Funds` to `Target` if the last round was a buy, not a sell.
+You can simply upgrade the code and keep running with your existing history log (which likely has a slightly inflated `Target` because any sells still added an expected growth to the baseline). If you decide not to correct historical data, new data will still use the new algorithm. However, if you want to rectify your records, there is an optional script that will do this for you:
+
+(optional)
+1. Backup your data directory
+2. For each pair you are tracking, run `CPBB_TICKER=BTC CPBB_CURRENCY=USD node adjust.target.js`
+3. Examine the new '...fixed.tsv' file to make sure the records look satisfactory
+4. Overwrite your history with the fixed version
+5. restart your app: `pm2 reload all`
+
 # Disclaimer
 This software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement. In no event shall the authors, copyright holders, or Coinbase Inc. be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
 
