@@ -29,7 +29,7 @@ This is all much easier on a Linux/Mac environment with a shell. I have not trie
   - install shell extension so you can type `code .` in a terminal to open the project up in the editor
 2. git clone this project (via terminal) -- or download zip file and unzip
 ```
-git clone git@github.com:jasonedison/coinbase_position_builder_bot.git
+git clone https://github.com/jasonedison/coinbase_position_builder_bot.git
 cd coinbase_position_builder_bot;
 ```
 2. Install dependencies and PM2 (process manager)
