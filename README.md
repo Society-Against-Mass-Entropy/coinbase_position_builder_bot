@@ -27,42 +27,42 @@ This is all much easier on a Linux/Mac environment with a shell. I have not trie
 2. Optional: Install a good text editor (like https://code.visualstudio.com/)
   - After install, F1 and type "shell command"
   - install shell extension so you can type `code .` in a terminal to open the project up in the editor
-2. git clone this project (via terminal) -- or download zip file and unzip
+3. git clone this project (via terminal) -- or download zip file and unzip
 ```
 git clone https://github.com/jasonedison/coinbase_position_builder_bot.git
 cd coinbase_position_builder_bot;
 ```
-2. Install dependencies and PM2 (process manager)
+4. Install dependencies and PM2 (process manager)
 ```
 npm run setup;
 ```
-2. Create a Coinbase Pro account (if you don't already have one)
-2. Connect a bank account and transfer in some money (you will need to make sure you keep your USD balance fed with enough runway to keep buying during a bear market)
-2. Create API Key, pass, and secret on Coinbase Pro: https://pro.coinbase.com/profile/api
+5. Create a Coinbase Pro account (if you don't already have one)
+6. Connect a bank account and transfer in some money (you will need to make sure you keep your USD balance fed with enough runway to keep buying during a bear market)
+7. Create API Key, pass, and secret on Coinbase Pro: https://pro.coinbase.com/profile/api
   - must have `view`+`trade` permissions
   - there is no need to allow `transfers` (this script does not move money to/from your bank account)
   - recommended to limit the API keys to IP address whitelists
-2. Add the key, pass, and secret to your environment via environmental variables, or add them to the `./api.key.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
-2. Test all the configs in dry run mode at 1 minute intervals:
+8. Add the key, pass, and secret to your environment via environmental variables, or add them to the `./api.key.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
+9. Test all the configs in dry run mode at 1 minute intervals:
 ```
 pm2 start run.dry.all.minute.config.js && pm2 logs
 ```
-2. Kill it
+10. Kill it
 ```
 pm2 kill
 ```
-2. Now copy one of the sample configs (e.g. run.default.btcusd.config.js)
+11. Now copy one of the sample configs (e.g. run.default.btcusd.config.js)
 ```
 cp run.default.btcusd.config.js run.config.js
 ```
-2. Edit your new `run.config.js` to have the APY and VOLUME values you want by editing `CPBB_APY` and `CPBB_VOL`, respectively.
-2. Adjust the run time interval to suit your preferences. You can use https://crontab.guru/#5_*/12_*_*_* to help turn your desired frequency into the crontab syntax that goes in `CPBB_FREQ`
-2. Now run it for real
+12. Edit your new `run.config.js` to have the APY and VOLUME values you want by editing `CPBB_APY` and `CPBB_VOL`, respectively.
+13. Adjust the run time interval to suit your preferences. You can use https://crontab.guru/#5_*/12_*_*_* to help turn your desired frequency into the crontab syntax that goes in `CPBB_FREQ`
+14. Now run it for real
 ```
 pm2 start run.config.js && pm2 logs
 ```
-2. Setup PM2 to save this as a startup task: `pm2 startup`
-2. save current configuration `pm2 save`
+15. Setup PM2 to save this as a startup task: `pm2 startup`
+16. save current configuration `pm2 save`
 
 [PM2 Docs](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/)
 [PM2 Startup Docs] More info on PM2 startup: https://pm2.keymetrics.io/docs/usage/startup/
