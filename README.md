@@ -30,11 +30,11 @@ This is all much easier on a Linux/Mac environment with a shell. I have not trie
 3. git clone this project (via terminal) -- or download zip file and unzip
 ```
 git clone https://github.com/jasonedison/coinbase_position_builder_bot.git
-cd coinbase_position_builder_bot;
+cd coinbase_position_builder_bot
 ```
 4. Install dependencies and PM2 (process manager)
 ```
-npm run setup;
+npm run setup
 ```
 5. Create a Coinbase Pro account (if you don't already have one)
 6. Connect a bank account and transfer in some money (you will need to make sure you keep your USD balance fed with enough runway to keep buying during a bear market)
