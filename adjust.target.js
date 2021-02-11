@@ -19,7 +19,7 @@ for (let i = 1; i < all.length; i++) {
   } else {
     all[i].Target = add(last.Funds, all[i].ExpectedGain, last.Target);
   }
-  all[i].Diff = format(subtract(all[i].Liquid, all[i].Target), { notation: 'fixed', precision: 2 });
+  all[i].Diff = format(subtract(all[i].Value, all[i].Target), { notation: 'fixed', precision: 2 });
 
   // format
   all[i].Target = format(all[i].Target, { notation: 'fixed', precision: 2 });
