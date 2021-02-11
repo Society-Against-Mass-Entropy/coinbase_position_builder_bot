@@ -29,11 +29,12 @@ for (let i = 1; i < all.length; i++) {
   } else {
     all[i].Target = add(last.Funds, all[i].ExpectedGain, last.Target);
   }
-  all[i].Diff = subtract(all[i].Value, all[i].Target);
+  all[i].Diff = subtract(all[i].Liquid, all[i].Target);
   // format for log output
   all[i].Target = format(all[i].Target, { notation: 'fixed', precision: 2 });
   all[i].Diff = format(all[i].Diff, { notation: 'fixed', precision: 2 });
   all[i].ExpectedGain = format(all[i].ExpectedGain, { notation: 'fixed', precision: 2 });
+  all[i].PeriodRate = format(all[i].PeriodRate, { notation: 'fixed', precision: 8 });
 }
 
 const data = [
