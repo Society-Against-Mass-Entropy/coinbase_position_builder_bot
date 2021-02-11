@@ -18,7 +18,7 @@ for (let i = 1; i < all.length; i++) {
     // calculate the targe without the Funds from this round
     // console.log('adjust', all[i].Target, current.Diff);
     all[i].Target = format(add(all[i - 1].Target, all[i].ExpectedGain), { notation: 'fixed', precision: 2 });
-    all[i].Diff = format(subtract(all[i].Liquid, all[i].Target), { notation: 'fixed', precision: 4 });
+    all[i].Diff = format(subtract(all[i].Value, all[i].Target), { notation: 'fixed', precision: 4 });
     // console.log('adjusted', all[i].Target, all[i].Diff);
   }
 }
