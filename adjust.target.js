@@ -15,12 +15,15 @@ const all = history.all();
 for (let i = 1; i < all.length; i++) {
   let last = all[i - 1];
   if (last.Funds < 0) {
-    // calculate the targe without the Funds from this round
-    // console.log('adjust', all[i].Target, current.Diff);
-    all[i].Target = format(add(all[i - 1].Target, all[i].ExpectedGain), { notation: 'fixed', precision: 2 });
-    all[i].Diff = format(subtract(all[i].Value, all[i].Target), { notation: 'fixed', precision: 4 });
-    // console.log('adjusted', all[i].Target, all[i].Diff);
+    all[i].Target = add(all[i].ExpectedGain, last.Target);
+  } else {
+    all[i].Target = add(last.Funds, all[i].ExpectedGain, last.Target);
   }
+  all[i].Diff = format(subtract(all[i].Value, all[i].Target), { notation: 'fixed', precision: 2 });
+
+  // format
+  all[i].Target = format(all[i].Target, { notation: 'fixed', precision: 2 });
+
 }
 
 const data = [
