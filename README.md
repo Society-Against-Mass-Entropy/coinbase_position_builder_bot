@@ -183,7 +183,27 @@ CPBB_VOL=20 CPBB_APY=20 node project.forward.js
 
 This will examine your current history file (e.g. `./data/history.BTC-USD.tsv`), reverse the data, and run it as projected future events. Then it will save the result in a coorsponding projection file (e.g. `./data/history.BTC-USD.projection.tsv`).
 
-# Adding Missing Records
+
+# Scripting Tools
+
+## Tax Calculator
+NOTE: I am not an accountant. I am not a fiduciary. You are responsible for the accuracy of your own tax reporting and usage of this tool is not garunteed to give you accurate results. I use it. It's for me. If you want to use it, you are responsible for reviewing the code and making sure it is accurate for your accounting needs/purposes.
+
+### Calculate Short-term and Long-term and Captital Gains for a Calendar Year
+```
+CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_YEAR=2020 node tax_fifo.js
+```
+
+## APY Adjustor
+If you want to change your APY and back-edit all your history so your Target is adjusted to be that APY consistently for your whole history (this will compound). You can run like so:
+```
+# updates the BTC-USD history with 150% APY (creates a new ./data/history.BTC-USD.fixed.apy.tsv that will need to be reviewed and copied into your history.BTC-USD.tsv)
+CPBB_TICKER=BTC CPBB_APY=150 node adjust.apy.js
+# after copying into ./data/history.BTC-USD.tsv
+pm2 reload all
+```
+
+## Adding Missing Records
 I have noticed that in extreme situations, the Coinbase API will be so overloaded that the API will fail to complete an order and timeout. However, the order does complete. When I notice this, I can see in Coinbase that the order went through and get the price and shares traded--but the engine is still running without that info!
 
 > NOTE: I believe we have addressed this in retry logic. If you see this happen, please file an issue.

@@ -7,11 +7,11 @@
  */
 const MS_PER_YEAR = 31556952000;
 const config = require('./config');
-console.log(`🤖 Position Builder Engine Updater: APY ${config.apy}x`);
 const fs = require("fs");
 const history = require("./lib/history");
 const { divide, format, multiply, subtract, add, pow } = require("mathjs");
 const map = require("lodash.map");
+console.log(`🤖 Position Builder Engine Updater: APY ${multiply(config.apy, 100)}%`);
 
 const all = history.all();
 

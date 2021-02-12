@@ -18,7 +18,7 @@ module.exports = {
         CPBB_TICKER: "BTC",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 100,
-        CPBB_APY: 100, // 100% APY
+        CPBB_APY: 100, // 200% APY
       },
     },
     {
