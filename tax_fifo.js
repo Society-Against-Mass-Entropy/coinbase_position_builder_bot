@@ -29,15 +29,17 @@ console.log(`found ${all.length} transactions (${buys.length} buys, and ${sells.
 
 let shortTermGain = 0;
 let longTermGain = 0;
+let buyIndex = 0;
 
 sells.forEach((sell, idx) => {
   // console.log(`finding match for sell on ${sell.time} ${sell.funds} ${sell.shares}`);
   // if (idx === 5) process.exit();
   const sellYear = sell.time.getFullYear();
-  for (let i = 0, len = buys.length; i < len; i++) {
+  for (let i = buyIndex, len = buys.length; i < len; i++) {
     let buy = buys[i];
     if (!number(buy.shares)) {
       // console.log(`buy at ${i} used up`, { buy });
+      buyIndex = i + 1; // prevent the next sell from looking earlier than this
       continue; // already sold this set
     }
     let ms = subtract(sell.time.getTime(), buy.time.getTime())
@@ -53,7 +55,7 @@ sells.forEach((sell, idx) => {
     let closedSellValue = multiply(closedShares, sell.basis);
     let closedBuyValue = multiply(closedShares, buy.basis);
     let profit = subtract(closedSellValue, closedBuyValue);
-    console.log(`sold ${number(closedShares)} shares @ ${number(sell.basis)} for $${dollarize(closedSellValue)}, bought @ $${number(buy.basis)} for $${dollarize(closedBuyValue)} | net ${dollarize(profit)} in ${isLongTerm ? 'long' : 'short'}-term gains`);
+    console.log(`sold ${number(closedShares)} shares @ $${dollarize(sell.basis)} for $${dollarize(closedSellValue)}, bought @ $${dollarize(buy.basis)} for $${dollarize(closedBuyValue)} | net ${dollarize(profit)} in ${isLongTerm ? 'long' : 'short'}-term gains`);
     // NOTE: we want to calculate buys/sells since the beginning of time
     // but only sells that happen in the year are counted for output
     if (sellYear === number(year)) {
