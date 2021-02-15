@@ -17,17 +17,16 @@ const all = history.all();
 
 for (let i = 1; i < all.length; i++) {
   let last = all[i - 1];
-
+  // if (i === 1) console.log(all[i]);
   let dateNow = new Date(all[i].Time);
   let dateLast = new Date(last.Time);
   let msPassed = dateNow - dateLast; // milliseconds delta
   all[i].PeriodRate =
     pow(1 + config.apy, divide(1, divide(MS_PER_YEAR, msPassed))) - 1;
   all[i].ExpectedGain = multiply(last.Target, all[i].PeriodRate);
+  all[i].Target = add(Math.abs(all[i].Funds), all[i].ExpectedGain, last.Target);
   if (last.Funds < 0) {
-    all[i].Target = add(all[i].ExpectedGain, last.Target);
-  } else {
-    all[i].Target = add(last.Funds, all[i].ExpectedGain, last.Target);
+    all[i].Target = add(all[i].Target, last.Funds);
   }
   all[i].Diff = subtract(all[i].Value, all[i].Target);
   // format for log output
@@ -35,6 +34,7 @@ for (let i = 1; i < all.length; i++) {
   all[i].Diff = format(all[i].Diff, { notation: 'fixed', precision: 2 });
   all[i].ExpectedGain = format(all[i].ExpectedGain, { notation: 'fixed', precision: 2 });
   all[i].PeriodRate = format(all[i].PeriodRate, { notation: 'fixed', precision: 8 });
+  // if (i === 1) console.log(all[i]);
 }
 
 const data = [

@@ -14,10 +14,9 @@ const all = history.all();
 
 for (let i = 1; i < all.length; i++) {
   let last = all[i - 1];
+  all[i].Target = add(Math.abs(all[i].Funds), all[i].ExpectedGain, last.Target);
   if (last.Funds < 0) {
-    all[i].Target = add(all[i].ExpectedGain, last.Target);
-  } else {
-    all[i].Target = add(last.Funds, all[i].ExpectedGain, last.Target);
+    all[i].Target = add(all[i].Target, last.Funds);
   }
   all[i].Diff = format(subtract(all[i].Value, all[i].Target), { notation: 'fixed', precision: 2 });
 
