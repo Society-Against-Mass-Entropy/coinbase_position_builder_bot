@@ -19,7 +19,38 @@ const reduceFiatBTC = orders => orders
     return add(sum, Number(o[1]))
   }, 0);
 
-const alts = ['ETH', 'XRP', 'LTC', 'BCH', 'EOS', 'DASH', 'MKR', 'XLM', 'ATOM', 'XTZ', 'ETC', 'OMG', 'ZEC', 'REP', 'ZRX', 'KNC', 'COMP', 'BAND', 'NMR', 'CGLD', 'UMA', 'REN', 'WBTC', 'BAL'];
+const alts = [
+  'AAVE',
+  'ATOM',
+  'BAL',
+  'BAND',
+  'BCH',
+  'BNT',
+  'CGLD',
+  'COMP',
+  'DASH',
+  'EOS',
+  'ETC',
+  'ETH',
+  'FIL',
+  'GRT',
+  'KNC',
+  'LTC',
+  'MKR',
+  'NMR',
+  'NU',
+  'OMG',
+  'REN',
+  'REP',
+  'SNX',
+  'UMA',
+  'WBTC',
+  'XLM',
+  'XTZ',
+  'YFI',
+  'ZEC',
+  'ZRX',
+];
 const fiat = ['USD', 'USDC', 'GBP', 'EUR'];
 
 (async () => {

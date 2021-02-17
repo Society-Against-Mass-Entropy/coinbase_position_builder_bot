@@ -29,6 +29,8 @@ console.log(`found ${all.length} transactions (${buys.length} buys, and ${sells.
 
 let shortTermGain = 0;
 let longTermGain = 0;
+let shortTermBasis = 0;
+let longTermBasis = 0;
 let buyIndex = 0;
 
 sells.forEach((sell, idx) => {
@@ -59,8 +61,14 @@ sells.forEach((sell, idx) => {
     // NOTE: we want to calculate buys/sells since the beginning of time
     // but only sells that happen in the year are counted for output
     if (sellYear === number(year)) {
-      if (isLongTerm) longTermGain = add(longTermGain, profit);
-      else shortTermGain = add(shortTermGain, profit);
+      if (isLongTerm) {
+        longTermGain = add(longTermGain, profit);
+        longTermBasis = add(longTermBasis, closedSellValue);
+      }
+      else {
+        shortTermGain = add(shortTermGain, profit);
+        shortTermBasis = add(shortTermBasis, closedSellValue);
+      }
     }
     // if (number(buy.shares) > 0) console.log(`${number(buy.shares)} remaining @ ${number(buy.basis)}`)
     if (number(sell.shares) > 0) console.error('something very wrong with this algorithm', { sell });
@@ -68,5 +76,7 @@ sells.forEach((sell, idx) => {
   }
 });
 
+console.log(`short-term basis: $${dollarize(shortTermBasis)}`);
 console.log(`short-term gains: $${dollarize(shortTermGain)}`);
+console.log(`long-term basis: $${dollarize(longTermBasis)}`);
 console.log(`long-term gains: $${dollarize(longTermGain)}`);
