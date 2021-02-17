@@ -18,7 +18,7 @@ module.exports = {
         CPBB_TICKER: "BTC",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 100,
-        CPBB_APY: 100, // 200% APY
+        CPBB_APY: 100,
       },
     },
     {
@@ -34,7 +34,7 @@ module.exports = {
         CPBB_TICKER: "ETH",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 100,
-        CPBB_APY: 25,
+        CPBB_APY: 100,
       },
     },
     {
@@ -50,7 +50,7 @@ module.exports = {
         CPBB_TICKER: "LTC",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 100,
-        CPBB_APY: 25,
+        CPBB_APY: 100,
       },
     },
   ],

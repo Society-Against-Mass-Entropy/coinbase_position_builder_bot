@@ -12,7 +12,7 @@ Here is a view of my first 1 BTC purchased via this method (in a Google Sheet fo
 And here is a view of the bot running for a full year (in a Google Sheet for charting):
 ![history](docs/cbpp_year.png "First year of automation")
 
-After running this engine for a bit, you can copy the data in your local log file (e.g. `./data/history.BTC-USD.tsv`) and paste it into the spreadsheet template: [./docs/CBPP_BTC-Template.xlsx](./docs/CBPP_BTC-Template.xlsx). This template can be saved locally and periodically updated or saved to Google Docs or some other service for backup.
+After running this engine for a bit, you can copy the data in your local log file (e.g. `./data/history.BTC-USD.tsv`) and paste it into the spreadsheet template by [creating a copy of this Google Docs Sheet](https://docs.google.com/spreadsheets/d/1DPo9amEx6RAr33Nnaq27J59AA7XiO90Q2bBP9rq2Tiw/edit?usp=sharing). This template can be saved locally and periodically updated or saved to Google Docs or some other service for backup.
 
 ## WARNING
 This tool is built for my own personal use--and while I have published it publically for others to use/enjoy, please beware that usage of this tool is at your own risk. I have not accounted for all edge cases as I watch and tune this code as an experiment in-progress.
