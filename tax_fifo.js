@@ -27,10 +27,14 @@ const sells = all.filter(txn => txn.funds < 0);
 
 console.log(`found ${all.length} transactions (${buys.length} buys, and ${sells.length} sells) leading up to the end of ${year}`)
 
-let shortTermGain = 0;
-let longTermGain = 0;
 let shortTermBasis = 0;
+let shortTermProceeds = 0;
+let shortTermGain = 0;
+
 let longTermBasis = 0;
+let longTermProceeds = 0;
+let longTermGain = 0;
+
 let buyIndex = 0;
 
 sells.forEach((sell, idx) => {
@@ -63,11 +67,13 @@ sells.forEach((sell, idx) => {
     if (sellYear === number(year)) {
       if (isLongTerm) {
         longTermGain = add(longTermGain, profit);
-        longTermBasis = add(longTermBasis, closedSellValue);
+        longTermBasis = add(longTermBasis, closedBuyValue);
+        longTermProceeds = add(longTermProceeds, closedSellValue);
       }
       else {
         shortTermGain = add(shortTermGain, profit);
-        shortTermBasis = add(shortTermBasis, closedSellValue);
+        shortTermBasis = add(shortTermBasis, closedBuyValue);
+        shortTermProceeds = add(shortTermProceeds, closedSellValue);
       }
     }
     // if (number(buy.shares) > 0) console.log(`${number(buy.shares)} remaining @ ${number(buy.basis)}`)
@@ -76,7 +82,11 @@ sells.forEach((sell, idx) => {
   }
 });
 
-console.log(`short-term basis: $${dollarize(shortTermBasis)}`);
+console.log(`\nshort-term basis: $${dollarize(shortTermBasis)}`);
+console.log(`short-term proceeds: $${dollarize(shortTermProceeds)}`);
 console.log(`short-term gains: $${dollarize(shortTermGain)}`);
-console.log(`long-term basis: $${dollarize(longTermBasis)}`);
+console.log(`short-term fees: $${dollarize(shortTermFees)}`);
+console.log(`\nlong-term basis: $${dollarize(longTermBasis)}`);
+console.log(`long-term proceeds: $${dollarize(longTermProceeds)}`);
 console.log(`long-term gains: $${dollarize(longTermGain)}`);
+console.log(`long-term fees: $${dollarize(longTermFees)}`);
