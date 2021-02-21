@@ -10,18 +10,28 @@ module.exports = {
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
-        CPBB_DRY_RUN: true,
         VERBOSE: true,
-        // every hour at the 5th minute (dry run testing)
+        CPBB_DRY_RUN: true,
+        // testing rebuy--hit it immediately
         CPBB_FREQ: "* * * * *",
         CPBB_TICKER: "BTC",
         CPBB_CURRENCY: "USD",
-        CPBB_VOL: 100, // $100
-        CPBB_APY: 1, // sell if over 1% APY (trying to trigger this quickly)
-        // new, experimental vars
-        CPBB_REBUY_ORDERS: 5, // place 5 maker limit orders on the books
-        CPBB_REBUY_VOL: 10, // $10 each limit buy
-        CPBB_REBUY_AT: -0.5, // -0.5% intervals (e.g. -0.5%, -1%, -1.5%, -2%, -2.5%, -3%, -3.5%, -4%)
+        CPBB_VOL: 100,
+        CPBB_APY: 1, // sell if over 1% APY
+        // should the engine only create and manage the limit orders and not make normal accumulation trades
+        // useful for testing this feature
+        CPBB_REBUY_ONLY: false,
+        // place up to 2 maker limit orders on the books after a sell action
+        CPBB_REBUY_MAX: 2,
+        // maximum dollar value consumed by limit order placements
+        CPBB_REBUY_VOL: 100,
+        // minimum order is in BTC (.0001, which is $5 at $50K, or $2 at $20K)
+        // rebuy logic will place up to CPBB_REBUY_MAX orders at this size until CPBB_REBUY_VOL is reached
+        CPBB_REBUY_SIZE: .0001,
+        // should the size be doubled at each percentage drop?
+        CPBB_REBUY_DOUBLING: true,
+        // -0.5% intervals (e.g. -0.05%, -0.01%, -0.15%, -0.2%, -0.25%, -0.3%, -0.35%, -0.4%)
+        CPBB_REBUY_AT: -0.05,
       },
     },
   ],
