@@ -21,8 +21,8 @@ module.exports = {
         // should the engine only create and manage the limit orders and not make normal accumulation trades
         // useful for testing this feature
         CPBB_REBUY_ONLY: false,
-        // place up to 2 maker limit orders on the books after a sell action
-        CPBB_REBUY_MAX: 2,
+        // place up to 5 maker limit orders on the books after a sell action
+        CPBB_REBUY_MAX: 5,
         // maximum dollar value consumed by limit order placements
         CPBB_REBUY_VOL: 100,
         // minimum order is in BTC (.0001, which is $5 at $50K, or $2 at $20K)
@@ -30,8 +30,7 @@ module.exports = {
         CPBB_REBUY_SIZE: .0001,
         // should the size be doubled at each percentage drop?
         CPBB_REBUY_DOUBLING: true,
-        // -0.5% intervals (e.g. -0.05%, -0.01%, -0.15%, -0.2%, -0.25%, -0.3%, -0.35%, -0.4%)
-        CPBB_REBUY_AT: -0.05,
+        CPBB_REBUY_AT: -1,
       },
     },
   ],
