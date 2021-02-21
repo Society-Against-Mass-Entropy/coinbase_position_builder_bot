@@ -11,6 +11,7 @@ module.exports = {
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
         CPBB_DRY_RUN: true,
+        VERBOSE: true,
         // every hour at the 5th minute (dry run testing)
         CPBB_FREQ: "* * * * *",
         CPBB_TICKER: "BTC",

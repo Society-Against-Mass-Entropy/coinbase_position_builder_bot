@@ -8,7 +8,6 @@ module.exports = async (id) => {
   }
   return request({
     requestPath: `/orders/${id}`,
-    method: "DELETE",
-    body: opts,
+    method: "DELETE"
   });
 };

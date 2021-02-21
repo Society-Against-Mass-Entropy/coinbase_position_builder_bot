@@ -17,14 +17,19 @@ module.exports = async (order) => {
       log.zap(`API is slow! Order ${order.id} is pending! 404 is normal. We will retry every 10 seconds for up to 1 hour...`);
       log.debug(`retry #${retryCount} on order #${order.id}`);
     }
-    const orderResponse = await request({
+    const opts = {
       requestPath: `/orders/${order.id}`,
       method: "GET",
-    });
-    if (
-      !orderResponse ||
-      !orderResponse.settled ||
-      orderResponse.message === "NotFound"
+    };
+    log.debug(opts);
+    const orderResponse = await request(opts);
+    log.debug(orderResponse);
+    // NOTE: we allow limit orders to be unsettled and even not found (sometimes limits get purged due to maintenance or other conditions)
+    if (order.type==='market' && (
+        !orderResponse ||
+        !orderResponse.settled ||
+        orderResponse.message === "NotFound"
+      )
     ) {
       retryCount++;
       if (retryCount > RETRY_TIMES) {
