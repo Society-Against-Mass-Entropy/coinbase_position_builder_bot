@@ -26,8 +26,7 @@
     "cron": "1.8.1",
     "lodash.map": "4.6.0",
     "mathjs": "6.5.0",
-    "moment": "2.24.0",
-    "stable": "0.1.8"
+    "moment": "2.24.0"
   },
   "devDependencies": {
     "eslint": "6.8.0"
