@@ -18,7 +18,7 @@ module.exports = {
         CPBB_VOL: 100, // $100
         CPBB_APY: 15, // sell if over 15% APY
         // new, experimental vars
-        CPBB_REBUY: 80, // use $80 from each sell to set limit orders
+        CPBB_REBUY_ORDERS: 5, // place 5 maker limit orders on the books
         CPBB_REBUY_VOL: 10, // $10 each limit buy
         CPBB_REBUY_AT: -0.5, // -0.5% intervals (e.g. -0.5%, -1%, -1.5%, -2%, -2.5%, -3%, -3.5%, -4%)
       },
