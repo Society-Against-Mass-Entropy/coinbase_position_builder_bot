@@ -181,7 +181,7 @@ It can be used to examine what it might look like if we alter the volume or APY 
 CPBB_VOL=20 CPBB_APY=20 node project.forward.js
 ```
 
-This will examine your current history file (e.g. `./data/history.BTC-USD.tsv`), reverse the data, and run it as projected future events. Then it will save the result in a coorsponding projection file (e.g. `./data/history.BTC-USD.projection.tsv`).
+This will examine your current history file (e.g. `./data/history.BTC-USD.tsv`), reverse the data, and run it as projected future events. Then it will save the result in a corresponding projection file (e.g. `./data/history.BTC-USD.projection.tsv`).
 
 
 # Scripting Tools
