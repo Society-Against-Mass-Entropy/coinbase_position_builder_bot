@@ -4,12 +4,15 @@
 
 We don't need to look at charts. The trendlines and price predictions don't matter. All that matters is your current cost-basis and investment. Are you in profit? Is the price a dip relative to your current holdings? These questions are easy to answer without having to be an oracle. You just have to keep track of your investments, calculate where you fall at the current moment, and automate an action. That's what this project does!
 
-This bot will make a market taker action of the configured funding level at the configured interval. If the current holdings that that bot has accumulated is at a profit point higher than a target APY, then it will make a sell action, else it makes a buy action.
+This bot will make a market taker action of the configured funding level at the configured interval. If the current holdings that the bot has accumulated is at a profit point higher than a target APY (and the action volume will keep the holdings at a value higher than the APY), then it will make a sell action, else it makes a buy action.
 
 Here is a view of my first 1 BTC purchased via this method (in a Google Sheet for charting):
 ![history](docs/cbpp_charts.png "First 1 BTC Accumulated")
 
-After running this engine for a bit, you can copy the data in your local log file (e.g. `./data/history.BTC-USD.tsv`) and paste it into the spreadsheet template: [./docs/CBPP_BTC-Template.xlsx](./docs/CBPP_BTC-Template.xlsx). This template can be saved locally and periodically updated or saved to Google Docs or some other service for backup.
+And here is a view of the bot running for a full year (in a Google Sheet for charting):
+![history](docs/cbpp_year.png "First year of automation")
+
+After running this engine for a bit, you can copy the data in your local log file (e.g. `./data/history.BTC-USD.tsv`) and paste it into the spreadsheet template by [creating a copy of this Google Docs Sheet](https://docs.google.com/spreadsheets/d/1DPo9amEx6RAr33Nnaq27J59AA7XiO90Q2bBP9rq2Tiw/edit?usp=sharing). This template can be saved locally and periodically updated or saved to Google Docs or some other service for backup.
 
 ## WARNING
 This tool is built for my own personal use--and while I have published it publically for others to use/enjoy, please beware that usage of this tool is at your own risk. I have not accounted for all edge cases as I watch and tune this code as an experiment in-progress.
@@ -24,56 +27,46 @@ This is all much easier on a Linux/Mac environment with a shell. I have not trie
 2. Optional: Install a good text editor (like https://code.visualstudio.com/)
   - After install, F1 and type "shell command"
   - install shell extension so you can type `code .` in a terminal to open the project up in the editor
-2. git clone this project (via terminal) -- or download zip file and unzip
+3. git clone this project (via terminal) -- or download zip file and unzip
 ```
-git clone git@github.com:jasonedison/coinbase_position_builder_bot.git
-cd coinbase_position_builder_bot;
+git clone https://github.com/jasonedison/coinbase_position_builder_bot.git
+cd coinbase_position_builder_bot
 ```
-3. Install dependencies and PM2 (process manager)
+4. Install dependencies and PM2 (process manager)
 ```
-npm run setup;
+npm run setup
 ```
-4. Create API Key, pass, and secret on Coinbase Pro: https://pro.coinbase.com/profile/api
+5. Create a Coinbase Pro account (if you don't already have one)
+6. Connect a bank account and transfer in some money (you will need to make sure you keep your USD balance fed with enough runway to keep buying during a bear market)
+7. Create API Key, pass, and secret on Coinbase Pro: https://pro.coinbase.com/profile/api
   - must have `view`+`trade` permissions
-  - there is no need to allow `transfers`
+  - there is no need to allow `transfers` (this script does not move money to/from your bank account)
   - recommended to limit the API keys to IP address whitelists
-
-5. Add the key, pass, and secret to your environment via environmental variables, or add them to the `./api.key.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
-
-6. Test all the configs in dry run mode at 1 minute intervals:
+8. Add the key, pass, and secret to your environment via environmental variables, or add them to the `./api.key.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
+9. Test all the configs in dry run mode at 1 minute intervals:
 ```
-pm2 start run.dry.all.minute.config.js
+pm2 start run.dry.all.minute.config.js && pm2 logs
 ```
-
-### Running with PM2 (keep alive with computer restarts)
+10. Kill it
+```
+pm2 kill
+```
+11. Now copy one of the sample configs (e.g. run.default.btcusd.config.js)
+```
+cp run.default.btcusd.config.js run.config.js
+```
+12. Edit your new `run.config.js` to have the APY and VOLUME values you want by editing `CPBB_APY` and `CPBB_VOL`, respectively.
+13. Adjust the run time interval to suit your preferences. You can use https://crontab.guru/#5_*/12_*_*_* to help turn your desired frequency into the crontab syntax that goes in `CPBB_FREQ`
+14. Now run it for real
+```
+pm2 start run.config.js && pm2 logs
+```
+15. Setup PM2 to save this as a startup task: `pm2 startup`
+16. save current configuration `pm2 save`
 
 [PM2 Docs](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/)
+[PM2 Startup Docs] More info on PM2 startup: https://pm2.keymetrics.io/docs/usage/startup/
 
-1. edit one of the run.*.config.js or create your own
-2. run pm2 (e.g. `pm2 start run.default.btcusd.config.js`)
-3. make pm2 save this as a startup task: `pm2 startup`
-4. save current configuration `pm2 save`
-
- > WARNING: if you put your keys directly in the `./api.keys.js` files, DO NOT COMMIT THEM TO GITHUB (if you forked this repo and are pushing changes, add the config files to .gitignore)
-
-More info on PM2 startup: https://pm2.keymetrics.io/docs/usage/startup/
-
-### Manual run (without PM2):
-```
-# add Coinbase Pro API Key & password
-export CPBB_APIPASS="GET API Password FROM COINBASE PRO"
-export CPBB_APIKEY="GET Access Key FROM COINBASE PRO"
-export CPBB_APISEC="GET Secret Key FROM COINBASE PRO"
-
-# default start (see below for more options)
-node .
-```
-
-## Settings
-
-> The best way to run the app and manage settings is using one of the pm2 run.*.config.js files in the project root.
-
-More info on the pm2 ecosystem config: https://pm2.keymetrics.io/docs/usage/application-declaration/#cli
 
 ### Default Configuration
 Note: the default settings will take a $10 action every 12 hours on BTCUSD. If Bitcoin sustains a bear market for a full year, this would amount to spending $20/day = $140/week = $7,300/year on Bitcoin (always accumulating). If the price fluctuates enough to cross the profitability threshold (default 15% APY), it may sell upward and sustain itself with a floating balance for a while.
@@ -189,12 +182,59 @@ CPBB_VOL=20 CPBB_APY=20 node project.forward.js
 ```
 
 This will examine your current history file (e.g. `./data/history.BTC-USD.tsv`), reverse the data, and run it as projected future events. Then it will save the result in a corresponding projection file (e.g. `./data/history.BTC-USD.projection.tsv`).
+This will examine your current history file (e.g. `./data/history.BTC-USD.tsv`), reverse the data, and run it as projected future events. Then it will save the result in a corresponding projection file (e.g. `./data/history.BTC-USD.projection.tsv`).
+
+
+# Scripting Tools
+
+## Tax Calculator
+NOTE: I am not an accountant. I am not a fiduciary. You are responsible for the accuracy of your own tax reporting and usage of this tool is not garunteed to give you accurate results. I use it. It's for me. If you want to use it, you are responsible for reviewing the code and making sure it is accurate for your accounting needs/purposes.
+
+### Calculate Short-term and Long-term and Captital Gains for a Calendar Year
+```
+CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_YEAR=2020 node tax_fifo.js
+```
+
+## APY Adjustor
+If you want to change your APY and back-edit all your history so your Target is adjusted to be that APY consistently for your whole history (this will compound). You can run like so:
+```
+# updates the BTC-USD history with 150% APY (creates a new ./data/history.BTC-USD.fixed.apy.tsv that will need to be reviewed and copied into your history.BTC-USD.tsv)
+CPBB_TICKER=BTC CPBB_APY=150 node adjust.apy.js
+# after copying into ./data/history.BTC-USD.tsv
+pm2 reload all
+```
+
+## Adding Missing Records
+I have noticed that in extreme situations, the Coinbase API will be so overloaded that the API will fail to complete an order and timeout. However, the order does complete. When I notice this, I can see in Coinbase that the order went through and get the price and shares traded--but the engine is still running without that info!
+
+> NOTE: I believe we have addressed this in retry logic. If you see this happen, please file an issue.
+
+To correct this, I've added a manual log entry tool. In order to use this, you will need to load your keys as env vars and then execute like the following:
+
+```
+# node addLog.js $TICKER $CURRENCY $VOLUME $APY $DATEISO $PRICE $SHARES
+node addLog.js BTC USD 50 20 2020-11-26T16:35:00.706Z 16915.52 0.00295586
+```
+
+# Updating to Version 2.0.0
+
+Version `2.0.0` contains a change to the `Target` growth calculation. In older versions, the `Target` growth is calculated as `Prior Target` + `Period Gain` + `Funds` for this round. This makes sense when you are always buying because we are adding to the account, and we want to make sure that if we are over our `Target`, we only sell if the `Value` of the account is greater than `Target` by more than the `Funds` we would be cashing out. However, if you sold on the last round, we now have a target on record that includes `Funds` we didn't add into the system. This still gave us a good algorithmic result since it manifests as a higher than configured `APY` growth in our target calculation, but this creates confusion because the APY isn't the only thing being used to calculate the long term `Target`.
+
+In 2.0.0+, we only add `Funds` to `Target` if the last round was a buy, not a sell.
+You can simply upgrade the code and keep running with your existing history log (which likely has a slightly inflated `Target` because any sells still added an expected growth to the baseline). If you decide not to correct historical data, new data will still use the new algorithm. However, if you want to rectify your records, there is an optional script that will do this for you:
+
+(optional)
+1. Backup your data directory
+2. For each pair you are tracking, run `CPBB_TICKER=BTC CPBB_CURRENCY=USD node adjust.target.js`
+3. Examine the new '...fixed.tsv' file to make sure the records look satisfactory
+4. Overwrite your history with the fixed version
+5. restart your app: `pm2 reload all`
 
 # Disclaimer
 This software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement. In no event shall the authors, copyright holders, or Coinbase Inc. be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
 
 # Who Am I?
 
-I'm a double-major economics and app development student in NY. I like to play with code as a way of exploring and proving economic theories.
+I'm a recent NYU grad and Microsoft Intern. I like to play with code as a way of exploring and proving economic theories.
 
 I am not a financial advisor but you can find my occasional takes on twitter: https://twitter.com/cryptecon

@@ -11,6 +11,6 @@ module.exports = (opts) => {
   // sign the require message with the hmac
   // and finally base64 encode the result
   const signature = hmac.update(what).digest("base64");
-  log.debug(`signature`, what, signature);
+  // log.debug(`signature`, what, signature);
   return signature;
 };

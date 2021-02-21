@@ -14,6 +14,12 @@ module.exports = async (opts) => {
       settled: true,
     };
   }
+  if (process.env.LOG_CORRECTION) {
+    return {
+      filled_size: process.env.LOG_CORRECTION,
+      settled: true,
+    };
+  }
   return request({
     requestPath: "/orders",
     method: "POST",
