@@ -12,11 +12,11 @@ module.exports = {
         CPBB_APISEC: apiKeys.CPBB_APISEC,
         CPBB_DRY_RUN: true,
         // every hour at the 5th minute (dry run testing)
-        CPBB_FREQ: "5 * * * *",
+        CPBB_FREQ: "* * * * *",
         CPBB_TICKER: "BTC",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 100, // $100
-        CPBB_APY: 15, // sell if over 15% APY
+        CPBB_APY: 1, // sell if over 1% APY (trying to trigger this quickly)
         // new, experimental vars
         CPBB_REBUY_ORDERS: 5, // place 5 maker limit orders on the books
         CPBB_REBUY_VOL: 10, // $10 each limit buy

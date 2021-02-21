@@ -14,17 +14,13 @@ const job = new CronJob(config.freq, action);
 
 (async () => {
   log.now(
-    `🤖 Position Builder Bot ${config.pjson.version}, ${
-    config.api
-    } in ${process.env.CPBB_DRY_RUN ? "DRY RUN" : "LIVE"} mode, ${
-    config.vol
-    } $${config.currency} ➡️  $${config.ticker} @ cron(${
-    config.freq
+    `🤖 Position Builder Bot ${config.pjson.version}, ${config.api
+    } in ${process.env.CPBB_DRY_RUN ? "DRY RUN" : "LIVE"} mode, ${config.vol
+    } $${config.currency} ➡️  $${config.ticker} @ cron(${config.freq
     }), ${config.apy * 100}% APY target, ${process.env.VERBOSE ? `verbose` : 'ledger'} logging`
   );
 
   // console.log(memory.lastLog);
-
 
   log.ok(`history loaded: holding ${add(memory.lastLog.Holding, memory.lastLog.Shares)} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`)
 

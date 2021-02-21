@@ -10,6 +10,7 @@ module.exports = async (opts) => {
     // fake out a .002 fee subtraction
     const converted = multiply(Number(opts.funds), 0.998);
     return {
+      executed_value: Number(opts.funds),
       filled_size: numFix(divide(converted, memory.price), 8),
       settled: true,
     };
