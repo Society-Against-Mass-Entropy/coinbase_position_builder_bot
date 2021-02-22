@@ -1,8 +1,11 @@
 // shared application memory module
-const history = require('../lib/history')
+const history = require('../lib/history');
+
+const config = require('../config');
 
 module.exports = {
   account: {},
   firstLog: history.first(),
-  lastLog: history.last()
-}
+  lastLog: history.last(),
+  makerOrders: require(config.maker_file)
+};
