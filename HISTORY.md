@@ -1,6 +1,7 @@
 # 2.1.1
 - aborting script immediately if we failed to load account via the API (shows message about loading keys properly)
 - If you cannot start the app due to this message, ensure your API keys are loaded into the environment or api.keys.js file properly then do: `pm2 kill && pm2 start [YOUR_CONFIG_NAME].js`
+- startup icons and documentation improvements
 
 # 2.1.0
 - Added Rebuy Feature: https://github.com/jasonedison/coinbase_position_builder_bot/pull/7

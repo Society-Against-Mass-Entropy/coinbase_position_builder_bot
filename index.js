@@ -1,7 +1,7 @@
 const { CronJob } = require("cron");
 
 const config = require("./config");
-
+const apiKeys = require('./api.keys.js');
 const { add, format } = require("mathjs");
 const action = require("./lib/action");
 const getAccounts = require("./coinbase/accounts");
@@ -13,6 +13,16 @@ const memory = require("./lib/memory");
 const job = new CronJob(config.freq, action);
 
 (async () => {
+
+  if (
+    !apiKeys.CPBB_APIKEY || !apiKeys.CPBB_APISEC || !apiKeys.CPBB_APIPASS ||
+    apiKeys.CPBB_APIKEY.includes('load your keys') ||
+    apiKeys.CPBB_APISEC.includes('load your keys') ||
+    apiKeys.CPBB_APIPASS.includes('load your keys')
+  ) {
+    log.error('API Keys are not correctly configured.\nPlease check the setup instructions and load your API keys into the environment before starting.\nHalting the app now.')
+    return;
+  }
   log.now(
     `🤖 Position Builder Bot ${config.pjson.version}, ${config.api
     } in ${process.env.CPBB_DRY_RUN ? "DRY RUN" : "LIVE"} mode, ${config.vol
@@ -22,7 +32,7 @@ const job = new CronJob(config.freq, action);
   if (process.env.CPBB_REBUY_AT) {
     const sizes = process.env.CPBB_REBUY_SIZE.split(',');
     const drops = process.env.CPBB_REBUY_AT.split(',');
-    log.now(`${config.productID}: REBUY up to $${process.env.CPBB_REBUY_MAX} of ${sizes.map((s, i) => `${s}@${drops[i]}%`).join(', ')}`);
+    log.now(`💵 REBUY up to $${process.env.CPBB_REBUY_MAX} of ${config.ticker}: ${sizes.map((s, i) => `${s}@${drops[i]}%`).join(', ')}`);
   }
   if (process.env.CPBB_REBUY_ONLY === 'true') {
     // this mode says "I want to buy this asset, but only when it's flashing downward during the timing interval"
@@ -31,18 +41,18 @@ const job = new CronJob(config.freq, action);
 
   // console.log(memory.lastLog);
 
-  log.ok(`history loaded: holding ${format(add(memory.lastLog.Holding, memory.lastLog.Shares), { notation: "fixed", precision: 8 })} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`)
+  log.now(`📒 history loaded: holding ${format(add(memory.lastLog.Holding, memory.lastLog.Shares), { notation: "fixed", precision: 8 })} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`)
 
   const accounts = await getAccounts().catch((e) => console.error(e));
 
   if (!accounts) {
-    log.error(`Failed to load your account info. Are your keys correctly loaded in the environment?\nDouble check them and then do "pm2 kill; pm2 start [YOUR_CONFIG_NAME].js"`);
+    log.error(`Failed to load your account info. Are your keys correctly loaded in the environment?\nDouble check them and then do "pm2 kill; pm2 start [YOUR_CONFIG_NAME].js". Still having issues? Add VERBOSE=true to your config and kill/start app again to see verbose logs.`);
     return;
   }
   // find the trading account we care about
   // eslint-disable-next-line prefer-destructuring
   memory.account = accounts.filter((a) => a.currency === config.currency)[0];
-  log.ok(`$${config.currency} account loaded with ${memory.account.available}`);
+  log.now(`🏦 $${config.currency} account loaded with ${memory.account.available}`);
 
   // immediate kick off (testing mode)
   if (process.env.CPBB_TEST || process.env.CPBB_DRY_RUN) action();
@@ -53,5 +63,5 @@ const job = new CronJob(config.freq, action);
   log.ok(`last transaction for ${config.productID}:`);
   logOutput(memory.logData);
   const nextDate = job.nextDates();
-  log.ok(`next run ${nextDate.fromNow()}, on ${nextDate.local().format()}`);
+  log.now(`🕟 next run ${nextDate.fromNow()}, on ${nextDate.local().format()}`);
 })();

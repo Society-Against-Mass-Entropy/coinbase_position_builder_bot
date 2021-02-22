@@ -69,8 +69,13 @@ pm2 start run.config.js && pm2 logs
 
 ## Upgrading The Project Version
 
-If you downloaded the project via a `git clone`, upgrading is super easy via `git pull --rebase --autostash`, you should be all set. PM2 watches the directory and will restart the processes with the latest code. All done.
+### Git Cloned
+If you downloaded the project via a `git clone`, upgrading is super easy:
+1. Make sure you are on the right branch: `git checkout stable` (stable for latest stable release, develop for next release)
+2. `git pull --rebase --autostash`
+3. You should be all set. PM2 watches the directory and will restart the processes with the latest code. All done.
 
+### Zip File Download
 If you downloaded the project via a zip file, it's a bit more complicated.
 1. Download the latest release zip file: https://github.com/jasonedison/coinbase_position_builder_bot/releases
 2. unzip
@@ -104,6 +109,12 @@ export CPBB_CURRENCY=USD # this is the account we will take buy/sell actions on 
 ### Rebuy Configuration
 Since 2.1.0, we have a rebuy feature that will set limit orders to rebuy some of the sold asset if it drops to a specified target % drop point between checking periods.
 
+If you start the app with a config of CPBB_REBUY_MAX greater than 0, it will invoke the following behavioral change on each cron job:
+
+1. Check status of existing limit orders, add any filled ones to the history, and cancel any unfilled ones
+2. Perform normal action (using latest history, which may have been modified by limit orders)
+3. If the action was a `sell`, set new limit orders
+
 There are two sample configs that illustrate how this can be configured:
 - `run.btcusd.limit_only.config.js`
 - `run.btcusd.rebuy.config.js`
@@ -112,7 +123,7 @@ There are two sample configs that illustrate how this can be configured:
 // should the engine only create and manage the limit orders and not make normal accumulation trades
 // useful for testing this feature
 // or for running a bot that only wants to accumulate an asset via dips
-CPBB_REBUY_ONLY: true,
+CPBB_REBUY_ONLY: false,
 // maximum dollar value consumed by limit order placements
 CPBB_REBUY_MAX: 50,
 // NOTE: as of 2021-02-22, Coinbase has the following minimum order sizes:
@@ -128,6 +139,8 @@ CPBB_REBUY_SIZE: ".0001,.0001,.0002,.0002,.0003,.0003,.0004,.0004,.0005,.0005",
 // note: you have to define at least the number of points in CPBB_REBUY_SIZE
 CPBB_REBUY_AT: "-.01,-2,-4,-5,-8,-10,-12,-25,-50,-80",
 ```
+
+The above config will cause the engine to attempt to set up to $50 worth of limit orders for the asset after each `sell` action. The orders will be placed as .0001 @ -.01% drop (very soon), .0001 @ -2% drop, etc until the $50 spending threshold is met.
 
 ### Volume and Frequency
 Unfortunately, the Coinbase Pro API will only allow market taker orders of `$10` or more. So my original idea of buying $1 or $2 worth every hour (or even more frequently) went bust--unless you want to make a $10/hour order, which adds up fast if you are in a continuous recession (always buying mode).
