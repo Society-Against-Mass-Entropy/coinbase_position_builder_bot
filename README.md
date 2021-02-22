@@ -67,6 +67,27 @@ pm2 start run.config.js && pm2 logs
 [PM2 Docs](https://pm2.keymetrics.io/docs/usage/pm2-doc-single-page/)
 [PM2 Startup Docs] More info on PM2 startup: https://pm2.keymetrics.io/docs/usage/startup/
 
+## Upgrading The Project Version
+
+If you downloaded the project via a `git clone`, upgrading is super easy via `git pull --rebase --autostash`, you should be all set. PM2 watches the directory and will restart the processes with the latest code. All done.
+
+If you downloaded the project via a zip file, it's a bit more complicated.
+1. Download the latest release zip file: https://github.com/jasonedison/coinbase_position_builder_bot/releases
+2. unzip
+3. run `npm i` in the folder
+4. copy your `./data/history*` files from your old project directory
+5. copy your `./data/maker.orders*` files from your old project directory (if they exist, version > 2.1.0)
+6. copy your custom run.*.config.js file (with your config setup)
+7. Ensure that your keys are in your environment by doing `echo $CPBB_APIKEY` -- this should be the value you set (if it returns nothing, your environmental variables are not set right). If you had set your keys in api.keys.js (not recommended but useful if you don't know how to set environmental variables), make sure you copied that file from your old project
+8. run `pm2 kill` to stop all running pm2 processes
+9. run `pm2 start [YOUR_CONFIG_NAME].config.js` (e.g. `pm2 start run.mine.config.js`)
+
+## Changing Config Settings
+If you edit your *.config.js file with new values, you will have to kill pm2 and start your app from the config fresh. pm2 restart and reload does not read new environmental variables.
+1. Edit your config file
+2. run `pm2 kill` to stop all running pm2 processes
+3. run `pm2 start [YOUR_CONFIG_NAME].config.js` (e.g. `pm2 start run.mine.config.js`)
+
 
 ### Default Configuration
 Note: the default settings will take a $10 action every 12 hours on BTCUSD. If Bitcoin sustains a bear market for a full year, this would amount to spending $20/day = $140/week = $7,300/year on Bitcoin (always accumulating). If the price fluctuates enough to cross the profitability threshold (default 15% APY), it may sell upward and sustain itself with a floating balance for a while.
