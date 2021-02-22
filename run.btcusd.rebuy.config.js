@@ -20,10 +20,11 @@ module.exports = {
         // MAKER REBUY CONFIG
         // The below section will create the following maker orders after a sell
         // .0001 BTC @ price -1% (as long as bitcoin is under $100K)
-        // .0002 BTC @ price -2% (but only if this doesn't bust the $10 max)
-        // .0004 BTC @ price -4% (but only if this doesn't bust the $10 max)
-        // .0008 BTC @ price -8% (but only if this doesn't bust the $10 max)
-        // .0016 BTC @ price -16% (but only if this doesn't bust the $10 max)
+        // .0001 BTC @ price -2% (but only if this doesn't bust the $10 max)
+        // .0002 BTC @ price -4% (but only if this doesn't bust the $10 max)
+        // .0002 BTC @ price -8% (but only if this doesn't bust the $10 max)
+        // .0003 BTC @ price -16% (but only if this doesn't bust the $10 max)
+        // etc...
 
         // maximum dollar value consumed by limit order placements
         CPBB_REBUY_MAX: 10,
