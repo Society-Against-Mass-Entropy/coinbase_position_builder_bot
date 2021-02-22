@@ -20,7 +20,9 @@ const job = new CronJob(config.freq, action);
     }), ${config.apy * 100}% APY, ${process.env.VERBOSE ? `verbose` : 'ledger'} logging`
   );
   if(process.env.CPBB_REBUY_AT){
-    log.now(`${config.productID}: REBUY up to $${process.env.CPBB_REBUY_MAX}, for ${process.env.CPBB_REBUY_SIZE} @ ${process.env.CPBB_REBUY_AT}% drops`);
+    const sizes = process.env.CPBB_REBUY_SIZE.split(',');
+    const drops = process.env.CPBB_REBUY_AT.split(',');
+    log.now(`${config.productID}: REBUY up to $${process.env.CPBB_REBUY_MAX} of ${sizes.map((s,i)=>`${s}@${drops[i]}%`).join(', ')}`);
   }
   if(process.env.CPBB_REBUY_ONLY==='true'){
     // this mode says "I want to buy this asset, but only when it's flashing downward during the timing interval"
