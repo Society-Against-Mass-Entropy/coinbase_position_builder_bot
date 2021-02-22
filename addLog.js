@@ -18,7 +18,7 @@ const { add, format } = require("mathjs");
 const action = require('./lib/action');
 const config = require("./config");
 const log = require('./lib/log');
-const memory = require("./data/memory");
+const memory = require("./lib/memory");
 const touch = require('./lib/touch');
 
 const dateOverride = new Date(process.argv[6]);
@@ -31,7 +31,7 @@ if (process.argv.length !== 9) {
   return log.error('invalid arguments, invoke like so: node addLog.js BTC USD 50 20 2020-11-26T16:35:00.706Z 16915.52 0.00295586');
 }
 
-log.ok(`history loaded: holding ${format(add(memory.lastLog.Holding, memory.lastLog.Shares), {notation: "fixed",precision:8})} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`);
+log.ok(`history loaded: holding ${format(add(memory.lastLog.Holding, memory.lastLog.Shares), { notation: "fixed", precision: 8 })} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`);
 
 
 (async () => {

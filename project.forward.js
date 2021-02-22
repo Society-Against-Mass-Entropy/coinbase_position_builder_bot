@@ -11,7 +11,7 @@ const calcAction = require("./lib/calculate.action");
 const history = require("./lib/history");
 const log = require("./lib/log");
 const logSave = require("./lib/log.save");
-const memory = require('./data/memory')
+const memory = require('./lib/memory')
 const ticker = `${config.ticker}-${config.currency}`;
 
 const historyFile = `./data/history.${ticker}.tsv`;

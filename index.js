@@ -8,7 +8,7 @@ const getAccounts = require("./coinbase/accounts");
 const loadLastLog = require('./lib/load.lastLog');
 const log = require("./lib/log");
 const logOutput = require('./lib/log.output');
-const memory = require("./data/memory");
+const memory = require("./lib/memory");
 
 const job = new CronJob(config.freq, action);
 
@@ -19,19 +19,19 @@ const job = new CronJob(config.freq, action);
     } $${config.currency} ➡️  $${config.ticker} @ cron(${config.freq
     }), ${config.apy * 100}% APY, ${process.env.VERBOSE ? `verbose` : 'ledger'} logging`
   );
-  if(process.env.CPBB_REBUY_AT){
+  if (process.env.CPBB_REBUY_AT) {
     const sizes = process.env.CPBB_REBUY_SIZE.split(',');
     const drops = process.env.CPBB_REBUY_AT.split(',');
-    log.now(`${config.productID}: REBUY up to $${process.env.CPBB_REBUY_MAX} of ${sizes.map((s,i)=>`${s}@${drops[i]}%`).join(', ')}`);
+    log.now(`${config.productID}: REBUY up to $${process.env.CPBB_REBUY_MAX} of ${sizes.map((s, i) => `${s}@${drops[i]}%`).join(', ')}`);
   }
-  if(process.env.CPBB_REBUY_ONLY==='true'){
+  if (process.env.CPBB_REBUY_ONLY === 'true') {
     // this mode says "I want to buy this asset, but only when it's flashing downward during the timing interval"
     log.now(`${config.productID} set to REBUY ONLY MODE (will not create market taker trades, only limit orders at drops)`);
   }
 
   // console.log(memory.lastLog);
 
-  log.ok(`history loaded: holding ${format(add(memory.lastLog.Holding, memory.lastLog.Shares), {notation: "fixed",precision:8})} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`)
+  log.ok(`history loaded: holding ${format(add(memory.lastLog.Holding, memory.lastLog.Shares), { notation: "fixed", precision: 8 })} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`)
 
   const accounts = await getAccounts().catch((e) => console.error(e));
 

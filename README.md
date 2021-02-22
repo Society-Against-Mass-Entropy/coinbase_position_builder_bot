@@ -80,6 +80,34 @@ export CPBB_TICKER=BTC
 export CPBB_CURRENCY=USD # this is the account we will take buy/sell actions on (money will move in and out of this, exchanged for CPBB_TICKER)
 ```
 
+### Rebuy Configuration
+Since 2.1.0, we have a rebuy feature that will set limit orders to rebuy some of the sold asset if it drops to a specified target % drop point between checking periods.
+
+There are two sample configs that illustrate how this can be configured:
+- `run.btcusd.limit_only.config.js`
+- `run.btcusd.rebuy.config.js`
+
+```
+// should the engine only create and manage the limit orders and not make normal accumulation trades
+// useful for testing this feature
+// or for running a bot that only wants to accumulate an asset via dips
+CPBB_REBUY_ONLY: true,
+// maximum dollar value consumed by limit order placements
+CPBB_REBUY_MAX: 50,
+// NOTE: as of 2021-02-22, Coinbase has the following minimum order sizes:
+// BTC minimum order is .0001 ($5 at $50K)
+// ETH minimum order is .001 ($5 at $5K)
+// LTC minimum order is .01 ($5 at $500)
+// DASH minimum order is .01 ($5 at $500)
+// etc: try to make absurdly small limit orders via coinbase UI to get an error with the limit
+// these could change in the future and allow you to make smaller size rebuy trades
+// rebuy logic will place up to  orders at this size until CPBB_REBUY_MAX is reached
+CPBB_REBUY_SIZE: ".0001,.0001,.0002,.0002,.0003,.0003,.0004,.0004,.0005,.0005",
+// rebuy at these percentage drop targets (-1%, -2%, etc)
+// note: you have to define at least the number of points in CPBB_REBUY_SIZE
+CPBB_REBUY_AT: "-.01,-2,-4,-5,-8,-10,-12,-25,-50,-80",
+```
+
 ### Volume and Frequency
 Unfortunately, the Coinbase Pro API will only allow market taker orders of `$10` or more. So my original idea of buying $1 or $2 worth every hour (or even more frequently) went bust--unless you want to make a $10/hour order, which adds up fast if you are in a continuous recession (always buying mode).
 
@@ -214,20 +242,6 @@ To correct this, I've added a manual log entry tool. In order to use this, you w
 # node addLog.js $TICKER $CURRENCY $VOLUME $APY $DATEISO $PRICE $SHARES
 node addLog.js BTC USD 50 20 2020-11-26T16:35:00.706Z 16915.52 0.00295586
 ```
-
-# Updating to Version 2.0.0
-
-Version `2.0.0` contains a change to the `Target` growth calculation. In older versions, the `Target` growth is calculated as `Prior Target` + `Period Gain` + `Funds` for this round. This makes sense when you are always buying because we are adding to the account, and we want to make sure that if we are over our `Target`, we only sell if the `Value` of the account is greater than `Target` by more than the `Funds` we would be cashing out. However, if you sold on the last round, we now have a target on record that includes `Funds` we didn't add into the system. This still gave us a good algorithmic result since it manifests as a higher than configured `APY` growth in our target calculation, but this creates confusion because the APY isn't the only thing being used to calculate the long term `Target`.
-
-In 2.0.0+, we only add `Funds` to `Target` if the last round was a buy, not a sell.
-You can simply upgrade the code and keep running with your existing history log (which likely has a slightly inflated `Target` because any sells still added an expected growth to the baseline). If you decide not to correct historical data, new data will still use the new algorithm. However, if you want to rectify your records, there is an optional script that will do this for you:
-
-(optional)
-1. Backup your data directory
-2. For each pair you are tracking, run `CPBB_TICKER=BTC CPBB_CURRENCY=USD node adjust.target.js`
-3. Examine the new '...fixed.tsv' file to make sure the records look satisfactory
-4. Overwrite your history with the fixed version
-5. restart your app: `pm2 reload all`
 
 # Disclaimer
 This software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement. In no event shall the authors, copyright holders, or Coinbase Inc. be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
