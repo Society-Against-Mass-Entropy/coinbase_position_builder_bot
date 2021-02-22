@@ -22,7 +22,7 @@ const job = new CronJob(config.freq, action);
   if(process.env.CPBB_REBUY_AT){
     log.now(`${config.productID}: REBUY up to ${process.env.CPBB_REBUY_MAX} limit orders or $${process.env.CPBB_REBUY_VOL}, for ${process.env.CPBB_REBUY_SIZE}${process.env.CPBB_REBUY_MULTIPLIER?`(x${process.env.CPBB_REBUY_MULTIPLIER})`:''} @ ${process.env.CPBB_REBUY_AT}% drops`);
   }
-  if(process.env.CPBB_REBUY_ONLY){
+  if(process.env.CPBB_REBUY_ONLY==='true'){
     // this mode says "I want to buy this asset, but only when it's flashing downward during the timing interval"
     log.now(`${config.productID} set to REBUY ONLY MODE (will not create market taker trades, only limit orders at drops)`);
   }
