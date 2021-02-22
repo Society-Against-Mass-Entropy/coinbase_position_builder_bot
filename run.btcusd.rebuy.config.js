@@ -11,7 +11,7 @@ module.exports = {
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
         // VERBOSE: true,
-        CPBB_FREQ: "3 */2 * * *",
+        CPBB_FREQ: "28 */2 * * *",
         CPBB_TICKER: "BTC",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 10,

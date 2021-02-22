@@ -6,7 +6,7 @@ const apiKeys = require("./api.keys");
 module.exports = {
   apps: [
     {
-      name: "cpbb_btcusd",
+      name: "cpbb_btcusd_limit",
       script: ".",
       watch: ["*.js", "coinbase", "lib"],
       env: {
@@ -15,8 +15,8 @@ module.exports = {
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
         // VERBOSE: true,
-        // run at 5:03 am daily
-        CPBB_FREQ: "3 5 * * *",
+        // every hour at the 35 minute
+        CPBB_FREQ: "35 * * * *",
         CPBB_TICKER: "BTC",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 50, // $50 each day
