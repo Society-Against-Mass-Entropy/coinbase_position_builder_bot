@@ -15,11 +15,13 @@ module.exports = {
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
         // VERBOSE: true,
-        // every 5 minutes
+        // every 2 minutes (for testing)
+        // NOTE: if you run this in a bear market, it can spend up to CPBB_VOL every 2 minutes!
+        // this config example is just for testing!
         CPBB_FREQ: "*/2 * * * *",
         CPBB_TICKER: "BTC",
         CPBB_CURRENCY: "USD",
-        CPBB_VOL: 50, // $50 each day
+        CPBB_VOL: 50, // $50 worth of limits always on the books (unless filled in interval)
         CPBB_APY: 100, // sell if over 100% APY
         // should the engine only create and manage the limit orders and not make normal accumulation trades
         // useful for testing this feature
