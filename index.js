@@ -35,6 +35,10 @@ const job = new CronJob(config.freq, action);
 
   const accounts = await getAccounts().catch((e) => console.error(e));
 
+  if (!accounts) {
+    log.error(`failed to load your account info. Are your keys correctly loaded in the environment?`);
+    return;
+  }
   // find the trading account we care about
   // eslint-disable-next-line prefer-destructuring
   memory.account = accounts.filter((a) => a.currency === config.currency)[0];
