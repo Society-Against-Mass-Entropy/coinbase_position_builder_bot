@@ -36,7 +36,7 @@ const job = new CronJob(config.freq, action);
   const accounts = await getAccounts().catch((e) => console.error(e));
 
   if (!accounts) {
-    log.error(`failed to load your account info. Are your keys correctly loaded in the environment?`);
+    log.error(`Failed to load your account info. Are your keys correctly loaded in the environment?\nDouble check them and then do "pm2 kill; pm2 start [YOUR_CONFIG_NAME].js"`);
     return;
   }
   // find the trading account we care about
