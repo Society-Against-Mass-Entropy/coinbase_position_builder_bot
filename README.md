@@ -15,7 +15,7 @@ And here is a view of the bot running for a full year (in a Google Sheet for cha
 After running this engine for a bit, you can copy the data in your local log file (e.g. `./data/history.BTC-USD.tsv`) and paste it into the spreadsheet template by [creating a copy of this Google Docs Sheet](https://docs.google.com/spreadsheets/d/1DPo9amEx6RAr33Nnaq27J59AA7XiO90Q2bBP9rq2Tiw/edit?usp=sharing). This template can be saved locally and periodically updated or saved to Google Docs or some other service for backup.
 
 ## WARNING
-This tool is built for my own personal use--and while I have published it publically for others to use/enjoy, please beware that usage of this tool is at your own risk. I have not accounted for all edge cases as I watch and tune this code as an experiment in-progress.
+This tool is built for my own personal use--and while I have published it publicly for others to use/enjoy, please beware that usage of this tool is at your own risk. I have not accounted for all edge cases as I watch and tune this code as an experiment in-progress.
 
 ## Getting Started
 
@@ -71,7 +71,7 @@ pm2 start run.config.js && pm2 logs
 ### Default Configuration
 Note: the default settings will take a $10 action every 12 hours on BTCUSD. If Bitcoin sustains a bear market for a full year, this would amount to spending $20/day = $140/week = $7,300/year on Bitcoin (always accumulating). If the price fluctuates enough to cross the profitability threshold (default 15% APY), it may sell upward and sustain itself with a floating balance for a while.
 
-The defaults can be overridden with envronmental variables (or update in the run.*.config.js files with pm2):
+The defaults can be overridden with environmental variables (or update in the run.*.config.js files with pm2):
 ```
 export CPBB_APY=15 # 15% APY (sell above this gain)
 export CPBB_VOL=10 # take $10 actions at configured frequency
@@ -187,14 +187,14 @@ This will examine your current history file (e.g. `./data/history.BTC-USD.tsv`),
 # Scripting Tools
 
 ## Tax Calculator
-NOTE: I am not an accountant. I am not a fiduciary. You are responsible for the accuracy of your own tax reporting and usage of this tool is not garunteed to give you accurate results. I use it. It's for me. If you want to use it, you are responsible for reviewing the code and making sure it is accurate for your accounting needs/purposes.
+NOTE: I am not an accountant. I am not a fiduciary. You are responsible for the accuracy of your own tax reporting and usage of this tool is not guaranteed to give you accurate results. I use it. It's for me. If you want to use it, you are responsible for reviewing the code and making sure it is accurate for your accounting needs/purposes.
 
-### Calculate Short-term and Long-term and Captital Gains for a Calendar Year
+### Calculate Short-term and Long-term and Capital Gains for a Calendar Year
 ```
 CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_YEAR=2020 node tax_fifo.js
 ```
 
-## APY Adjustor
+## APY Adjuster
 If you want to change your APY and back-edit all your history so your Target is adjusted to be that APY consistently for your whole history (this will compound). You can run like so:
 ```
 # updates the BTC-USD history with 150% APY (creates a new ./data/history.BTC-USD.fixed.apy.tsv that will need to be reviewed and copied into your history.BTC-USD.tsv)
