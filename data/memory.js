@@ -1,11 +1,11 @@
 // shared application memory module
-const history = require('../lib/history')
-// load up any maker orders from a previous process launch
-const makerOrders = require('./maker.orders.json')
+const history = require('../lib/history');
+
+const config = require('../config');
 
 module.exports = {
   account: {},
   firstLog: history.first(),
   lastLog: history.last(),
-  makerOrders
-}
+  makerOrders: require(config.maker_file)
+};
