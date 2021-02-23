@@ -36,9 +36,10 @@ module.exports = {
         // these could change in the future and allow you to make smaller size rebuy trades
         // rebuy logic will place up to  orders at this size until CPBB_REBUY_MAX is reached
         CPBB_REBUY_SIZE: ".0001,.0001,.0002,.0002,.0003,.0003,.0004,.0004,.0005,.0005",
-        // rebuy at these percentage drop targets (-1%, -2%, etc)
+        // rebuy at these percentage drop targets
         // note: you have to define at least the number of points in CPBB_REBUY_SIZE
-        CPBB_REBUY_AT: "-.01,-2,-4,-5,-8,-10,-12,-25,-50,-80",
+        // if the percentage drop is too low, it could cause you to lose profit in fees
+        CPBB_REBUY_AT: "-4,-6,-8,-10,-12,-14,-16,-20,-50,-80",
       },
     },
   ],
