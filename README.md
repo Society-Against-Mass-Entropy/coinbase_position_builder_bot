@@ -138,6 +138,15 @@ CPBB_REBUY_SIZE: ".0001,.0001,.0002,.0002,.0003,.0003,.0004,.0004,.0005,.0005",
 // rebuy at these percentage drop targets (-1%, -2%, etc)
 // note: you have to define at least the number of points in CPBB_REBUY_SIZE
 CPBB_REBUY_AT: "-2,-4,-6,-8,-10,-12,-15,-25,-50,-80",
+// default behavior is on the next action point (if they didn't fill)
+// if CPBB_REBUY_CANCEL is set, this is a number of minutes after the limit order
+// creation timestamp that it will be considered ready to cancel if not filled
+// NOTE: the rebuy check/cancel is run on your CPBB_FREQ interval so setting this to
+// 5 minutes with a daily job timer will cancel the order after 1 day, not 5 minutes
+// set to 0 or remove ENV var to have default behavior of canceling on the next
+// action timer
+// below is a config to leave the order for a minimum time of 3 days
+CPBB_REBUY_CANCEL: 60 * 24 * 3
 ```
 
 The above config will cause the engine to attempt to set up to $50 worth of limit orders for the asset after each `sell` action. The orders will be placed as .0001 @ -.01% drop (very soon), .0001 @ -2% drop, etc until the $50 spending threshold is met.
