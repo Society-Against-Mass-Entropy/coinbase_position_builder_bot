@@ -8,7 +8,7 @@
  * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_VOL=100 CPBB_APY=150 node project.changes.js 360 32000:100 41500:75 20000:200 37000:100 30000:200 100000:400 50000:400 300000:800
  */
 const fs = require("fs");
-const { add, divide, multiply } = require("mathjs");
+const { add, divide, multiply } = require("../lib/math");
 
 const config = require("../config");
 const calcAction = require("../lib/calculate.action");

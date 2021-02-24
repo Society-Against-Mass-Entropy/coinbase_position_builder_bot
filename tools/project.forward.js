@@ -4,7 +4,7 @@
  * CPBB_VOL=10 CPBB_APY=10 node project.forward.js
  */
 const fs = require("fs");
-const { divide } = require("mathjs");
+const { divide } = require("../lib/math");
 
 const config = require("../config");
 const calcAction = require("../lib/calculate.action");

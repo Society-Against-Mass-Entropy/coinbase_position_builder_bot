@@ -6,7 +6,7 @@ console.log(`🤖 Position Builder Engine Updater`);
 
 const fs = require("fs");
 const history = require("../lib/history");
-const { format, pow, divide, subtract, multiply, add } = require("mathjs");
+const { divide, subtract, multiply, add } = require("../lib/math");
 const map = require("lodash.map");
 const MS_PER_YEAR = 31556952000;
 
@@ -18,7 +18,7 @@ const start = new Date(all[0].Time).getTime();
 
 for (let i = 0; i < all.length; i++) {
   // fix holding (format 8 decimals)
-  // all[i].Holding = !i ? 0 : format(add(all[i-1].Holding, all[i-1].Shares),8)
+  // all[i].Holding = !i ? 0 : add(all[i-1].Holding, all[i-1].Shares).toFixed(8)
 
   all[i].InProfit = !i
     ? 0
@@ -37,16 +37,14 @@ for (let i = 0; i < all.length; i++) {
   all[i].PeriodsPerYear = !i ? 0 : divide(MS_PER_YEAR, all[i].Elapsed);
   all[i].InAPY = !i
     ? 0
-    : format(
-      multiply(
-        subtract(
-          pow(add(all[i].RealPeriodRate, 1), all[i].PeriodsPerYear),
-          1
-        ),
-        100
+    :
+    multiply(
+      subtract(
+        Math.pow(add(all[i].RealPeriodRate, 1), all[i].PeriodsPerYear),
+        1
       ),
-      2
-    ) + "%";
+      100
+    ).toFixed(2) + "%";
 
   // console.log(all[i])
   // if(i) console.log(all[i-1].Holding, '+',all[i-1].Shares, '=',all[i].Holding)

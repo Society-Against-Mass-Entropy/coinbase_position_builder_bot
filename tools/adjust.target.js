@@ -7,7 +7,7 @@ console.log(`🤖 Position Builder Engine Updater`);
 const config = require('../config');
 const fs = require("fs");
 const history = require("../lib/history");
-const { format, subtract, add } = require("mathjs");
+const { subtract, add } = require("../lib/math");
 const map = require("lodash.map");
 
 const all = history.all();
@@ -18,10 +18,7 @@ for (let i = 1; i < all.length; i++) {
   if (last.Funds < 0) {
     all[i].Target = add(all[i].Target, last.Funds);
   }
-  all[i].Diff = format(subtract(all[i].Value, all[i].Target), { notation: 'fixed', precision: 2 });
-
-  // format
-  all[i].Target = format(all[i].Target, { notation: 'fixed', precision: 2 });
+  all[i].Diff = subtract(all[i].Value, all[i].Target);
 
 }
 

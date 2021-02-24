@@ -3,8 +3,6 @@ const log = require("../lib/log");
 const request = require("./http.request");
 const requestSign = require("./request.sign");
 const { URL } = require("url");
-const { ResultSetDependencies } = require("mathjs");
-const { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } = require("constants");
 
 const { hostname } = new URL(config.api);
 /**

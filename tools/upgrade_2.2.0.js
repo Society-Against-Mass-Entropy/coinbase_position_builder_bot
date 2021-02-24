@@ -21,7 +21,7 @@ const uniqFilter = (value, index, self) => {
 }
 
 // const fills = require(`../data/fills_${config.productID}.json`);
-const { add, format, subtract } = require('mathjs');
+const { add, subtract } = require('../lib/math');
 const backup = config.history_file.replace('.tsv', `_backup_${new Date().getTime()}.tsv`);
 (async () => {
   // backup history file
@@ -79,9 +79,9 @@ const backup = config.history_file.replace('.tsv', `_backup_${new Date().getTime
     let usd = 0;
 
     matches.forEach(m => {
-      fee = add(fee, Number(m.fee));
-      shares = add(shares, Number(m.size));
-      usd = add(usd, Number(m.usd_volume));
+      fee = add(fee, m.fee);
+      shares = add(shares, m.size);
+      usd = add(usd, m.usd_volume);
     });
 
     if (sold) {
@@ -90,7 +90,7 @@ const backup = config.history_file.replace('.tsv', `_backup_${new Date().getTime
     } else {
       usd = add(usd, fee);
     }
-    const fmtShares = format(shares, { precision: 9 });
+    const fmtShares = shares.toFixed(9);
     if (h.Shares != fmtShares) {
       log.ok(h.Time, h.Shares, fmtShares);
       h.Shares = shares;

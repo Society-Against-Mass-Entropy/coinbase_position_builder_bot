@@ -14,7 +14,7 @@ process.env.CPBB_CURRENCY = process.argv[3];
 process.env.CPBB_VOL = process.argv[4];
 process.env.CPBB_APY = process.argv[5];
 
-const { add, format } = require("mathjs");
+const { add } = require("../lib/math");
 const action = require('../lib/action');
 const config = require("../config");
 const log = require('../lib/log');
@@ -31,7 +31,7 @@ if (process.argv.length !== 9) {
   return log.error('invalid arguments, invoke like so: node addLog.js BTC USD 50 20 2020-11-26T16:35:00.706Z 16915.52 0.00295586');
 }
 
-log.ok(`history loaded: holding ${format(add(memory.lastLog.Holding, memory.lastLog.Shares), { notation: "fixed", precision: 8 })} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`);
+log.ok(`history loaded: holding ${add(memory.lastLog.Holding, memory.lastLog.Shares).toFixed(8)} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`);
 
 
 (async () => {

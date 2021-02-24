@@ -1,5 +1,6 @@
 /**
  * buys LTC with BTC at interval (accumulates LTC using BTC)
+ * WARNING: I don't know anyone running this. It may have bugs.
  */
 const apiKeys = require("./api.keys");
 module.exports = {
