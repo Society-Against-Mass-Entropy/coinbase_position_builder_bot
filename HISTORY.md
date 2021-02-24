@@ -1,3 +1,10 @@
+# 2.3.0
+- Mathjs needed to be altered to fix floating point rounding issues with javascript numbers
+  - math.number((math.add(0.12460097, '0.12035164'))) => 0.24495261000000002
+  - math.number((math.add(0.12460097, math.bignumber('0.12035164')))) => 0.24495261
+  - now we have a small helper module that uses mathjs to automatically convert to bignumber() and back into a normal javascript Number.
+- It is highly recommended to run the `tools/upgrade_2.2.0.js` script if you haven't by now (this will go back and recalculate all of your history data using corrected math and data from the api). See 2.2.0 release for details.
+
 # 2.2.0
 - now using response data to correct the funding used to include fees (and to use the actual executed_value) -- Coinbase Pro will not execute $100 when you market buy for $100, it might be 99.996. The fee also takes away from the total reclaimed now
 - moving sample configs to `sample.` naming convention

@@ -4,7 +4,7 @@
  * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_VOL=100 CPBB_APY=100 node project.target.js 360 2021-12-31 0.1 0.9
  */
 const fs = require("fs");
-const { add, divide, multiply, subtract } = require("mathjs");
+const { add, divide, multiply, subtract } = require("../lib/math");
 
 const config = require("../config");
 const calcAction = require("../lib/calculate.action");

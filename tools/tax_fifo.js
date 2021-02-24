@@ -7,11 +7,11 @@
  */
 
 const history = require("../lib/history");
-const { add, bignumber, number, divide, format, multiply, subtract } = require("mathjs");
-const year = process.env.CPBB_YEAR;
+const { add, divide, multiply, subtract } = require("../lib/math");
+const year = Number(process.env.CPBB_YEAR);
 console.log(`🤖 Position Builder Bot FIFO Calculator ${year}`);
 
-const dollarize = val => format(val, { notation: 'fixed', precision: 2 });
+const dollarize = val => `$${val.toFixed(2)}`;
 const all = history.all()
   // only need to examine up to the end of the year we are calculating
   .filter(txn => new Date(txn.Time).getFullYear() <= year)
@@ -19,8 +19,8 @@ const all = history.all()
   .map(txn => ({
     time: new Date(txn.Time),
     funds: txn.Funds,
-    basis: divide(txn.Funds, bignumber(txn.Shares)),
-    shares: bignumber(txn.Shares)
+    basis: divide(txn.Funds, txn.Shares),
+    shares: txn.Shares
   }));
 
 const buys = all.filter(txn => txn.funds > 0);
@@ -31,10 +31,12 @@ console.log(`found ${all.length} transactions (${buys.length} buys, and ${sells.
 let shortTermBasis = 0;
 let shortTermProceeds = 0;
 let shortTermGain = 0;
+let shortTermFees = 0;
 
 let longTermBasis = 0;
 let longTermProceeds = 0;
 let longTermGain = 0;
+let longTermFees = 0;
 
 let buyIndex = 0;
 
@@ -44,7 +46,7 @@ sells.forEach((sell, idx) => {
   const sellYear = sell.time.getFullYear();
   for (let i = buyIndex, len = buys.length; i < len; i++) {
     let buy = buys[i];
-    if (!number(buy.shares)) {
+    if (!buy.shares) {
       // console.log(`buy at ${i} used up`, { buy });
       buyIndex = i + 1; // prevent the next sell from looking earlier than this
       continue; // already sold this set
@@ -54,7 +56,7 @@ sells.forEach((sell, idx) => {
     // how much of the sell can we consider from this buy
     let posSellShares = multiply(-1, sell.shares);
     let closedShares = posSellShares < buy.shares ? posSellShares : buy.shares;
-    // console.log(`closedShares: ${number(closedShares)} from ${number(sell.shares)} sold matched to ${number(buy.shares)} buy`)
+    // console.log(`closedShares: ${closedShares} from ${sell.shares} sold matched to ${buy.shares} buy`)
     // subtract sold shares from the buy stack
     buy.shares = subtract(buy.shares, closedShares);
     // add sold shares to nullify them from the sell stack
@@ -62,10 +64,10 @@ sells.forEach((sell, idx) => {
     let closedSellValue = multiply(closedShares, sell.basis);
     let closedBuyValue = multiply(closedShares, buy.basis);
     let profit = subtract(closedSellValue, closedBuyValue);
-    console.log(`sold ${number(closedShares)} shares @ $${dollarize(sell.basis)} for $${dollarize(closedSellValue)}, bought @ $${dollarize(buy.basis)} for $${dollarize(closedBuyValue)} | net ${dollarize(profit)} in ${isLongTerm ? 'long' : 'short'}-term gains`);
+    console.log(`sold ${closedShares} shares @ ${dollarize(sell.basis)} for ${dollarize(closedSellValue)}, bought @ ${dollarize(buy.basis)} for ${dollarize(closedBuyValue)} | net ${dollarize(profit)} in ${isLongTerm ? 'long' : 'short'}-term gains`);
     // NOTE: we want to calculate buys/sells since the beginning of time
     // but only sells that happen in the year are counted for output
-    if (sellYear === number(year)) {
+    if (sellYear === year) {
       if (isLongTerm) {
         longTermGain = add(longTermGain, profit);
         longTermBasis = add(longTermBasis, closedBuyValue);
@@ -77,17 +79,17 @@ sells.forEach((sell, idx) => {
         shortTermProceeds = add(shortTermProceeds, closedSellValue);
       }
     }
-    // if (number(buy.shares) > 0) console.log(`${number(buy.shares)} remaining @ ${number(buy.basis)}`)
-    if (number(sell.shares) > 0) console.error('something very wrong with this algorithm', { sell });
-    if (!number(sell.shares)) return; // break the loop and kill this function (onto the next sell)
+    // if (buy.shares > 0) console.log(`${buy.shares} remaining @ ${buy.basis}`)
+    if (sell.shares > 0) console.error('something very wrong with this algorithm', { sell });
+    if (!sell.shares) return; // break the loop and kill this function (onto the next sell)
   }
 });
 
-console.log(`\nshort-term basis: $${dollarize(shortTermBasis)}`);
-console.log(`short-term proceeds: $${dollarize(shortTermProceeds)}`);
-console.log(`short-term gains: $${dollarize(shortTermGain)}`);
-console.log(`short-term fees: $${dollarize(shortTermFees)}`);
-console.log(`\nlong-term basis: $${dollarize(longTermBasis)}`);
-console.log(`long-term proceeds: $${dollarize(longTermProceeds)}`);
-console.log(`long-term gains: $${dollarize(longTermGain)}`);
-console.log(`long-term fees: $${dollarize(longTermFees)}`);
+console.log(`\nshort-term basis: ${dollarize(shortTermBasis)}`);
+console.log(`short-term proceeds: ${dollarize(shortTermProceeds)}`);
+console.log(`short-term gains: ${dollarize(shortTermGain)}`);
+console.log(`short-term fees: ${dollarize(shortTermFees)}`);
+console.log(`\nlong-term basis: ${dollarize(longTermBasis)}`);
+console.log(`long-term proceeds: ${dollarize(longTermProceeds)}`);
+console.log(`long-term gains: ${dollarize(longTermGain)}`);
+console.log(`long-term fees: ${dollarize(longTermFees)}`);
