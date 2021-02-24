@@ -24,7 +24,9 @@ You can correct the precision of your history with the updater tool.
 This will fetch all of your fill data since the start of the history for the given pair and update the history file to add the ID column and correct the calculations using the more precice data from the order fill payloads:
 ```
 cd tools
+# NOTE: change CPBB_APY to your APY (this is just an example)
 CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_APY=150 node upgrade_2.2.0.js
+# run the same for any other tickers you have history to correct
 ```
 
 # 2.1.1

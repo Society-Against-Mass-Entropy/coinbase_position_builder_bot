@@ -100,8 +100,9 @@ const backup = config.history_file.replace('.tsv', `_backup_${new Date().getTime
 
 
   // write new history file
+  const headers = history.headerRow.includes('\tID') ? history.headerRow : history.headerRow + '\tID';
   const data = [
-    `${history.headerRow}`,
+    `${headers}`,
     ...all.map(row => map(row, v => v).join("\t")),
   ].join("\n");
 
