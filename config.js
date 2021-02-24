@@ -46,13 +46,13 @@ log.ok(config.history_file);
 if (!fs.existsSync(config.history_file)) {
   // copy the template
   console.log("creating log file from template", config.history_file);
-  fs.copyFileSync(`${__dirname}/data/history.tsv`, config.history_file);
+  fs.copyFileSync(`${__dirname}/data/template.history.tsv`, config.history_file);
 }
 config.maker_file = `${__dirname}/data/maker.orders.${historyName}${historySubName}.json`;
 log.ok(config.maker_file);
 if (!fs.existsSync(config.maker_file)) {
   // copy the template
   console.log("creating maker file from template", config.maker_file);
-  fs.copyFileSync(`${__dirname}/data/maker.orders.json`, config.maker_file);
+  fs.copyFileSync(`${__dirname}/data/template.maker.orders.json`, config.maker_file);
 }
 module.exports = config;
