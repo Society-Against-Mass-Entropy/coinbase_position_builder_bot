@@ -15,6 +15,10 @@ const config = {
   vol: Number(process.env.CPBB_VOL || 10),
   // default 15% APY target (we aim to shave off any excess from this gain)
   apy: Number(process.env.CPBB_APY || 15) / 100,
+  rebuy: {
+    // ms after limit order placed before it is able to be canceled due to not filling
+    cancel: Number(process.env.CPBB_REBUY_CANCEL || 0) * 60000
+  },
   // if the trading pair ordering doesn't exist (e.g. BTC-LTC)
   // we have to reverse our logic to run from the trading pair that does exist (e.g. LTC-BTC)
   reverse: false,

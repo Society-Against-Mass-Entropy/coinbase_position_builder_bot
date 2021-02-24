@@ -14,7 +14,7 @@ module.exports = {
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
-        CPBB_FREQ: "31 */6 * * *",
+        CPBB_FREQ: "23 */6 * * *",
         // CPBB_FREQ: "40 */6 * * *",
         CPBB_TICKER: "BTC",
         CPBB_CURRENCY: "USD",
@@ -28,6 +28,11 @@ module.exports = {
         // rebuy at these percentage drop targets (-1%, -2%, etc)
         // note: you have to define at least the number of points in CPBB_REBUY_SIZE
         CPBB_REBUY_AT: "-4,-6,-8,-10,-12,-15,-20,-25,-50,-80",
+        // when should we cancel limit orders?
+        // default behavior is on the next action point (if they didn't fill)
+        // if CPBB_REBUY_CANCEL is set, this is a number of minutes after the limit order
+        // creation timestamp that it will be considered ready to cancel if not filled
+        CPBB_REBUY_CANCEL: 60 * 24 * 4
       },
     },
     {
@@ -40,7 +45,7 @@ module.exports = {
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
-        CPBB_FREQ: "02 17 * * *",
+        CPBB_FREQ: "02 15 * * *",
         CPBB_TICKER: "ETH",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 25,
@@ -52,6 +57,7 @@ module.exports = {
         CPBB_REBUY_SIZE: ".001,.002,.003,.004,.005,.006,.007,.008,.009,.01",
         // note: you have to define at least the number of points in CPBB_REBUY_SIZE
         CPBB_REBUY_AT: "-4,-6,-8,-10,-12,-15,-20,-25,-50,-80",
+        CPBB_REBUY_CANCEL: 60 * 24 * 2
       },
     },
     {
@@ -63,7 +69,7 @@ module.exports = {
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
-        CPBB_FREQ: "04 18 * * *",
+        CPBB_FREQ: "02 16 * * *",
         CPBB_TICKER: "LTC",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 25,
@@ -75,6 +81,7 @@ module.exports = {
         CPBB_REBUY_SIZE: ".01,.02,.03,.04,.05,.06,.07,.08,.09,.1",
         // note: you have to define at least the number of points in CPBB_REBUY_SIZE
         CPBB_REBUY_AT: "-4,-6,-8,-10,-12,-15,-20,-25,-50,-80",
+        CPBB_REBUY_CANCEL: 60 * 24 * 2
       },
     },
     {
@@ -86,7 +93,7 @@ module.exports = {
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
-        CPBB_FREQ: "02 19 * * *",
+        CPBB_FREQ: "02 17 * * *",
         CPBB_TICKER: "DASH",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 25,
@@ -99,6 +106,7 @@ module.exports = {
         // rebuy at these percentage drop targets
         // note: you have to define at least the number of points in CPBB_REBUY_SIZE
         CPBB_REBUY_AT: "-4,-6,-8,-10,-12,-15,-20,-25,-50,-80",
+        CPBB_REBUY_CANCEL: 60 * 24 * 2
       },
     },
   ],

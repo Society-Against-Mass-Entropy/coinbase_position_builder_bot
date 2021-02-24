@@ -1,3 +1,9 @@
+# 2.4.0
+- Added new configuration to support leaving limit rebuy orders on the books longer
+  - new CBPP_REBUY_CANCEL environmental variable is the minimum number of minutes you would like the order to remain on the books (note that the cancelation will only occur on the next interval so if you set this to 5 minutes but have a cron job timer set to every hour, the limits will cancel after 1 hour)
+  - set to 0 or remove ENV var to have default behavior of canceling on the next action timer
+  - NOTE: existing limits in the queue did not have the created_at date so they will be canceled per the default behavior and the new limit orders will take on these new rules
+
 # 2.3.0
 - Mathjs needed to be altered to fix floating point rounding issues with javascript numbers
   - math.number((math.add(0.12460097, '0.12035164'))) => 0.24495261000000002
