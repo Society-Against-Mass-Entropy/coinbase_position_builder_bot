@@ -10,15 +10,15 @@
 const fs = require("fs");
 const { add, divide, multiply } = require("mathjs");
 
-const config = require("./config");
-const calcAction = require("./lib/calculate.action");
-const log = require("./lib/log");
-const logSave = require("./lib/log.save");
-const memory = require('./lib/memory');
+const config = require("../config");
+const calcAction = require("../lib/calculate.action");
+const log = require("../lib/log");
+const logSave = require("../lib/log.save");
+const memory = require('../lib/memory');
 const ticker = `${config.ticker}-${config.currency}`;
 
-const historyFile = `./data/history.${ticker}.tsv`;
-const projectedFile = `./data/history.${ticker}.projected.tsv`;
+const historyFile = `${__dirname}/../data/history.${ticker}.tsv`;
+const projectedFile = `${__dirname}/../data/history.${ticker}.projected.tsv`;
 
 const targetMinutes = process.argv[2];
 

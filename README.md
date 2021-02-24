@@ -116,8 +116,8 @@ If you start the app with a config of CPBB_REBUY_MAX greater than 0, it will inv
 3. If the action was a `sell`, set new limit orders
 
 There are two sample configs that illustrate how this can be configured:
-- `run.btcusd.limit_only.config.js`
-- `run.btcusd.rebuy.config.js`
+- `sample.btcusd.limit_only.config.js`
+- `sample.btcusd.rebuy.config.js`
 
 ```
 // should the engine only create and manage the limit orders and not make normal accumulation trades
@@ -137,7 +137,7 @@ CPBB_REBUY_MAX: 50,
 CPBB_REBUY_SIZE: ".0001,.0001,.0002,.0002,.0003,.0003,.0004,.0004,.0005,.0005",
 // rebuy at these percentage drop targets (-1%, -2%, etc)
 // note: you have to define at least the number of points in CPBB_REBUY_SIZE
-CPBB_REBUY_AT: "-.01,-2,-4,-5,-8,-10,-12,-25,-50,-80",
+CPBB_REBUY_AT: "-2,-4,-6,-8,-10,-12,-15,-25,-50,-80",
 ```
 
 The above config will cause the engine to attempt to set up to $50 worth of limit orders for the asset after each `sell` action. The orders will be placed as .0001 @ -.01% drop (very soon), .0001 @ -2% drop, etc until the $50 spending threshold is met.

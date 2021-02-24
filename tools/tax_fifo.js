@@ -1,11 +1,12 @@
 /**
  * parses a history file to get the FIFO-based profit/loss report for a given year
- * run with
+ * run with:
  *
+ * cd tools;
  * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_YEAR=2020 node tax_fifo.js
  */
 
-const history = require("./lib/history");
+const history = require("../lib/history");
 const { add, bignumber, number, divide, format, multiply, subtract } = require("mathjs");
 const year = process.env.CPBB_YEAR;
 console.log(`🤖 Position Builder Bot FIFO Calculator ${year}`);

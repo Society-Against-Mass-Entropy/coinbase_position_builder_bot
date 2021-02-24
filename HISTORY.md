@@ -1,3 +1,19 @@
+# 2.2.0
+- now using response data to correct the funding used to include fees (and to use the actual executed_value) -- Coinbase Pro will not execute $100 when you market buy for $100, it might be 99.996. The fee also takes away from the total reclaimed now
+- moving sample configs to `sample.` naming convention
+- moving tool scripts to `tools/` folder for organization
+- Adding `ID` column in history file (at the end)
+- `tools/upgrade_2.2.0.js` script for migrating history file to latest schema (including ID field) and correcting data using real executed_value + fees
+
+## Upgrading History for 2.2.0
+You can correct the precision of your history with the updater tool.
+
+This will fetch all of your fill data since the start of the history for the given pair and update the history file to add the ID column and correct the calculations using the more precice data from the order fill payloads:
+```
+cd tools
+CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_APY=150 node upgrade_2.2.0.js
+```
+
 # 2.1.1
 - aborting script immediately if we failed to load account via the API (shows message about loading keys properly)
 - If you cannot start the app due to this message, ensure your API keys are loaded into the environment or api.keys.js file properly then do: `pm2 kill && pm2 start [YOUR_CONFIG_NAME].js`

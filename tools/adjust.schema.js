@@ -5,7 +5,7 @@
 console.log(`🤖 Position Builder Engine Updater`);
 
 const fs = require("fs");
-const history = require("./lib/history");
+const history = require("../lib/history");
 const { format, pow, divide, subtract, multiply, add } = require("mathjs");
 const map = require("lodash.map");
 const MS_PER_YEAR = 31556952000;
@@ -57,4 +57,4 @@ const data = [
   ...all.map((row) => map(row, (v) => v).join("\t")),
 ].join("\n");
 
-fs.writeFileSync("./data/history.BTC-USD.fixed.tsv", data);
+fs.writeFileSync(`${__dirname}/../data/history.BTC-USD.fixed.tsv`, data);

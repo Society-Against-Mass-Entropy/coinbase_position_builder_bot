@@ -22,18 +22,18 @@ module.exports = async (order) => {
       method: "GET",
     };
     log.debug(opts);
-    const orderResponse = await request(opts);
-    log.debug(orderResponse);
+    const { json } = await request(opts);
+    log.debug(json);
     // NOTE: we allow limit orders to be unsettled and even not found (sometimes limits get purged due to maintenance or other conditions)
-    if (order.type==='market' && (
-        !orderResponse ||
-        !orderResponse.settled ||
-        orderResponse.message === "NotFound"
-      )
+    if (order.type === 'market' && (
+      !json ||
+      !json.settled ||
+      json.message === "NotFound"
+    )
     ) {
       retryCount++;
       if (retryCount > RETRY_TIMES) {
-        log.error(`failed to get order ${order.id}`, { order, orderResponse });
+        log.error(`failed to get order ${order.id}`, { order, json });
         return Promise.reject("failed to get complete order");
       }
       await sleep(time);
@@ -47,7 +47,7 @@ module.exports = async (order) => {
         log.zap(`API slowdown: Order ${order.id} took ${timeString} to update status!`);
       }
     }
-    return orderResponse;
+    return json;
   };
 
   return getCompletedOrder();

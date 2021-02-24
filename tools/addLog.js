@@ -15,11 +15,11 @@ process.env.CPBB_VOL = process.argv[4];
 process.env.CPBB_APY = process.argv[5];
 
 const { add, format } = require("mathjs");
-const action = require('./lib/action');
-const config = require("./config");
-const log = require('./lib/log');
-const memory = require("./lib/memory");
-const touch = require('./lib/touch');
+const action = require('../lib/action');
+const config = require("../config");
+const log = require('../lib/log');
+const memory = require("../lib/memory");
+const touch = require('../lib/touch');
 
 const dateOverride = new Date(process.argv[6]);
 const price = process.argv[7];
@@ -42,6 +42,6 @@ log.ok(`history loaded: holding ${format(add(memory.lastLog.Holding, memory.last
 
   // finally, touch the index file so our pm2 filewatcher will auto-restart the service
   // this will load the latest history file into memory for the next job run
-  touch('./index.js');
+  touch('../index.js');
 })();
 

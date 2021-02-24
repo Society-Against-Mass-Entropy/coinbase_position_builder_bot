@@ -4,9 +4,9 @@
  */
 console.log(`🤖 Position Builder Engine Updater`);
 
-const config = require('./config');
+const config = require('../config');
 const fs = require("fs");
-const history = require("./lib/history");
+const history = require("../lib/history");
 const { format, subtract, add } = require("mathjs");
 const map = require("lodash.map");
 
@@ -31,7 +31,7 @@ const data = [
 ].join("\n");
 
 // console.log(data)
-const file = `./data/history.${config.productID}.fixed.tsv`;
+const file = `${__dirname}/../data/history.${config.productID}.fixed.tsv`;
 fs.writeFileSync(file, data);
 
 console.log(`wrote updated history to ${file}\nIf this looks good, overwrite your original history file (without the '.fixed' name adjustment) and restart your app by running\npm2 reload all`)

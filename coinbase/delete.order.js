@@ -6,8 +6,10 @@ module.exports = async (id) => {
   if (process.env.CPBB_DRY_RUN) {
     return true;
   }
-  return request({
+  const { json } = await request({
     requestPath: `/orders/${id}`,
     method: "DELETE"
   });
+
+  return json;
 };

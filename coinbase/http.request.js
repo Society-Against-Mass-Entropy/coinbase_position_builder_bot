@@ -27,7 +27,8 @@ module.exports = (params) => {
           log.debug(`${res.statusCode} error:`, responseBody);
           return reject(res.statusCode);
         }
-        resolve(json);
+        resolve({ json, headers: res.headers });
+        // resolve(json);
       });
     });
     // reject on request error

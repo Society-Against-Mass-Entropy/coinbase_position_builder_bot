@@ -1,7 +1,11 @@
 const request = require("./cb.request");
-
-module.exports = async () =>
-  request({
+const log = require('../lib/log');
+module.exports = async () => {
+  const { json } = await request({
     requestPath: "/accounts",
     method: "GET",
   });
+  // log.debug(json);
+  return json;
+}
+

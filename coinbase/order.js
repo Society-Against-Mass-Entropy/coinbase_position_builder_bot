@@ -1,6 +1,6 @@
 // https://docs.pro.coinbase.com/?javascript#place-a-new-order
 
-const { divide, multiply } = require("mathjs");
+const { divide, multiply, json } = require("mathjs");
 const memory = require("../lib/memory");
 const numFix = require("../lib/number.fix");
 const request = require("./cb.request");
@@ -21,9 +21,10 @@ module.exports = async (opts) => {
       settled: true,
     };
   }
-  return request({
+  const { json } = await request({
     requestPath: "/orders",
     method: "POST",
     body: opts,
   });
+  return json;
 };
