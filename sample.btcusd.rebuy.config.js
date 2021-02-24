@@ -34,6 +34,15 @@ module.exports = {
         // rebuy at these percentage drop targets
         // note: you have to define at least the number of points in CPBB_REBUY_SIZE
         CPBB_REBUY_AT: "-4,-6,-8,-10,-12,-14,-16,-20,-50,-80",
+        // default behavior is on the next action point (if they didn't fill)
+        // if CPBB_REBUY_CANCEL is set, this is a number of minutes after the limit order
+        // creation timestamp that it will be considered ready to cancel if not filled
+        // below is a config to leave the order for a minimum time of 1 day
+        // NOTE: the rebuy check/cancel is run on your CPBB_FREQ interval so setting this to
+        // 5 minutes with a daily job timer will cancel the order after 1 day, not 5 minutes
+        // set to 0 or remove ENV var to have default behavior of canceling on the next
+        // action timer
+        CPBB_REBUY_CANCEL: 60 * 24 * 1
       },
     },
   ],
