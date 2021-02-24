@@ -2,7 +2,6 @@ const { CronJob } = require("cron");
 
 const config = require("./config");
 const apiKeys = require('./api.keys.js');
-const { add, format } = require("mathjs");
 const action = require("./lib/action");
 const getAccounts = require("./coinbase/accounts");
 const loadLastLog = require('./lib/load.lastLog');
@@ -41,7 +40,7 @@ const job = new CronJob(config.freq, action);
 
   // console.log(memory.lastLog);
 
-  log.now(`📒 history loaded: holding ${format(add(memory.lastLog.Holding, memory.lastLog.Shares), { notation: "fixed", precision: 8 })} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`)
+  log.now(`📒 history loaded: holding ${(memory.lastLog.Holding + memory.lastLog.Shares).toFixed(8)} ${config.ticker} worth ${memory.lastLog.EndValue}, liquid profit ${memory.lastLog.Profit}`)
 
   const accounts = await getAccounts().catch((e) => console.error(e));
 

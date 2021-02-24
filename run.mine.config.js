@@ -62,7 +62,7 @@ module.exports = {
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
-        CPBB_FREQ: "02 18 * * *",
+        CPBB_FREQ: "04 18 * * *",
         CPBB_TICKER: "LTC",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 25,
