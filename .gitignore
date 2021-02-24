@@ -2,3 +2,6 @@ node_modules
 .DS_Store
 data/*.backup*
 data/*_backup*
+data/fills_*
+data/maker.orders.*.json
+data/history.*.json
