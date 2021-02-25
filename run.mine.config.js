@@ -52,7 +52,7 @@ module.exports = {
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
-        CPBB_FREQ: "13 7 * * *",
+        CPBB_FREQ: "5 7 * * *",
         CPBB_TICKER: "ETH",
         CPBB_CURRENCY: "USD",
         CPBB_VOL: 25,
@@ -65,7 +65,7 @@ module.exports = {
         // note: you have to define at least the number of points in CPBB_REBUY_SIZE
         CPBB_REBUY_AT: "-4,-6,-8,-10,-12,-15,-20,-25,-50,-80",
         CPBB_REBUY_CANCEL: 60 * 24 * 2,
-        CPBB_REBUY_REBUILD: 12
+        CPBB_REBUY_REBUILD: 6
       },
     },
     {
