@@ -146,7 +146,16 @@ CPBB_REBUY_AT: "-2,-4,-6,-8,-10,-12,-15,-25,-50,-80",
 // set to 0 or remove ENV var to have default behavior of canceling on the next
 // action timer
 // below is a config to leave the order for a minimum time of 3 days
-CPBB_REBUY_CANCEL: 60 * 24 * 3
+CPBB_REBUY_CANCEL: 60 * 24 * 3,
+// if there are twelve unfilled limit orders remaining on the books, expire them
+// and rebuild the limit order set immediately using the sum total of funds
+// used for all the limit orders that existed, starting with the price at the highest limit value
+// using the rebuy config to create new orders
+// NOTE: if you use this setting, it is recommended that you set it higher than
+// the number of items in your CPBB_REBUY_AT config so it doesn't excessively rebuild
+// the same oders over and over
+// NOTE: this feature only matters if you are using a non-zero CPBB_REBUY_CANCEL config
+CPBB_REBUY_REBUILD: 12
 ```
 
 The above config will cause the engine to attempt to set up to $50 worth of limit orders for the asset after each `sell` action. The orders will be placed as .0001 @ -.01% drop (very soon), .0001 @ -2% drop, etc until the $50 spending threshold is met.

@@ -1,3 +1,11 @@
+# 2.5.0
+- New configuration of `CPBB_REBUY_REBUILD`, which is a number of active limit orders on the books to consider the set ready for a rebuild based on the existing rebuy SIZE/AT config.
+- NOTE: this is only useful if you have `CPBB_REBUY_CANCEL` set to something other than 0, where limit orders can pile up over many runs. By default, limit orders are canceled on the next cron.
+- If `CPBB_REBUY_REBUILD` is triggered, existing limit orders will be canceled and new orders will be built from the highest price of the order set, and using the total `funds` from the limit orders on the books. For example, if you normally put $50 into rebuy orders, but the rebuy limits have piled up through several sell operations, you might have 20 limit orders worth $120 on the books, all accumulated in one region. Setting `CPBB_REBUY_REBUILD` to 20 (or less) will cause the next run to cancel these limit orders and build a new set of limit orders up to $120, up to the number of drop points configured in `CPBB_REBUY_AT`
+- Resuming checking each limit order to be sure they haven't been manually deleted  
+- Removing 404 limit orders from tracking (limit orders can be manually deleted or deleted by Coinbase system maintenance)
+- Correcting rate limiting issues by sleeping between rebuy checks and posts
+
 # 2.4.0
 - Added new configuration to support leaving limit rebuy orders on the books longer
   - new CBPP_REBUY_CANCEL environmental variable is the minimum number of minutes you would like the order to remain on the books (note that the cancelation will only occur on the next interval so if you set this to 5 minutes but have a cron job timer set to every hour, the limits will cancel after 1 hour)

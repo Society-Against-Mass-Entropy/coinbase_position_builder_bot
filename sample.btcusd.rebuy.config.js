@@ -42,7 +42,15 @@ module.exports = {
         // 5 minutes with a daily job timer will cancel the order after 1 day, not 5 minutes
         // set to 0 or remove ENV var to have default behavior of canceling on the next
         // action timer
-        CPBB_REBUY_CANCEL: 60 * 24 * 1
+        CPBB_REBUY_CANCEL: 60 * 24 * 5,
+        // if there are twelve unfilled limit orders remaining on the books, expire them
+        // and rebuild the limit order set immediately using the sum total of funds
+        // used for all the limit orders that existed, starting with the price at the highest limit value
+        // using the rebuy config to create new orders
+        // NOTE: if you use this setting, it is recommended that you set it higher than
+        // the number of items in your CPBB_REBUY_AT config so it doesn't excessively rebuild
+        // the same oders over and over
+        CPBB_REBUY_REBUILD: 12
       },
     },
   ],
