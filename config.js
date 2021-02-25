@@ -20,11 +20,11 @@ const config = {
   rebuy: {
     // ms after limit order placed before it is able to be canceled due to not filling
     cancel: Number(process.env.CPBB_REBUY_CANCEL || 0) * 60000,
-    drops: (process.env.CPBB_REBUY_AT || '').split(',').map(p => divide(p, 100)),
+    drops: (process.env.CPBB_REBUY_AT || '').split(',').map(p => p ? divide(p, 100) : null).filter(i => i),
     max: Number(process.env.CPBB_REBUY_MAX || 0),
     only: process.env.CPBB_REBUY_ONLY === 'true',
     rebuild: Number(process.env.CPBB_REBUY_REBUILD || 0),
-    sizes: (process.env.CPBB_REBUY_SIZE || '').split(',').map(s => Number(s))
+    sizes: (process.env.CPBB_REBUY_SIZE || '').split(',').map(s => s ? Number(s) : null).filter(i => i)
   },
   // if the trading pair ordering doesn't exist (e.g. BTC-LTC)
   // we have to reverse our logic to run from the trading pair that does exist (e.g. LTC-BTC)
