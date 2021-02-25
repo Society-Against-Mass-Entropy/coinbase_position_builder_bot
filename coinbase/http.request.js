@@ -17,6 +17,9 @@ module.exports = (params) => {
           log.error('failed to parse response from API', e)
           reject(e);
         }
+        if (res.statusCode === 429) {
+          log.error('Error 429: rate limited. Please file an issue here: https://github.com/jasonedison/coinbase_position_builder_bot/issues');
+        }
         if (res.statusCode < 200 || res.statusCode >= 300) {
           if (json && json.message === "invalid signature") {
             log.error(
