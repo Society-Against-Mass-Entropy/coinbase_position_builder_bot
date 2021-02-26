@@ -296,6 +296,20 @@ To correct this, I've added a manual log entry tool. In order to use this, you w
 node addLog.js BTC USD 50 20 2020-11-26T16:35:00.706Z 16915.52 0.00295586
 ```
 
+## Build Complete History from Coinbase Pro Fills
+
+If you want to add all manual activity to the history file, you can generate a new history file using all of the Coinbase Pro data. This only looks at Coinbase Pro so if you moved funds in and out of that service (even to Coinbase), there can be negative balances appearing in the Holdings section of the history. If you bought coins elsewhere and moved them into Coinbase Pro, you will have possible sells that have no buy history associated with them.
+
+```
+cd tools;
+CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_APY=150 CPBB_SINCE=2015-01-01 node create.history.js
+```
+or to use a cached fills history file:
+```
+cd tools;
+CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_APY=150 CPBB_SINCE=2015-01-01 CPBB_FILLS=../data/fills_BTC-USD.json node create.history.js
+```
+
 # Disclaimer
 This software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement. In no event shall the authors, copyright holders, or Coinbase Inc. be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
 

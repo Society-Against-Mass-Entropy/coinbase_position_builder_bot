@@ -5,6 +5,7 @@
 - Resuming checking each limit order to be sure they haven't been manually deleted  
 - Removing 404 limit orders from tracking (limit orders can be manually deleted or deleted by Coinbase system maintenance)
 - Correcting rate limiting issues by sleeping between rebuy checks and posts
+- New Tool: `tools/create.history.js` - goes through entire coinbase pro fill history for a trading pair and generates a history file from that data. NOTE: if you bought/sold crypto via Coinbase and moved in in and out of Coinbase Pro, you can end up with negative holdings at points in the history file because it only has access to the Coinbase Pro side.
 
 # 2.4.0
 - Added new configuration to support leaving limit rebuy orders on the books longer
