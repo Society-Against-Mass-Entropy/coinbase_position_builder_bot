@@ -155,6 +155,7 @@ CPBB_REBUY_CANCEL: 60 * 24 * 3,
 // the number of items in your CPBB_REBUY_AT config so it doesn't excessively rebuild
 // the same oders over and over
 // NOTE: this feature only matters if you are using a non-zero CPBB_REBUY_CANCEL config
+// NOTE: enabling this feature also sets new created_at timestamps for limit orders so the expiration is continuously pushed out until they are filled
 CPBB_REBUY_REBUILD: 12
 ```
 
