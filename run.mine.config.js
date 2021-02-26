@@ -39,7 +39,7 @@ module.exports = {
         // NOTE: if you use this setting, it is recommended that you set it higher than
         // the number of items in your CPBB_REBUY_AT config so it doesn't excessively rebuild
         // the same oders over and over
-        CPBB_REBUY_REBUILD: 5 // short term testing
+        CPBB_REBUY_REBUILD: 12
       },
     },
     {
@@ -65,7 +65,7 @@ module.exports = {
         // note: you have to define at least the number of points in CPBB_REBUY_SIZE
         CPBB_REBUY_AT: "-4,-6,-8,-10,-12,-15,-20,-25,-50,-80",
         CPBB_REBUY_CANCEL: 60 * 24 * 2,
-        CPBB_REBUY_REBUILD: 6
+        CPBB_REBUY_REBUILD: 12
       },
     },
     {
