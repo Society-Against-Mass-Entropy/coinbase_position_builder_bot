@@ -8,11 +8,12 @@ const request = require("./cb.request");
 
 module.exports = async (opts) => {
   if (config.dry) {
-    // fake out a .002 fee subtraction
-    const converted = multiply(opts.funds, 0.998);
+    // fake out a .5% fee subtraction (worst case tier)
+    const converted = multiply(opts.funds, 0.995);
     return {
       executed_value: Number(opts.funds),
       filled_size: numFix(divide(converted, memory.price), 8),
+      fill_fees: multiply(opts.funds, .005),
       settled: true,
     };
   }
