@@ -20,8 +20,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "precommit": "npm test",
-    "prepush": "npm test",
+    "postinstall": "husky install",
+    "pre-commit": "npm test",
     "setup": "npm i -g pm2 && npm i",
     "start": "node .",
     "start:1": "CPBB_FREQ='5 * * * *' node .",
