@@ -4,4 +4,5 @@ data/*.backup*
 data/*_backup*
 data/fills_*
 data/maker.orders.*.json
-data/history.*.json
+data/history.*.tsv
+coverage

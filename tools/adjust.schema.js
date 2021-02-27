@@ -6,7 +6,7 @@ console.log(`🤖 Position Builder Engine Updater`);
 
 const fs = require("fs");
 const history = require("../lib/history");
-const { divide, subtract, multiply, add } = require("../lib/math");
+const { divide, subtract, multiply, add, pow } = require("../lib/math");
 const map = require("lodash.map");
 const MS_PER_YEAR = 31556952000;
 
@@ -40,7 +40,7 @@ for (let i = 0; i < all.length; i++) {
     :
     multiply(
       subtract(
-        Math.pow(add(all[i].RealPeriodRate, 1), all[i].PeriodsPerYear),
+        pow(add(all[i].RealPeriodRate, 1), all[i].PeriodsPerYear),
         1
       ),
       100

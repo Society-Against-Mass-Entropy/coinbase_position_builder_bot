@@ -9,7 +9,7 @@ const MS_PER_YEAR = 31556952000;
 const config = require('../config');
 const fs = require("fs");
 const history = require("../lib/history");
-const { divide, multiply, subtract, add } = require("../lib/math");
+const { divide, multiply, subtract, add, pow } = require("../lib/math");
 const log = require('../lib/log');
 const map = require("lodash.map");
 console.log(`🤖 Position Builder Engine Updater: Recalculating with ${multiply(config.apy, 100)}% APY`);
@@ -27,8 +27,7 @@ for (let i = 1; i < all.length; i++) {
 
   all[i].Holding = add(last.Holding, last.Shares);
   all[i].Value = multiply(all[i].Holding, all[i].Price);
-  all[i].PeriodRate =
-    Math.pow(1 + config.apy, divide(1, divide(MS_PER_YEAR, msPassed))) - 1;
+  all[i].PeriodRate = subtract(pow(1 + config.apy, divide(1, divide(MS_PER_YEAR, msPassed))), 1);
   all[i].ExpectedGain = multiply(last.Target, all[i].PeriodRate);
   all[i].Target = add(add(Math.abs(all[i].Funds), all[i].ExpectedGain), last.Target);
   if (last.Funds < 0) {

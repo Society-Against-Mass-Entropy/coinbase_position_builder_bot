@@ -38,7 +38,7 @@ let targetFloor = multiply(memory.lastLog.Price, .8);
 let targetCeiling = multiply(memory.lastLog.Price, 1.5);
 
 let direction = 1;
-let priceStart = 0;
+// let priceStart = 0;
 let periodCounter = 0;
 
 (async () => {
@@ -50,7 +50,7 @@ let periodCounter = 0;
     targetFloor = add(targetFloor, multiply(targetFloor, .001));
     targetCeiling = add(targetCeiling, multiply(targetCeiling, .001));
 
-    priceStart = price;
+    // priceStart = price;
     periodCounter++;
     if (periodCounter > 120) {
       // shift direction likelihood
