@@ -20,6 +20,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "precommit": "npm test",
     "prepush": "npm test",
     "setup": "npm i -g pm2 && npm i",
     "start": "node .",
