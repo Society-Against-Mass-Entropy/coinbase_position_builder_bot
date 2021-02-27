@@ -39,6 +39,6 @@ module.exports = async (opts) => {
   // log.debug({ requestConfig });
   return request(requestConfig).catch((e) => {
     if (process.env.VERBOSE)
-      log.error(opts.requestPath, `status error`, e)
+      log.error(opts.method, opts.requestPath, `status error`, e)
   });
 };
