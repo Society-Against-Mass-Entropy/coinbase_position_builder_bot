@@ -138,6 +138,25 @@ CPBB_REBUY_SIZE: ".0001,.0001,.0002,.0002,.0003,.0003,.0004,.0004,.0005,.0005",
 // rebuy at these percentage drop targets (-1%, -2%, etc)
 // note: you have to define at least the number of points in CPBB_REBUY_SIZE
 CPBB_REBUY_AT: "-2,-4,-6,-8,-10,-12,-15,-25,-50,-80",
+// default behavior is on the next action point (if they didn't fill)
+// if CPBB_REBUY_CANCEL is set, this is a number of minutes after the limit order
+// creation timestamp that it will be considered ready to cancel if not filled
+// NOTE: the rebuy check/cancel is run on your CPBB_FREQ interval so setting this to
+// 5 minutes with a daily job timer will cancel the order after 1 day, not 5 minutes
+// set to 0 or remove ENV var to have default behavior of canceling on the next
+// action timer
+// below is a config to leave the order for a minimum time of 3 days
+CPBB_REBUY_CANCEL: 60 * 24 * 3,
+// if there are twelve unfilled limit orders remaining on the books, expire them
+// and rebuild the limit order set immediately using the sum total of funds
+// used for all the limit orders that existed, starting with the price at the highest limit value
+// using the rebuy config to create new orders
+// NOTE: if you use this setting, it is recommended that you set it higher than
+// the number of items in your CPBB_REBUY_AT config so it doesn't excessively rebuild
+// the same oders over and over
+// NOTE: this feature only matters if you are using a non-zero CPBB_REBUY_CANCEL config
+// NOTE: enabling this feature also sets new created_at timestamps for limit orders so the expiration is continuously pushed out until they are filled
+CPBB_REBUY_REBUILD: 12
 ```
 
 The above config will cause the engine to attempt to set up to $50 worth of limit orders for the asset after each `sell` action. The orders will be placed as .0001 @ -.01% drop (very soon), .0001 @ -2% drop, etc until the $50 spending threshold is met.
@@ -275,6 +294,20 @@ To correct this, I've added a manual log entry tool. In order to use this, you w
 ```
 # node addLog.js $TICKER $CURRENCY $VOLUME $APY $DATEISO $PRICE $SHARES
 node addLog.js BTC USD 50 20 2020-11-26T16:35:00.706Z 16915.52 0.00295586
+```
+
+## Build Complete History from Coinbase Pro Fills
+
+If you want to add all manual activity to the history file, you can generate a new history file using all of the Coinbase Pro data. This only looks at Coinbase Pro so if you moved funds in and out of that service (even to Coinbase), there can be negative balances appearing in the Holdings section of the history. If you bought coins elsewhere and moved them into Coinbase Pro, you will have possible sells that have no buy history associated with them.
+
+```
+cd tools;
+CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_APY=150 CPBB_SINCE=2015-01-01 node create.history.js
+```
+or to use a cached fills history file:
+```
+cd tools;
+CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_APY=150 CPBB_SINCE=2015-01-01 CPBB_FILLS=../data/fills_BTC-USD.json node create.history.js
 ```
 
 # Disclaimer

@@ -22,8 +22,9 @@ module.exports = async (order) => {
       method: "GET",
     };
     log.debug(opts);
-    const { json } = await request(opts);
-    log.debug(json);
+    const response = await request(opts);
+    log.debug(response);
+    const json = response ? response.json : response;
     // NOTE: we allow limit orders to be unsettled and even not found (sometimes limits get purged due to maintenance or other conditions)
     if (order.type === 'market' && (
       !json ||

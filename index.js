@@ -24,16 +24,16 @@ const job = new CronJob(config.freq, action);
   }
   log.now(
     `🤖 Position Builder Bot ${config.pjson.version}, ${config.api
-    } in ${process.env.CPBB_DRY_RUN ? "DRY RUN" : "LIVE"} mode, ${config.vol
+    } in ${config.dry ? "DRY RUN" : "LIVE"} mode, ${config.vol
     } $${config.currency} ➡️  $${config.ticker} @ cron(${config.freq
-    }), ${config.apy * 100}% APY, ${process.env.VERBOSE ? `verbose` : 'ledger'} logging`
+    }), ${config.apy * 100}% APY, ${process.env.VERBOSE === 'true' ? `verbose logging` : ''}`
   );
-  if (process.env.CPBB_REBUY_AT) {
+  if (config.rebuy.drops) {
     const sizes = process.env.CPBB_REBUY_SIZE.split(',');
     const drops = process.env.CPBB_REBUY_AT.split(',');
-    log.now(`💵 REBUY up to $${process.env.CPBB_REBUY_MAX} of ${config.ticker}: ${sizes.map((s, i) => `${s}@${drops[i]}%`).join(', ')}`);
+    log.now(`💵 REBUY up to $${config.rebuy.max} of ${config.ticker}: ${sizes.map((s, i) => `${s}@${drops[i]}%`).join(', ')}`);
   }
-  if (process.env.CPBB_REBUY_ONLY === 'true') {
+  if (config.rebuy.only) {
     // this mode says "I want to buy this asset, but only when it's flashing downward during the timing interval"
     log.now(`${config.productID} set to REBUY ONLY MODE (will not create market taker trades, only limit orders at drops)`);
   }
@@ -54,7 +54,7 @@ const job = new CronJob(config.freq, action);
   log.now(`🏦 $${config.currency} account loaded with ${memory.account.available}`);
 
   // immediate kick off (testing mode)
-  if (process.env.CPBB_TEST || process.env.CPBB_DRY_RUN) action();
+  if (process.env.CPBB_TEST || config.dry) action();
 
   // start the cronjob
   job.start();

@@ -2,10 +2,12 @@ const fs = require("fs");
 const log = require('./lib/log');
 const pjson = require("./package");
 
+const { divide } = require('./lib/math');
 const config = {
   api: process.env.CPBB_TEST
     ? "https://api-public.sandbox.pro.coinbase.com"
     : "https://api.pro.coinbase.com",
+  dry: process.env.CPBB_DRY_RUN === "true",
   // default run once per 12 hours at the 5th minute (crontab syntax)
   // testing mode will run every minute
   freq: process.env.CPBB_TEST
@@ -17,7 +19,12 @@ const config = {
   apy: Number(process.env.CPBB_APY || 15) / 100,
   rebuy: {
     // ms after limit order placed before it is able to be canceled due to not filling
-    cancel: Number(process.env.CPBB_REBUY_CANCEL || 0) * 60000
+    cancel: Number(process.env.CPBB_REBUY_CANCEL || 0) * 60000,
+    drops: (process.env.CPBB_REBUY_AT || '').split(',').map(p => p ? divide(p, 100) : null).filter(i => i),
+    max: Number(process.env.CPBB_REBUY_MAX || 0),
+    only: process.env.CPBB_REBUY_ONLY === 'true',
+    rebuild: Number(process.env.CPBB_REBUY_REBUILD || 0),
+    sizes: (process.env.CPBB_REBUY_SIZE || '').split(',').map(s => s ? Number(s) : null).filter(i => i)
   },
   // if the trading pair ordering doesn't exist (e.g. BTC-LTC)
   // we have to reverse our logic to run from the trading pair that does exist (e.g. LTC-BTC)
@@ -46,13 +53,13 @@ log.ok(config.history_file);
 if (!fs.existsSync(config.history_file)) {
   // copy the template
   console.log("creating log file from template", config.history_file);
-  fs.copyFileSync(`${__dirname}/data/history.tsv`, config.history_file);
+  fs.copyFileSync(`${__dirname}/data/template.history.tsv`, config.history_file);
 }
 config.maker_file = `${__dirname}/data/maker.orders.${historyName}${historySubName}.json`;
 log.ok(config.maker_file);
 if (!fs.existsSync(config.maker_file)) {
   // copy the template
   console.log("creating maker file from template", config.maker_file);
-  fs.copyFileSync(`${__dirname}/data/maker.orders.json`, config.maker_file);
+  fs.copyFileSync(`${__dirname}/data/template.maker.orders.json`, config.maker_file);
 }
 module.exports = config;

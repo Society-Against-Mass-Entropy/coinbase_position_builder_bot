@@ -40,7 +40,7 @@ let longTermFees = 0;
 
 let buyIndex = 0;
 
-sells.forEach((sell, idx) => {
+sells.forEach((sell) => {
   // console.log(`finding match for sell on ${sell.time} ${sell.funds} ${sell.shares}`);
   // if (idx === 5) process.exit();
   const sellYear = sell.time.getFullYear();
