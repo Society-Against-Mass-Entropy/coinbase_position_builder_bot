@@ -1,3 +1,7 @@
+# 2.5.1
+- Fix bug where rebuilding the rebuy orders can cause 429 rate limiting errors
+- merging in unit test ability with Jest: https://github.com/jasonedison/coinbase_position_builder_bot/pull/14
+
 # 2.5.0
 - New configuration of `CPBB_REBUY_REBUILD`, which is a number of active limit orders on the books to consider the set ready for a rebuild based on the existing rebuy SIZE/AT config.
 - NOTE: this is only useful if you have `CPBB_REBUY_CANCEL` set to something other than 0, where limit orders can pile up over many runs. By default, limit orders are canceled on the next cron.
