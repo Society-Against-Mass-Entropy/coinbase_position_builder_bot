@@ -6,9 +6,10 @@
  * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_VOL=100 CPBB_APY=100 node project.changes.js 360 32000:100 41500:75 20000:200 32600:100 14400:200 25000:200 20000:400 50000:800
  * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_VOL=100 CPBB_APY=100 node project.changes.js 360 32000:100 41500:75 20000:200 37000:100 30000:200 100000:200 70000:400 300000:800
  * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_VOL=100 CPBB_APY=150 node project.changes.js 360 32000:100 41500:75 20000:200 37000:100 30000:200 100000:400 50000:400 300000:800
+ * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_VOL=100 CPBB_APY=150 node project.changes.js 360 50000:2000
  */
 const fs = require('fs');
-const { add, divide, multiply } = require('../lib/math');
+const { add, divide, multiply, subtract } = require('../lib/math');
 
 const config = require('../config');
 const calcAction = require('../lib/calculate.action');
@@ -91,10 +92,16 @@ log.debug(memory.lastLog);
         dateOverride,
       });
       action.dateNow = dateOverride;
+      const fill_fees = multiply(config.vol, 0.005);
+      // log.debug(action);
       logSave({
         action,
         response: {
-          filled_size: divide(config.vol, price).toFixed(8),
+          filled_size: divide(config.vol, price),
+          fill_fees,
+          executed_value: subtract(config.vol, fill_fees),
+          side: action.funds < 0 ? 'sell' : 'buy',
+          id: 'mock',
         },
       });
     }
