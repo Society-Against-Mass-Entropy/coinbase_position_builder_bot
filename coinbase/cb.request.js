@@ -8,7 +8,7 @@ const { hostname } = new URL(config.api);
 /**
  * wrapper for http request specific to coinbase pro header requirements
  */
-module.exports = async (opts) => {
+module.exports = async opts => {
   const timestamp = Date.now() / 1000;
 
   const body = opts.body ? JSON.stringify(opts.body) : "";
@@ -37,8 +37,8 @@ module.exports = async (opts) => {
     requestConfig.headers["Content-Type"] = "application/json";
   }
   // log.debug({ requestConfig });
-  return request(requestConfig).catch((e) => {
+  return request(requestConfig).catch(e => {
     if (process.env.VERBOSE)
-      log.error(opts.method, opts.requestPath, `status error`, e)
+      log.error(opts.method, opts.requestPath, `status error`, e);
   });
 };

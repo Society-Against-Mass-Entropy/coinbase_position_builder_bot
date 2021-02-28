@@ -51,7 +51,7 @@ for (let i = 0; i < all.length; i++) {
 
 const data = [
   `${history.headerRow}\tInProfit\tElapsed\tGain\tRealPeriodRate\tPeriodsPerYear\tInAPY`,
-  ...all.map((row) => map(row, (v) => v).join("\t")),
+  ...all.map(row => map(row, v => v).join("\t")),
 ].join("\n");
 
 fs.writeFileSync(`${__dirname}/../data/history.BTC-USD.fixed.tsv`, data);

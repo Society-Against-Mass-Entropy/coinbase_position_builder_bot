@@ -60,7 +60,7 @@ const job = new CronJob(config.freq, action);
     }, liquid profit ${memory.lastLog.Profit}`
   );
 
-  const accounts = await getAccounts().catch((e) => console.error(e));
+  const accounts = await getAccounts().catch(e => console.error(e));
 
   if (!accounts) {
     log.error(
@@ -70,7 +70,7 @@ const job = new CronJob(config.freq, action);
   }
   // find the trading account we care about
   // eslint-disable-next-line prefer-destructuring
-  memory.account = accounts.filter((a) => a.currency === config.currency)[0];
+  memory.account = accounts.filter(a => a.currency === config.currency)[0];
   log.now(
     `🏦 $${config.currency} account loaded with ${memory.account.available}`
   );

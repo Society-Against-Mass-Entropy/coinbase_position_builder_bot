@@ -64,7 +64,7 @@ for (let i = 1; i < all.length; i++) {
 
 const data = [
   `${history.headerRow}`,
-  ...all.map((row) => map(row, (v) => v).join("\t")),
+  ...all.map(row => map(row, v => v).join("\t")),
 ].join("\n");
 
 log.debug(data);

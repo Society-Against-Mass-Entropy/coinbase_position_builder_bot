@@ -30,7 +30,7 @@ const reverseHistory = history.all().reverse();
 // to project actions using the settings provided
 const now = new Date().getTime();
 
-const processLog = async (idx) => {
+const processLog = async idx => {
   if (idx >= reverseHistory.length) return log.ok(`projection complete`);
   const d = reverseHistory[idx];
   // calculate the projected future date when this will occur

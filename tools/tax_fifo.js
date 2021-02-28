@@ -12,21 +12,21 @@ const { add, divide, multiply, subtract } = require("../lib/math");
 const year = Number(process.env.CPBB_YEAR);
 log.bot(`Position Builder Bot FIFO Calculator ${year}`);
 
-const dollarize = (val) => `$${val.toFixed(2)}`;
+const dollarize = val => `$${val.toFixed(2)}`;
 const all = history
   .all()
   // only need to examine up to the end of the year we are calculating
-  .filter((txn) => new Date(txn.Time).getFullYear() <= year)
+  .filter(txn => new Date(txn.Time).getFullYear() <= year)
   // only care about time, funds, shares traded
-  .map((txn) => ({
+  .map(txn => ({
     time: new Date(txn.Time),
     funds: txn.Funds,
     basis: divide(txn.Funds, txn.Shares),
     shares: txn.Shares,
   }));
 
-const buys = all.filter((txn) => txn.funds > 0);
-const sells = all.filter((txn) => txn.funds < 0);
+const buys = all.filter(txn => txn.funds > 0);
+const sells = all.filter(txn => txn.funds < 0);
 
 log.ok(
   `found ${all.length} transactions (${buys.length} buys, and ${sells.length} sells) leading up to the end of ${year}`
@@ -44,7 +44,7 @@ let longTermFees = 0;
 
 let buyIndex = 0;
 
-sells.forEach((sell) => {
+sells.forEach(sell => {
   log.zap(
     `finding match for sell on ${sell.time} ${sell.funds} ${sell.shares}`
   );

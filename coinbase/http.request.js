@@ -1,6 +1,6 @@
 const http = require("https");
 const log = require("../lib/log");
-module.exports = (params) => {
+module.exports = params => {
   const makeRequest = function (resolve, reject) {
     log.debug({ params });
     const req = http.request(params, function (res) {

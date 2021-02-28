@@ -20,6 +20,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "format": "npx prettier --write .",
     "postinstall": "husky install",
     "pre-commit": "npm test",
     "setup": "npm i -g pm2 && npm i",
@@ -50,6 +51,7 @@
   "devDependencies": {
     "eslint": "6.8.0",
     "husky": "5.1.1",
-    "jest": "26.6.3"
+    "jest": "26.6.3",
+    "prettier": "2.2.1"
   }
 }

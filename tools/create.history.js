@@ -33,7 +33,7 @@ log.ok(`backed up history file in ${backup}`);
 (async () => {
   const fills = fillsFromFile.length
     ? fillsFromFile.filter(
-        (f) => new Date(f.create_at) > process.env.CPBB_SINCE || "2015-01-01"
+        f => new Date(f.create_at) > process.env.CPBB_SINCE || "2015-01-01"
       )
     : await getFills({ since: process.env.CPBB_SINCE || "2010-01-01" });
   // so we can rerun this without calling the API again
@@ -47,7 +47,7 @@ log.ok(`backed up history file in ${backup}`);
   fills.reverse();
 
   log.ok("first fill record: ", fills[0]);
-  const all = fills.map((f) => {
+  const all = fills.map(f => {
     // if(!f.usd_volume){
     //   log.debug('no volume?', f);
     // }
@@ -79,7 +79,7 @@ log.ok(`backed up history file in ${backup}`);
     : history.headerRow + "\tID";
   const data = [
     `${headers}`,
-    ...all.map((row) => map(row, (v) => v).join("\t")),
+    ...all.map(row => map(row, v => v).join("\t")),
   ].join("\n");
 
   // log.debug(data)

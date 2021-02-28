@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 // const log = require("../lib/log");
 // https://docs.pro.coinbase.com/?javascript#signing-a-message
-module.exports = (opts) => {
+module.exports = opts => {
   // create the prehash string by concatenating required parts
   const what = opts.timestamp + opts.method + opts.requestPath + opts.body;
   // decode the base64 secret

@@ -43,7 +43,7 @@ const backup = config.history_file.replace(
   );
 
   // reverse it to oldest->newest to match history file
-  fills.reverse().map((f) => {
+  fills.reverse().map(f => {
     // add timestamp for fuzzy search
     f.timestamp = new Date(f.created_at).getTime();
     f.timestampMax = f.timestamp + 30000;
@@ -56,21 +56,21 @@ const backup = config.history_file.replace(
   // note: some fills might have been done outside this engine
   // additionally, some precision might be lost in old calculations or misreported results
   // so we do a fuzzy size+date match
-  all.forEach((h) => {
+  all.forEach(h => {
     const t = new Date(h.Time).getTime();
     const s = h.Shares + "";
-    let matches = fills.filter((f) => {
+    let matches = fills.filter(f => {
       if (f.timestamp === t && f.size === s) return true; // exact match
       // fuzzy
       return f.timestampMin < t && f.timestampMax > t;
     });
     if (!matches.length) {
-      matches = fills.filter((f) => Number(f.size) === h.Shares);
+      matches = fills.filter(f => Number(f.size) === h.Shares);
       if (!matches.length) {
         return log.error(`no match`, h);
       }
     }
-    let orderIds = matches.map((o) => o.order_id).filter(uniqFilter);
+    let orderIds = matches.map(o => o.order_id).filter(uniqFilter);
     if (orderIds.length > 1) {
       return log.error(`${orderIds.length} order ids matched`, h, matches);
     }
@@ -84,7 +84,7 @@ const backup = config.history_file.replace(
     let shares = 0;
     let usd = 0;
 
-    matches.forEach((m) => {
+    matches.forEach(m => {
       fee = add(fee, m.fee);
       shares = add(shares, m.size);
       usd = add(usd, m.usd_volume);
@@ -110,7 +110,7 @@ const backup = config.history_file.replace(
     : history.headerRow + "\tID";
   const data = [
     `${headers}`,
-    ...all.map((row) => map(row, (v) => v).join("\t")),
+    ...all.map(row => map(row, v => v).join("\t")),
   ].join("\n");
 
   log.debug(data);

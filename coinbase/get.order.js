@@ -2,7 +2,7 @@ const log = require("../lib/log");
 const request = require("./cb.request");
 const sleep = require("../lib/sleep");
 const RETRY_TIMES = 360; // 60 minutes worth of 10 second intervals
-module.exports = async (order) => {
+module.exports = async order => {
   let retryCount = 0;
   // intially, the order may have gone in and just not completed immediately
   // so we just need to call back to get the details:

@@ -5,18 +5,18 @@
 const log = require("../lib/log");
 const request = require("../coinbase/cb.request");
 const { add, multiply } = require("../lib/math");
-const sleep = (ms) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+const sleep = ms => {
+  return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-const reduceAltBTC = (orders) =>
+const reduceAltBTC = orders =>
   orders
-    .map((a) => multiply(a[0], a[1]))
+    .map(a => multiply(a[0], a[1]))
     .reduce((sum, o) => {
       return add(sum, o);
     }, 0);
 
-const reduceFiatBTC = (orders) =>
+const reduceFiatBTC = orders =>
   orders.reduce((sum, o) => {
     return add(sum, o[1]);
   }, 0);

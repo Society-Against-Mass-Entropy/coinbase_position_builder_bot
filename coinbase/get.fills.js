@@ -17,7 +17,7 @@ module.exports = async ({ since }) => {
         nextPage ? `&after=${nextPage}` : ""
       }`,
       method: "GET",
-    }).catch((e) => {
+    }).catch(e => {
       console.error(
         e,
         `failed to get fills history for ${config.productID}. Please make sure this ticker exists.`
@@ -32,5 +32,5 @@ module.exports = async ({ since }) => {
     if (new Date(json[json.length - 1].created_at) <= sinceDate) break;
     await sleep(1000); // avoid rate limit issues
   }
-  return fills.filter((f) => new Date(f.created_at) >= sinceDate);
+  return fills.filter(f => new Date(f.created_at) >= sinceDate);
 };
