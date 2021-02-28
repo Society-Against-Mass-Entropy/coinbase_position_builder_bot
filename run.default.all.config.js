@@ -9,18 +9,18 @@
  * pm2 start run.default.all.config.js
  */
 
-const fs = require("fs");
+const fs = require('fs');
 const files = fs
-  .readdirSync(".")
+  .readdirSync('.')
   .filter(
-    (f) =>
-      f.includes("run.default") &&
-      f.includes("config.js") &&
-      f !== "run.default.all.config.js"
+    f =>
+      f.includes('run.default') &&
+      f.includes('config.js') &&
+      f !== 'run.default.all.config.js'
   );
 
 const apps = [];
-files.forEach((f) => {
+files.forEach(f => {
   const config = require(`./${f}`).apps;
   apps.push(...config);
 });

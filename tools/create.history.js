@@ -14,30 +14,42 @@ const fs = require('fs');
 const log = require('../lib/log');
 const getFills = require('../coinbase/get.fills');
 const history = require('../lib/history');
-const map = require("lodash.map");
-const {multiply} = require('../lib/math');
+const map = require('lodash.map');
+const { multiply } = require('../lib/math');
 
-console.log('load fills', process.env.CPBB_FILLS);
-const fillsFromFile = process.env.CPBB_FILLS ? require(process.env.CPBB_FILLS) : [];
-console.log(fillsFromFile[0])
+log.zap('load fills', process.env.CPBB_FILLS);
+const fillsFromFile = process.env.CPBB_FILLS
+  ? require(process.env.CPBB_FILLS)
+  : [];
+log.debug(fillsFromFile[0]);
 
-const backup = config.history_file.replace('.tsv', `_backup_${new Date().getTime()}.tsv`);
+const backup = config.history_file.replace(
+  '.tsv',
+  `_backup_${new Date().getTime()}.tsv`
+);
 fs.copyFileSync(config.history_file, backup);
 log.ok(`backed up history file in ${backup}`);
 
 (async () => {
-
-  const fills = fillsFromFile.length ?  fillsFromFile.filter(f=>new Date(f.create_at) > process.env.CPBB_SINCE||'2015-01-01') : await getFills({since: process.env.CPBB_SINCE||'2010-01-01'});
+  const fills = fillsFromFile.length
+    ? fillsFromFile.filter(
+        f => new Date(f.create_at) > process.env.CPBB_SINCE || '2015-01-01'
+      )
+    : await getFills({ since: process.env.CPBB_SINCE || '2010-01-01' });
   // so we can rerun this without calling the API again
-  if(!fillsFromFile.length) fs.writeFileSync(`${__dirname}/../data/fills_${config.productID}.json`, JSON.stringify(fills, null, 2));
+  if (!fillsFromFile.length)
+    fs.writeFileSync(
+      `${__dirname}/../data/fills_${config.productID}.json`,
+      JSON.stringify(fills, null, 2)
+    );
 
   // reverse it to oldest->newest
   fills.reverse();
 
   log.ok('first fill record: ', fills[0]);
-  const all = fills.map(f=>{
+  const all = fills.map(f => {
     // if(!f.usd_volume){
-    //   console.log('no volume?', f);
+    //   log.debug('no volume?', f);
     // }
     const funds = multiply(f.price, f.size);
     return {
@@ -45,8 +57,8 @@ log.ok(`backed up history file in ${backup}`);
       Price: f.price,
       Holding: 0,
       Value: 0,
-      Funds: f.side==='sell' ? multiply(funds, -1) : funds,
-      Shares: f.side==='sell' ? multiply(f.size, -1) : f.size,
+      Funds: f.side === 'sell' ? multiply(funds, -1) : funds,
+      Shares: f.side === 'sell' ? multiply(f.size, -1) : f.size,
       PeriodRate: 0,
       ExpectedGain: 0,
       TotalInput: 0,
@@ -57,18 +69,20 @@ log.ok(`backed up history file in ${backup}`);
       TotalValue: 0,
       Liquid: 0,
       Profit: 0,
-      ID: f.order_id
-    }
+      ID: f.order_id,
+    };
   });
 
   // write new history file
-  const headers = history.headerRow.includes('\tID') ? history.headerRow : history.headerRow + '\tID';
+  const headers = history.headerRow.includes('\tID')
+    ? history.headerRow
+    : history.headerRow + '\tID';
   const data = [
     `${headers}`,
-    ...all.map(row => map(row, v => v).join("\t")),
-  ].join("\n");
+    ...all.map(row => map(row, v => v).join('\t')),
+  ].join('\n');
 
-  // console.log(data)
+  // log.debug(data)
   const file = `${__dirname}/../data/history.${config.productID}.tsv`;
   fs.writeFileSync(file, data);
   log.ok(`updated history ${file} from api data`);
@@ -78,10 +92,9 @@ log.ok(`backed up history file in ${backup}`);
       log.error(`exec error: ${error}`);
       return;
     }
-    console.log(stdout);
-    console.error(stderr);
+    log.ok(stdout);
+    if (stderr) log.error(stderr);
   });
 
   log.ok('all done');
-
 })();

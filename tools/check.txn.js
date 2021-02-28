@@ -1,10 +1,11 @@
-process.env.VERBOSE = "true";
+process.env.VERBOSE = 'true';
 
 const getOrder = require('../coinbase/get.order');
+const log = require('../lib/log');
 
 const id = process.argv[2];
-console.log('checking order', id);
+log.zap('checking order', id);
 (async () => {
   const response = await getOrder({ id });
-  console.log({ response });
-})()
+  log.ok({ response });
+})();

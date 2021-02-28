@@ -4,24 +4,24 @@
     "jest": true,
     "node": true
   },
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "globals": {},
   "parserOptions": {
     "ecmaFeatures": {
       "blockBindings": true,
       "experimentalObjectRestSpread": true
     },
-    "ecmaVersion": 2018
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
-  "ignorePatterns": [
-    "node_modules/"
-  ],
+  "ignorePatterns": ["node_modules/"],
   "rules": {
     "camelcase": 0,
     "comma-spacing": 0,
     "quotes": [
-      0,
-      "single"
+      1,
+      "single",
+      { "avoidEscape": true, "allowTemplateLiterals": true }
     ],
     "new-cap": 0,
     "no-console": 0,

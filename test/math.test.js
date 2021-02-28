@@ -1,8 +1,7 @@
 /**
  * ensure math interface is without JS float precision errors
  */
-const { add, subtract, divide, multiply, pow } = require('../lib/math')
-
+const { add, subtract, divide, multiply, pow } = require('../lib/math');
 
 test('add number and string: no rounding error', () => {
   // rounding error would produce 0.24495261000000002

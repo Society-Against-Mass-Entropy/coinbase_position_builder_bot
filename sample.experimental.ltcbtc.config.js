@@ -12,22 +12,22 @@
  * If you don't want to do this, you should plan on liquidating the full
  * accumulation at some profitable point
  */
-const apiKeys = require("./api.keys");
+const apiKeys = require('./api.keys');
 module.exports = {
   apps: [
     {
-      name: "cpbb_ltcbtc",
-      script: ".",
-      watch: ["*.js", "coinbase", "lib"],
+      name: 'cpbb_ltcbtc',
+      script: '.',
+      watch: ['*.js', 'coinbase', 'lib'],
       env: {
-        NODE_ENV: "production",
+        NODE_ENV: 'production',
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
         CPBB_DRY_RUN: true,
-        CPBB_FREQ: "25 * * * *",
-        CPBB_TICKER: "LTC",
-        CPBB_CURRENCY: "BTC",
+        CPBB_FREQ: '25 * * * *',
+        CPBB_TICKER: 'LTC',
+        CPBB_CURRENCY: 'BTC',
         // trading .005 BTC for ~ 1 LTC
         // (at the time of this creation 1 LTC = .0048 BTC)
         CPBB_VOL: 0.005,

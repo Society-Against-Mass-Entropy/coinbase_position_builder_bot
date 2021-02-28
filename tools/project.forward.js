@@ -3,14 +3,14 @@
  * CPBB_VOL=10 CPBB_APY=15 node project.forward.js
  * CPBB_VOL=10 CPBB_APY=10 node project.forward.js
  */
-const fs = require("fs");
-const { divide } = require("../lib/math");
+const fs = require('fs');
+const { divide } = require('../lib/math');
 
-const config = require("../config");
-const calcAction = require("../lib/calculate.action");
-const history = require("../lib/history");
-const log = require("../lib/log");
-const logSave = require("../lib/log.save");
+const config = require('../config');
+const calcAction = require('../lib/calculate.action');
+const history = require('../lib/history');
+const log = require('../lib/log');
+const logSave = require('../lib/log.save');
 // const memory = require('../lib/memory')
 const ticker = `${config.ticker}-${config.currency}`;
 
@@ -30,7 +30,7 @@ const reverseHistory = history.all().reverse();
 // to project actions using the settings provided
 const now = new Date().getTime();
 
-const processLog = async (idx) => {
+const processLog = async idx => {
   if (idx >= reverseHistory.length) return log.ok(`projection complete`);
   const d = reverseHistory[idx];
   // calculate the projected future date when this will occur
@@ -40,7 +40,7 @@ const processLog = async (idx) => {
     reverse: true,
     dateOverride,
   });
-  action.dateNow = dateOverride
+  action.dateNow = dateOverride;
   logSave({
     action,
     response: {

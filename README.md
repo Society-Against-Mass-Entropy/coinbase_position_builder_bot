@@ -7,14 +7,15 @@ We don't need to look at charts. The trendlines and price predictions don't matt
 This bot will make a market taker action of the configured funding level at the configured interval. If the current holdings that the bot has accumulated is at a profit point higher than a target APY (and the action volume will keep the holdings at a value higher than the APY), then it will make a sell action, else it makes a buy action.
 
 Here is a view of my first 1 BTC purchased via this method (in a Google Sheet for charting):
-![history](docs/cbpp_charts.png "First 1 BTC Accumulated")
+![history](docs/cbpp_charts.png 'First 1 BTC Accumulated')
 
 And here is a view of the bot running for a full year (in a Google Sheet for charting):
-![history](docs/cbpp_year.png "First year of automation")
+![history](docs/cbpp_year.png 'First year of automation')
 
 After running this engine for a bit, you can copy the data in your local log file (e.g. `./data/history.BTC-USD.tsv`) and paste it into the spreadsheet template by [creating a copy of this Google Docs Sheet](https://docs.google.com/spreadsheets/d/1DPo9amEx6RAr33Nnaq27J59AA7XiO90Q2bBP9rq2Tiw/edit?usp=sharing). This template can be saved locally and periodically updated or saved to Google Docs or some other service for backup.
 
 ## WARNING
+
 This tool is built for my own personal use--and while I have published it publicly for others to use/enjoy, please beware that usage of this tool is at your own risk. I have not accounted for all edge cases as I watch and tune this code as an experiment in-progress.
 
 ## Getting Started
@@ -25,42 +26,58 @@ This is all much easier on a Linux/Mac environment with a shell. I have not trie
 
 1. Install [Node.js](https://nodejs.org/en/) or via NVM
 2. Optional: Install a good text editor (like https://code.visualstudio.com/)
-  - After install, F1 and type "shell command"
-  - install shell extension so you can type `code .` in a terminal to open the project up in the editor
+
+- After install, F1 and type "shell command"
+- install shell extension so you can type `code .` in a terminal to open the project up in the editor
+
 3. git clone this project (via terminal) -- or download zip file and unzip
+
 ```
 git clone https://github.com/jasonedison/coinbase_position_builder_bot.git
 cd coinbase_position_builder_bot
 ```
+
 4. Install dependencies and PM2 (process manager)
+
 ```
 npm run setup
 ```
+
 5. Create a Coinbase Pro account (if you don't already have one)
 6. Connect a bank account and transfer in some money (you will need to make sure you keep your USD balance fed with enough runway to keep buying during a bear market)
 7. Create API Key, pass, and secret on Coinbase Pro: https://pro.coinbase.com/profile/api
-  - must have `view`+`trade` permissions
-  - there is no need to allow `transfers` (this script does not move money to/from your bank account)
-  - recommended to limit the API keys to IP address whitelists
+
+- must have `view`+`trade` permissions
+- there is no need to allow `transfers` (this script does not move money to/from your bank account)
+- recommended to limit the API keys to IP address whitelists
+
 8. Add the key, pass, and secret to your environment via environmental variables, or add them to the `./api.key.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
 9. Test all the configs in dry run mode at 1 minute intervals:
+
 ```
 pm2 start run.dry.all.minute.config.js && pm2 logs
 ```
+
 10. Kill it
+
 ```
 pm2 kill
 ```
+
 11. Now copy one of the sample configs (e.g. run.default.btcusd.config.js)
+
 ```
 cp run.default.btcusd.config.js run.config.js
 ```
+
 12. Edit your new `run.config.js` to have the APY and VOLUME values you want by editing `CPBB_APY` and `CPBB_VOL`, respectively.
-13. Adjust the run time interval to suit your preferences. You can use https://crontab.guru/#5_*/12_*_*_* to help turn your desired frequency into the crontab syntax that goes in `CPBB_FREQ`
+13. Adjust the run time interval to suit your preferences. You can use https://crontab.guru/#5_*/12_*__\__ to help turn your desired frequency into the crontab syntax that goes in `CPBB_FREQ`
 14. Now run it for real
+
 ```
 pm2 start run.config.js && pm2 logs
 ```
+
 15. Setup PM2 to save this as a startup task: `pm2 startup`
 16. save current configuration `pm2 save`
 
@@ -69,35 +86,66 @@ pm2 start run.config.js && pm2 logs
 
 ## Upgrading The Project Version
 
-### Git Cloned
+### Git Cloned Directly
+
 If you downloaded the project via a `git clone`, upgrading is super easy:
+
 1. Make sure you are on the right branch: `git checkout stable` (stable for latest stable release, develop for next release)
 2. `git pull --rebase --autostash`
 3. You should be all set. PM2 watches the directory and will restart the processes with the latest code. All done.
 
+### Git Clone Via Fork
+
+If you have code that you want to modify or pull-request into this project through your own fork, you can manage your fork like so:
+
+```
+git clone [YOUR_FORK_PATH];
+cd coinbase_position_builder_bot;
+git remote add upstream git@github.com:jasonedison/coinbase_position_builder_bot.git;
+git fetch upstream;
+git checkout develop;
+git merge upstream/develop;
+npm i;
+npm test;
+```
+
+Latest code will always be commited to `develop`. When releases are made, they are merged into the `stable` branch.
+
+Please make pull-requests to `develop` branch and run `npm test` before making a pull-request.
+We use `Prettier` and `eslint` for formatting so make sure those are set as well. You can format any pull-requests with:
+
+```
+npm run format
+```
+
 ### Zip File Download
+
 If you downloaded the project via a zip file, it's a bit more complicated.
+
 1. Download the latest release zip file: https://github.com/jasonedison/coinbase_position_builder_bot/releases
 2. unzip
 3. run `npm i` in the folder
 4. copy your `./data/history*` files from your old project directory
 5. copy your `./data/maker.orders*` files from your old project directory (if they exist, version > 2.1.0)
-6. copy your custom run.*.config.js file (with your config setup)
+6. copy your custom run.\*.config.js file (with your config setup)
 7. Ensure that your keys are in your environment by doing `echo $CPBB_APIKEY` -- this should be the value you set (if it returns nothing, your environmental variables are not set right). If you had set your keys in api.keys.js (not recommended but useful if you don't know how to set environmental variables), make sure you copied that file from your old project
 8. run `pm2 kill` to stop all running pm2 processes
 9. run `pm2 start [YOUR_CONFIG_NAME].config.js` (e.g. `pm2 start run.mine.config.js`)
 
 ## Changing Config Settings
-If you edit your *.config.js file with new values, you will have to kill pm2 and start your app from the config fresh. pm2 restart and reload does not read new environmental variables.
+
+If you edit your \*.config.js file with new values, you will have to kill pm2 and start your app from the config fresh. pm2 restart and reload does not read new environmental variables.
+
 1. Edit your config file
 2. run `pm2 kill` to stop all running pm2 processes
 3. run `pm2 start [YOUR_CONFIG_NAME].config.js` (e.g. `pm2 start run.mine.config.js`)
 
-
 ### Default Configuration
+
 Note: the default settings will take a $10 action every 12 hours on BTCUSD. If Bitcoin sustains a bear market for a full year, this would amount to spending $20/day = $140/week = $7,300/year on Bitcoin (always accumulating). If the price fluctuates enough to cross the profitability threshold (default 15% APY), it may sell upward and sustain itself with a floating balance for a while.
 
-The defaults can be overridden with environmental variables (or update in the run.*.config.js files with pm2):
+The defaults can be overridden with environmental variables (or update in the run.\*.config.js files with pm2):
+
 ```
 export CPBB_APY=15 # 15% APY (sell above this gain)
 export CPBB_VOL=10 # take $10 actions at configured frequency
@@ -107,6 +155,7 @@ export CPBB_CURRENCY=USD # this is the account we will take buy/sell actions on 
 ```
 
 ### Rebuy Configuration
+
 Since 2.1.0, we have a rebuy feature that will set limit orders to rebuy some of the sold asset if it drops to a specified target % drop point between checking periods.
 
 If you start the app with a config of CPBB_REBUY_MAX greater than 0, it will invoke the following behavioral change on each cron job:
@@ -116,6 +165,7 @@ If you start the app with a config of CPBB_REBUY_MAX greater than 0, it will inv
 3. If the action was a `sell`, set new limit orders
 
 There are two sample configs that illustrate how this can be configured:
+
 - `sample.btcusd.limit_only.config.js`
 - `sample.btcusd.rebuy.config.js`
 
@@ -162,6 +212,7 @@ CPBB_REBUY_REBUILD: 12
 The above config will cause the engine to attempt to set up to $50 worth of limit orders for the asset after each `sell` action. The orders will be placed as .0001 @ -.01% drop (very soon), .0001 @ -2% drop, etc until the $50 spending threshold is met.
 
 ### Volume and Frequency
+
 Unfortunately, the Coinbase Pro API will only allow market taker orders of `$10` or more. So my original idea of buying $1 or $2 worth every hour (or even more frequently) went bust--unless you want to make a $10/hour order, which adds up fast if you are in a continuous recession (always buying mode).
 
 $10/hour = $240/day = $1680/week = $87,600/year max buy.
@@ -187,6 +238,7 @@ If you've got an extra $87K/year to build a position into Bitcoin, `more power t
 If you want more crontab frequency options, you can construct your own via https://crontab.guru/
 
 Additionally, could alter the dollar amount and act with `$15` twice a day (for example) like so:
+
 ```
 CPBB_VOL=15 CPBB_FREQ='0 */12 * * *' node .
 ```
@@ -205,6 +257,7 @@ The first option is not great for testing strategies because it uses the sandbox
 2. You will also need to fake transfer USD from Coinbase into the Sandbox
 
 Then run the app against the Sandbox API
+
 ```
 export CPBB_APIPASS="API Password"
 export CPBB_APIKEY="SANDBOX API KEY"
@@ -218,18 +271,22 @@ The real coinbase API can also be run in a "dry run" mode, which will calculate 
 
 1. Edit the `./api.keys.js` file to have your APIPASS, APIKEY, and APISEC (or add them as environmental variables)
 2. start pm2
+
 ```
 pm2 start run.dry.all.minute.config.js
 ```
+
 3. observe the logs: `pm2 logs`
 4. Let it run for a few minutes
 5. kill it: `pm2 stop run.dry.all.minute.config.js`
 6. look at the log files: `./data/history.BTC-USD.dryrun.tsv` and `./data/history.LTC-BTC.dryrun.tsv`, etc
 
 ## History / Logs
-This app is built to be entirely self-contained. There is no database or 3rd party (aside from Coinbase as the market source). Activity is logged to a tsv file in the local `./data` directory on disk. 
+
+This app is built to be entirely self-contained. There is no database or 3rd party (aside from Coinbase as the market source). Activity is logged to a tsv file in the local `./data` directory on disk.
 
 Here is an example log from my first tests:
+
 ```
 Time	Price	Holding	Value	Funds	Shares	PeriodRate	ExpectedGain	TotalInput	Target	Diff	EndValue	Realized	TotalValue	Liquid	Profit
 2020-01-21T03:23:03.473Z	8656.29	0	0	10	0.00115292	0	0	10	10	-10	10	0	10	0	0
@@ -256,7 +313,7 @@ There is another provided tool for taking an existing history file and running a
 
 It can be used to examine what it might look like if we alter the volume or APY target in th event that the price reverses in the same pattern as our current log of transactions.
 
-  Note: this model runs using the existing engine log with the price/timestamps listed in the history. So it will model those prices and intervals in reverse. You will need to have run this engine for some amount of time prior to running the future projection tool in order to project from your particular history:
+Note: this model runs using the existing engine log with the price/timestamps listed in the history. So it will model those prices and intervals in reverse. You will need to have run this engine for some amount of time prior to running the future projection tool in order to project from your particular history:
 
 ```
 CPBB_VOL=20 CPBB_APY=20 node project.forward.js
@@ -264,19 +321,22 @@ CPBB_VOL=20 CPBB_APY=20 node project.forward.js
 
 This will examine your current history file (e.g. `./data/history.BTC-USD.tsv`), reverse the data, and run it as projected future events. Then it will save the result in a corresponding projection file (e.g. `./data/history.BTC-USD.projection.tsv`).
 
-
 # Scripting Tools
 
 ## Tax Calculator
+
 NOTE: I am not an accountant. I am not a fiduciary. You are responsible for the accuracy of your own tax reporting and usage of this tool is not guaranteed to give you accurate results. I use it. It's for me. If you want to use it, you are responsible for reviewing the code and making sure it is accurate for your accounting needs/purposes.
 
 ### Calculate Short-term and Long-term and Capital Gains for a Calendar Year
+
 ```
 CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_YEAR=2020 node tax_fifo.js
 ```
 
 ## APY Adjuster
+
 If you want to change your APY and back-edit all your history so your Target is adjusted to be that APY consistently for your whole history (this will compound). You can run like so:
+
 ```
 # updates the BTC-USD history with 150% APY (creates a new ./data/history.BTC-USD.fixed.apy.tsv that will need to be reviewed and copied into your history.BTC-USD.tsv)
 CPBB_TICKER=BTC CPBB_APY=150 node adjust.apy.js
@@ -285,6 +345,7 @@ pm2 reload all
 ```
 
 ## Adding Missing Records
+
 I have noticed that in extreme situations, the Coinbase API will be so overloaded that the API will fail to complete an order and timeout. However, the order does complete. When I notice this, I can see in Coinbase that the order went through and get the price and shares traded--but the engine is still running without that info!
 
 > NOTE: I believe we have addressed this in retry logic. If you see this happen, please file an issue.
@@ -304,13 +365,16 @@ If you want to add all manual activity to the history file, you can generate a n
 cd tools;
 CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_APY=150 CPBB_SINCE=2015-01-01 node create.history.js
 ```
+
 or to use a cached fills history file:
+
 ```
 cd tools;
 CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_APY=150 CPBB_SINCE=2015-01-01 CPBB_FILLS=../data/fills_BTC-USD.json node create.history.js
 ```
 
 # Disclaimer
+
 This software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement. In no event shall the authors, copyright holders, or Coinbase Inc. be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
 
 # Who Am I?

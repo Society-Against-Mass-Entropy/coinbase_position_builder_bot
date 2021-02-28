@@ -14,15 +14,18 @@ const log = require('../lib/log');
 const getFills = require('../coinbase/get.fills');
 const history = require('../lib/history');
 const touch = require('../lib/touch');
-const map = require("lodash.map");
+const map = require('lodash.map');
 
 const uniqFilter = (value, index, self) => {
   return self.indexOf(value) === index;
-}
+};
 
 // const fills = require(`../data/fills_${config.productID}.json`);
 const { add, subtract } = require('../lib/math');
-const backup = config.history_file.replace('.tsv', `_backup_${new Date().getTime()}.tsv`);
+const backup = config.history_file.replace(
+  '.tsv',
+  `_backup_${new Date().getTime()}.tsv`
+);
 (async () => {
   // backup history file
   fs.copyFileSync(config.history_file, backup);
@@ -34,7 +37,10 @@ const backup = config.history_file.replace('.tsv', `_backup_${new Date().getTime
   // now query all fills from API (paginated until the earliest history date)
   const fills = await getFills({ since: all[0].Time });
   // just for debugging
-  fs.writeFileSync(`${__dirname}/../data/fills_${config.productID}.json`, JSON.stringify(fills, null, 2));
+  fs.writeFileSync(
+    `${__dirname}/../data/fills_${config.productID}.json`,
+    JSON.stringify(fills, null, 2)
+  );
 
   // reverse it to oldest->newest to match history file
   fills.reverse().map(f => {
@@ -57,7 +63,7 @@ const backup = config.history_file.replace('.tsv', `_backup_${new Date().getTime
       if (f.timestamp === t && f.size === s) return true; // exact match
       // fuzzy
       return f.timestampMin < t && f.timestampMax > t;
-    })
+    });
     if (!matches.length) {
       matches = fills.filter(f => Number(f.size) === h.Shares);
       if (!matches.length) {
@@ -98,15 +104,16 @@ const backup = config.history_file.replace('.tsv', `_backup_${new Date().getTime
     h.Funds = usd.toFixed(9);
   });
 
-
   // write new history file
-  const headers = history.headerRow.includes('\tID') ? history.headerRow : history.headerRow + '\tID';
+  const headers = history.headerRow.includes('\tID')
+    ? history.headerRow
+    : history.headerRow + '\tID';
   const data = [
     `${headers}`,
-    ...all.map(row => map(row, v => v).join("\t")),
-  ].join("\n");
+    ...all.map(row => map(row, v => v).join('\t')),
+  ].join('\n');
 
-  // console.log(data)
+  log.debug(data);
   const file = `${__dirname}/../data/history.${config.productID}.tsv`;
   fs.writeFileSync(file, data);
   log.ok(`updated history ${file} from api data`);
@@ -116,15 +123,13 @@ const backup = config.history_file.replace('.tsv', `_backup_${new Date().getTime
       log.error(`exec error: ${error}`);
       return;
     }
-    console.log(stdout);
-    console.error(stderr);
+    log.ok(stdout);
+    if (stderr) log.error(stderr);
   });
-
 
   // finally, touch the index file so our pm2 filewatcher will auto-restart the service
   // this will load the latest history file into memory for the next job run
   await touch('../index.js');
 
   log.ok('all done');
-
 })();

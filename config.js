@@ -1,18 +1,18 @@
-const fs = require("fs");
+const fs = require('fs');
 const log = require('./lib/log');
-const pjson = require("./package");
+const pjson = require('./package');
 
 const { divide } = require('./lib/math');
 const config = {
   api: process.env.CPBB_TEST
-    ? "https://api-public.sandbox.pro.coinbase.com"
-    : "https://api.pro.coinbase.com",
-  dry: process.env.CPBB_DRY_RUN === "true",
+    ? 'https://api-public.sandbox.pro.coinbase.com'
+    : 'https://api.pro.coinbase.com',
+  dry: process.env.CPBB_DRY_RUN === 'true',
   // default run once per 12 hours at the 5th minute (crontab syntax)
   // testing mode will run every minute
   freq: process.env.CPBB_TEST
-    ? "* * * * *"
-    : process.env.CPBB_FREQ || "5 */12 * * *",
+    ? '* * * * *'
+    : process.env.CPBB_FREQ || '5 */12 * * *',
   // default $10 action
   vol: Number(process.env.CPBB_VOL || 10),
   // default 15% APY target (we aim to shave off any excess from this gain)
@@ -20,46 +20,61 @@ const config = {
   rebuy: {
     // ms after limit order placed before it is able to be canceled due to not filling
     cancel: Number(process.env.CPBB_REBUY_CANCEL || 0) * 60000,
-    drops: (process.env.CPBB_REBUY_AT || '').split(',').map(p => p ? divide(p, 100) : null).filter(i => i),
+    drops: (process.env.CPBB_REBUY_AT || '')
+      .split(',')
+      .map(p => (p ? divide(p, 100) : null))
+      .filter(i => i),
     max: Number(process.env.CPBB_REBUY_MAX || 0),
     only: process.env.CPBB_REBUY_ONLY === 'true',
     rebuild: Number(process.env.CPBB_REBUY_REBUILD || 0),
-    sizes: (process.env.CPBB_REBUY_SIZE || '').split(',').map(s => s ? Number(s) : null).filter(i => i)
+    sizes: (process.env.CPBB_REBUY_SIZE || '')
+      .split(',')
+      .map(s => (s ? Number(s) : null))
+      .filter(i => i),
   },
   // if the trading pair ordering doesn't exist (e.g. BTC-LTC)
   // we have to reverse our logic to run from the trading pair that does exist (e.g. LTC-BTC)
   reverse: false,
   // default ticker currency is BTC
-  ticker: process.env.CPBB_TICKER || "BTC",
+  ticker: process.env.CPBB_TICKER || 'BTC',
   // default home currency is USD
-  currency: process.env.CPBB_CURRENCY || "USD",
+  currency: process.env.CPBB_CURRENCY || 'USD',
   pjson,
 };
 config.productID = `${config.ticker}-${config.currency}`;
-let historyName = config.productID
+let historyName = config.productID;
 // currenly, we only support reversing BTC orders to support ticker pairs that don't exist
-if (config.ticker === 'BTC' && !['USD', 'USDC', 'GBP', 'EUR'].includes(config.currency)) {
+if (
+  config.ticker === 'BTC' &&
+  !['USD', 'USDC', 'GBP', 'EUR'].includes(config.currency)
+) {
   config.reverse = true;
   historyName = config.productID; // still save as history.BTC-LTC...
   // ask coinbase for LTCBTC pair
   config.productID = `${config.currency}-${config.ticker}`;
   log.zap(`running in reverse logic mode to support inverted ticker`);
 }
-let historySubName = "";
-if (process.env.CPBB_TEST) historySubName = ".sandbox";
-if (process.env.CPBB_DRY_RUN) historySubName = ".dryrun";
+let historySubName = '';
+if (process.env.CPBB_TEST) historySubName = '.sandbox';
+if (process.env.CPBB_DRY_RUN) historySubName = '.dryrun';
 config.history_file = `${__dirname}/data/history.${historyName}${historySubName}.tsv`;
 log.ok(config.history_file);
 if (!fs.existsSync(config.history_file)) {
   // copy the template
-  console.log("creating log file from template", config.history_file);
-  fs.copyFileSync(`${__dirname}/data/template.history.tsv`, config.history_file);
+  log.zap('creating log file from template', config.history_file);
+  fs.copyFileSync(
+    `${__dirname}/data/template.history.tsv`,
+    config.history_file
+  );
 }
 config.maker_file = `${__dirname}/data/maker.orders.${historyName}${historySubName}.json`;
 log.ok(config.maker_file);
 if (!fs.existsSync(config.maker_file)) {
   // copy the template
-  console.log("creating maker file from template", config.maker_file);
-  fs.copyFileSync(`${__dirname}/data/template.maker.orders.json`, config.maker_file);
+  log.zap('creating maker file from template', config.maker_file);
+  fs.copyFileSync(
+    `${__dirname}/data/template.maker.orders.json`,
+    config.maker_file
+  );
 }
 module.exports = config;
