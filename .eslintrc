@@ -18,7 +18,11 @@
   "rules": {
     "camelcase": 0,
     "comma-spacing": 0,
-    "quotes": [1, "single", {"avoidEscape": true, "allowTemplateLiterals": true}],
+    "quotes": [
+      1,
+      "single",
+      { "avoidEscape": true, "allowTemplateLiterals": true }
+    ],
     "new-cap": 0,
     "no-console": 0,
     "no-empty": 0,
