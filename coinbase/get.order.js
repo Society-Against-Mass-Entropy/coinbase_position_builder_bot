@@ -14,7 +14,9 @@ module.exports = async (order) => {
       time = 10000; // extend future retries to 10 seconds
     }
     if (retryCount === 2) {
-      log.zap(`API is slow! Order ${order.id} is pending! 404 is normal. We will retry every 10 seconds for up to 1 hour...`);
+      log.zap(
+        `API is slow! Order ${order.id} is pending! 404 is normal. We will retry every 10 seconds for up to 1 hour...`
+      );
       log.debug(`retry #${retryCount} on order #${order.id}`);
     }
     const opts = {
@@ -26,11 +28,9 @@ module.exports = async (order) => {
     log.debug(response);
     const json = response ? response.json : response;
     // NOTE: we allow limit orders to be unsettled and even not found (sometimes limits get purged due to maintenance or other conditions)
-    if (order.type === 'market' && (
-      !json ||
-      !json.settled ||
-      json.message === "NotFound"
-    )
+    if (
+      order.type === "market" &&
+      (!json || !json.settled || json.message === "NotFound")
     ) {
       retryCount++;
       if (retryCount > RETRY_TIMES) {
@@ -41,11 +41,14 @@ module.exports = async (order) => {
       return getCompletedOrder();
     }
     if (retryCount) {
-      const elapsed = retryCount * time / 1000;
+      const elapsed = (retryCount * time) / 1000;
       if (elapsed > 60) {
         // only log this alert if the delay was longer than 1 minute
-        const timeString = elapsed > 60 ? `${elapsed / 60} minutes` : `${elapsed} seconds`;
-        log.zap(`API slowdown: Order ${order.id} took ${timeString} to update status!`);
+        const timeString =
+          elapsed > 60 ? `${elapsed / 60} minutes` : `${elapsed} seconds`;
+        log.zap(
+          `API slowdown: Order ${order.id} took ${timeString} to update status!`
+        );
       }
     }
     return json;

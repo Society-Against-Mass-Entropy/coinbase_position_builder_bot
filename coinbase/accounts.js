@@ -7,5 +7,4 @@ module.exports = async () => {
   });
   // log.debug(json);
   return json;
-}
-
+};

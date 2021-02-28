@@ -2,17 +2,19 @@
  * just a tool for me to update the log schema or tweak the calculated values
  * if new rules take effect
  */
-console.log(`🤖 Position Builder Engine Updater`);
 
+const log = require("../lib/log");
 const fs = require("fs");
 const history = require("../lib/history");
 const { divide, subtract, multiply, add, pow } = require("../lib/math");
 const map = require("lodash.map");
 const MS_PER_YEAR = 31556952000;
 
+log.bot(`Position Builder Engine Updater`);
+
 const all = history.all();
 
-console.log(all[0].Time, all[all.length - 1].Time);
+log.debug(all[0].Time, all[all.length - 1].Time);
 
 const start = new Date(all[0].Time).getTime();
 
@@ -23,9 +25,9 @@ for (let i = 0; i < all.length; i++) {
   all[i].InProfit = !i
     ? 0
     : multiply(
-      subtract(divide(all[i].Value, all[i - 1].TotalInput), 1),
-      100
-    ).toFixed(2) + "%";
+        subtract(divide(all[i].Value, all[i - 1].TotalInput), 1),
+        100
+      ).toFixed(2) + "%";
 
   // add elapsed ms
   all[i].Elapsed = !i ? 0 : new Date(all[i].Time).getTime() - start;
@@ -37,17 +39,14 @@ for (let i = 0; i < all.length; i++) {
   all[i].PeriodsPerYear = !i ? 0 : divide(MS_PER_YEAR, all[i].Elapsed);
   all[i].InAPY = !i
     ? 0
-    :
-    multiply(
-      subtract(
-        pow(add(all[i].RealPeriodRate, 1), all[i].PeriodsPerYear),
-        1
-      ),
-      100
-    ).toFixed(2) + "%";
+    : multiply(
+        subtract(pow(add(all[i].RealPeriodRate, 1), all[i].PeriodsPerYear), 1),
+        100
+      ).toFixed(2) + "%";
 
-  // console.log(all[i])
-  // if(i) console.log(all[i-1].Holding, '+',all[i-1].Shares, '=',all[i].Holding)
+  log.debug(all[i]);
+  if (i)
+    log.debug(all[i - 1].Holding, "+", all[i - 1].Shares, "=", all[i].Holding);
 }
 
 const data = [

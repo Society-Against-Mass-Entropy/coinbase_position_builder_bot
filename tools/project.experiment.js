@@ -10,7 +10,7 @@ const config = require("../config");
 const calcAction = require("../lib/calculate.action");
 const log = require("../lib/log");
 const logSave = require("../lib/log.save");
-const memory = require('../lib/memory');
+const memory = require("../lib/memory");
 const ticker = `${config.ticker}-${config.currency}`;
 
 const historyFile = `${__dirname}/../data/history.${ticker}.tsv`;
@@ -28,12 +28,14 @@ config.history_file = projectedFile;
 // copy existing history file to new projected file
 fs.copyFileSync(historyFile, projectedFile);
 
-// console.log(memory.lastLog);
+log.debug(memory.lastLog);
 const startTime = new Date(memory.lastLog.Time).getTime();
 const endTime = new Date(targetDate).getTime();
-const periods = Math.floor(divide(subtract(endTime, startTime), multiply(60000, targetMinutes)));
+const periods = Math.floor(
+  divide(subtract(endTime, startTime), multiply(60000, targetMinutes))
+);
 // 80% correction (grows over time)
-let targetFloor = multiply(memory.lastLog.Price, .8);
+let targetFloor = multiply(memory.lastLog.Price, 0.8);
 // could go up 50% in the next period (this grows over time)
 let targetCeiling = multiply(memory.lastLog.Price, 1.5);
 
@@ -46,9 +48,9 @@ let periodCounter = 0;
     let remainingPeriods = periods - i;
     let price = memory.lastLog.Price;
     let change = multiply(price, Math.random(), targetVolatility);
-    let percentRemaining = (remainingPeriods / periods);
-    targetFloor = add(targetFloor, multiply(targetFloor, .001));
-    targetCeiling = add(targetCeiling, multiply(targetCeiling, .001));
+    let percentRemaining = remainingPeriods / periods;
+    targetFloor = add(targetFloor, multiply(targetFloor, 0.001));
+    targetCeiling = add(targetCeiling, multiply(targetCeiling, 0.001));
 
     // priceStart = price;
     periodCounter++;
@@ -70,20 +72,23 @@ let periodCounter = 0;
     } else {
       if (direction === -1) {
         // are we really going to do it?
-        change = multiply(change, Math.random() < targetDownChance * percentRemaining ? -1 : 1);
+        change = multiply(
+          change,
+          Math.random() < targetDownChance * percentRemaining ? -1 : 1
+        );
       }
       price = add(price, change);
-
     }
 
-
     // calculate the projected future date when this will occur
-    const dateOverride = new Date(add(startTime, multiply(i + 1, targetMinutes, 60000)));
+    const dateOverride = new Date(
+      add(startTime, multiply(i + 1, targetMinutes, 60000))
+    );
     const action = await calcAction({
       price,
       dateOverride,
     });
-    action.dateNow = dateOverride
+    action.dateNow = dateOverride;
     logSave({
       action,
       response: {
@@ -91,5 +96,11 @@ let periodCounter = 0;
       },
     });
   }
-  log.now(`projected ${ticker} between $${targetFloor} - $${targetCeiling} until ${targetDate} with $${config.vol} every ${targetMinutes} minutes, targeting ${config.apy * 100}% APY, and a ${targetDownChance} chance of going down rather than up (diminishing over time)`);
+  log.now(
+    `projected ${ticker} between $${targetFloor} - $${targetCeiling} until ${targetDate} with $${
+      config.vol
+    } every ${targetMinutes} minutes, targeting ${
+      config.apy * 100
+    }% APY, and a ${targetDownChance} chance of going down rather than up (diminishing over time)`
+  );
 })();

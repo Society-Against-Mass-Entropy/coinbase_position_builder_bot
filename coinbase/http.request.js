@@ -2,7 +2,7 @@ const http = require("https");
 const log = require("../lib/log");
 module.exports = (params) => {
   const makeRequest = function (resolve, reject) {
-    // console.log({ params });
+    log.debug({ params });
     const req = http.request(params, function (res) {
       const body = [];
       res.on("data", function (chunk) {
@@ -14,11 +14,13 @@ module.exports = (params) => {
         try {
           json = JSON.parse(responseBody);
         } catch (e) {
-          log.error('failed to parse response from API', e)
+          log.error("failed to parse response from API", e);
           reject(e);
         }
         if (res.statusCode === 429) {
-          log.error('Error 429: rate limited. Please file an issue here: https://github.com/jasonedison/coinbase_position_builder_bot/issues');
+          log.error(
+            "Error 429: rate limited. Please file an issue here: https://github.com/jasonedison/coinbase_position_builder_bot/issues"
+          );
         }
         if (res.statusCode < 200 || res.statusCode >= 300) {
           if (json && json.message === "invalid signature") {
@@ -37,7 +39,7 @@ module.exports = (params) => {
     // reject on request error
     req.on("error", function (err) {
       // This is not a "Second reject", just a different sort of failure
-      log.error(`error in API request/response`, err)
+      log.error(`error in API request/response`, err);
       reject(err);
     });
     if (params.body) {

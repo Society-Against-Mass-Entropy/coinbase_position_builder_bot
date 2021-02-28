@@ -40,7 +40,7 @@ const processLog = async (idx) => {
     reverse: true,
     dateOverride,
   });
-  action.dateNow = dateOverride
+  action.dateNow = dateOverride;
   logSave({
     action,
     response: {

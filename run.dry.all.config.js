@@ -6,6 +6,7 @@
  */
 
 const fs = require("fs");
+const log = require("./lib/log");
 const files = fs
   .readdirSync(".")
   .filter(
@@ -15,7 +16,7 @@ const files = fs
       f !== "run.default.all.config.js"
   );
 
-// console.log({files})
+log.debug({ files });
 
 const apps = [];
 files.forEach((f) => {
@@ -28,7 +29,7 @@ files.forEach((f) => {
   apps.push(...config);
 });
 
-// console.log(apps)
+log.debug(apps);
 
 module.exports = {
   apps: apps,
