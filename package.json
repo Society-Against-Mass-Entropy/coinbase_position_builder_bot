@@ -29,8 +29,8 @@
     "start:2": "CPBB_FREQ='5 */2 * * *' node .",
     "start:3": "CPBB_FREQ='5 */3 * * *' node .",
     "start:4": "CPBB_FREQ='5 */4 * * *' node .",
-    "test": "./node_modules/eslint/bin/eslint.js . && echo '✅ No Lint' && ./node_modules/jest/bin/jest.js --coverage && echo '✅ Tests'",
-    "test:watch": "./node_modules/jest/bin/jest.js --watch"
+    "test": "./node_modules/eslint/bin/eslint.js . && echo '✅ No Lint' && CPBB_SILENT=true ./node_modules/jest/bin/jest.js --coverage && echo '✅ Tests'",
+    "test:watch": "CPBB_SILENT=true ./node_modules/jest/bin/jest.js --watch"
   },
   "repository": {
     "type": "git",

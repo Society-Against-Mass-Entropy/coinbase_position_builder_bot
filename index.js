@@ -86,3 +86,5 @@ const job = new CronJob(config.freq, action);
   const nextDate = job.nextDates();
   log.now(`🕟 next run ${nextDate.fromNow()}, on ${nextDate.local().format()}`);
 })();
+
+module.exports = job;
