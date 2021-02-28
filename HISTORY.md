@@ -1,3 +1,13 @@
+# 2.5.3
+
+- Fix bug with running engine without CPBB_REBUY_AT being set in ENV
+- now using prettier and eslint together for code format
+- adding unit tests
+
+# 2.5.2
+
+- fix but with saving history item for a rebuy order (price from API is not a number and cannot be toFixed() until cast)
+
 # 2.5.1
 
 - Fix bug where rebuilding the rebuy orders can cause 429 rate limiting errors
