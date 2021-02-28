@@ -1,10 +1,10 @@
 // https://docs.pro.coinbase.com/?javascript#place-a-new-order
 
-const { divide, multiply } = require("../lib/math");
-const config = require("../config");
-const memory = require("../lib/memory");
-const numFix = require("../lib/number.fix");
-const request = require("./cb.request");
+const { divide, multiply } = require('../lib/math');
+const config = require('../config');
+const memory = require('../lib/memory');
+const numFix = require('../lib/number.fix');
+const request = require('./cb.request');
 
 module.exports = async opts => {
   if (config.dry) {
@@ -24,8 +24,8 @@ module.exports = async opts => {
     };
   }
   const response = await request({
-    requestPath: "/orders",
-    method: "POST",
+    requestPath: '/orders',
+    method: 'POST',
     body: opts,
   });
   return response ? response.json : response;

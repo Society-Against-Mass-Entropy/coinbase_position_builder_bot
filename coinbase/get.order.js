@@ -1,6 +1,6 @@
-const log = require("../lib/log");
-const request = require("./cb.request");
-const sleep = require("../lib/sleep");
+const log = require('../lib/log');
+const request = require('./cb.request');
+const sleep = require('../lib/sleep');
 const RETRY_TIMES = 360; // 60 minutes worth of 10 second intervals
 module.exports = async order => {
   let retryCount = 0;
@@ -21,7 +21,7 @@ module.exports = async order => {
     }
     const opts = {
       requestPath: `/orders/${order.id}`,
-      method: "GET",
+      method: 'GET',
     };
     log.debug(opts);
     const response = await request(opts);
@@ -29,13 +29,13 @@ module.exports = async order => {
     const json = response ? response.json : response;
     // NOTE: we allow limit orders to be unsettled and even not found (sometimes limits get purged due to maintenance or other conditions)
     if (
-      order.type === "market" &&
-      (!json || !json.settled || json.message === "NotFound")
+      order.type === 'market' &&
+      (!json || !json.settled || json.message === 'NotFound')
     ) {
       retryCount++;
       if (retryCount > RETRY_TIMES) {
         log.error(`failed to get order ${order.id}`, { order, json });
-        return Promise.reject("failed to get complete order");
+        return Promise.reject('failed to get complete order');
       }
       await sleep(time);
       return getCompletedOrder();

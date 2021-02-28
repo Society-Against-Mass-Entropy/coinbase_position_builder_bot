@@ -1,12 +1,12 @@
-const requestSign = require("../coinbase/request.sign");
+const requestSign = require('../coinbase/request.sign');
 
-test("sign a request", () => {
-  process.env.CPBB_APISEC = "test";
+test('sign a request', () => {
+  process.env.CPBB_APISEC = 'test';
   const signature = requestSign({
     timestamp: 1614460439.802,
     requestPath: `/test`,
-    body: "",
-    method: "GET",
+    body: '',
+    method: 'GET',
   });
-  expect(signature).toEqual("L337iiKjz8IEcFlHG3lu/CtcKXlXm2bsV3d5c0ZGFeg=");
+  expect(signature).toEqual('L337iiKjz8IEcFlHG3lu/CtcKXlXm2bsV3d5c0ZGFeg=');
 });

@@ -5,15 +5,15 @@
  * pm2 start run.dry.all.config.js
  */
 
-const fs = require("fs");
-const log = require("./lib/log");
+const fs = require('fs');
+const log = require('./lib/log');
 const files = fs
-  .readdirSync(".")
+  .readdirSync('.')
   .filter(
     f =>
-      f.includes("run.default") &&
-      f.includes("config.js") &&
-      f !== "run.default.all.config.js"
+      f.includes('run.default') &&
+      f.includes('config.js') &&
+      f !== 'run.default.all.config.js'
   );
 
 log.debug({ files });

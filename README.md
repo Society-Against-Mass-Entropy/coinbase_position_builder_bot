@@ -7,10 +7,10 @@ We don't need to look at charts. The trendlines and price predictions don't matt
 This bot will make a market taker action of the configured funding level at the configured interval. If the current holdings that the bot has accumulated is at a profit point higher than a target APY (and the action volume will keep the holdings at a value higher than the APY), then it will make a sell action, else it makes a buy action.
 
 Here is a view of my first 1 BTC purchased via this method (in a Google Sheet for charting):
-![history](docs/cbpp_charts.png "First 1 BTC Accumulated")
+![history](docs/cbpp_charts.png 'First 1 BTC Accumulated')
 
 And here is a view of the bot running for a full year (in a Google Sheet for charting):
-![history](docs/cbpp_year.png "First year of automation")
+![history](docs/cbpp_year.png 'First year of automation')
 
 After running this engine for a bit, you can copy the data in your local log file (e.g. `./data/history.BTC-USD.tsv`) and paste it into the spreadsheet template by [creating a copy of this Google Docs Sheet](https://docs.google.com/spreadsheets/d/1DPo9amEx6RAr33Nnaq27J59AA7XiO90Q2bBP9rq2Tiw/edit?usp=sharing). This template can be saved locally and periodically updated or saved to Google Docs or some other service for backup.
 

@@ -6,9 +6,9 @@
  * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_YEAR=2020 node tax_fifo.js
  */
 
-const history = require("../lib/history");
-const log = require("../lib/log");
-const { add, divide, multiply, subtract } = require("../lib/math");
+const history = require('../lib/history');
+const log = require('../lib/log');
+const { add, divide, multiply, subtract } = require('../lib/math');
 const year = Number(process.env.CPBB_YEAR);
 log.bot(`Position Builder Bot FIFO Calculator ${year}`);
 
@@ -78,7 +78,7 @@ sells.forEach(sell => {
       )}, bought @ ${dollarize(buy.basis)} for ${dollarize(
         closedBuyValue
       )} | net ${dollarize(profit)} in ${
-        isLongTerm ? "long" : "short"
+        isLongTerm ? 'long' : 'short'
       }-term gains`
     );
     // NOTE: we want to calculate buys/sells since the beginning of time
@@ -96,7 +96,7 @@ sells.forEach(sell => {
     }
     if (buy.shares > 0) log.debug(`${buy.shares} remaining @ ${buy.basis}`);
     if (sell.shares > 0)
-      log.error("something very wrong with this algorithm", { sell });
+      log.error('something very wrong with this algorithm', { sell });
     if (!sell.shares) return; // break the loop and kill this function (onto the next sell)
   }
 });

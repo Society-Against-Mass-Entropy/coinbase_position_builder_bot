@@ -1,6 +1,6 @@
-const sleep = require("../lib/sleep");
+const sleep = require('../lib/sleep');
 
-test("sleep 0", async () => {
+test('sleep 0', async () => {
   const startTime = new Date().getTime();
   await sleep();
   const endTime = new Date().getTime();
@@ -8,7 +8,7 @@ test("sleep 0", async () => {
   expect(elapsed).toBeGreaterThan(-1);
   expect(elapsed).toBeLessThan(10);
 });
-test("sleep 200ms", async () => {
+test('sleep 200ms', async () => {
   const startTime = new Date().getTime();
   await sleep(200);
   const endTime = new Date().getTime();

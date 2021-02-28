@@ -3,11 +3,11 @@
  * if new rules take effect
  */
 
-const log = require("../lib/log");
-const fs = require("fs");
-const history = require("../lib/history");
-const { divide, subtract, multiply, add, pow } = require("../lib/math");
-const map = require("lodash.map");
+const log = require('../lib/log');
+const fs = require('fs');
+const history = require('../lib/history');
+const { divide, subtract, multiply, add, pow } = require('../lib/math');
+const map = require('lodash.map');
 const MS_PER_YEAR = 31556952000;
 
 log.bot(`Position Builder Engine Updater`);
@@ -27,7 +27,7 @@ for (let i = 0; i < all.length; i++) {
     : multiply(
         subtract(divide(all[i].Value, all[i - 1].TotalInput), 1),
         100
-      ).toFixed(2) + "%";
+      ).toFixed(2) + '%';
 
   // add elapsed ms
   all[i].Elapsed = !i ? 0 : new Date(all[i].Time).getTime() - start;
@@ -42,16 +42,16 @@ for (let i = 0; i < all.length; i++) {
     : multiply(
         subtract(pow(add(all[i].RealPeriodRate, 1), all[i].PeriodsPerYear), 1),
         100
-      ).toFixed(2) + "%";
+      ).toFixed(2) + '%';
 
   log.debug(all[i]);
   if (i)
-    log.debug(all[i - 1].Holding, "+", all[i - 1].Shares, "=", all[i].Holding);
+    log.debug(all[i - 1].Holding, '+', all[i - 1].Shares, '=', all[i].Holding);
 }
 
 const data = [
   `${history.headerRow}\tInProfit\tElapsed\tGain\tRealPeriodRate\tPeriodsPerYear\tInAPY`,
-  ...all.map(row => map(row, v => v).join("\t")),
-].join("\n");
+  ...all.map(row => map(row, v => v).join('\t')),
+].join('\n');
 
 fs.writeFileSync(`${__dirname}/../data/history.BTC-USD.fixed.tsv`, data);

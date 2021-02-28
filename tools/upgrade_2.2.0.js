@@ -7,23 +7,23 @@
  * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_APY=150 node upgrade_2.2.0.js
  *
  */
-const { exec } = require("child_process");
-const config = require("../config");
-const fs = require("fs");
-const log = require("../lib/log");
-const getFills = require("../coinbase/get.fills");
-const history = require("../lib/history");
-const touch = require("../lib/touch");
-const map = require("lodash.map");
+const { exec } = require('child_process');
+const config = require('../config');
+const fs = require('fs');
+const log = require('../lib/log');
+const getFills = require('../coinbase/get.fills');
+const history = require('../lib/history');
+const touch = require('../lib/touch');
+const map = require('lodash.map');
 
 const uniqFilter = (value, index, self) => {
   return self.indexOf(value) === index;
 };
 
 // const fills = require(`../data/fills_${config.productID}.json`);
-const { add, subtract } = require("../lib/math");
+const { add, subtract } = require('../lib/math');
 const backup = config.history_file.replace(
-  ".tsv",
+  '.tsv',
   `_backup_${new Date().getTime()}.tsv`
 );
 (async () => {
@@ -32,7 +32,7 @@ const backup = config.history_file.replace(
   log.ok(`backed up history file in ${backup}`);
   const all = history.all();
 
-  log.ok("oldest item", all[0].Time);
+  log.ok('oldest item', all[0].Time);
 
   // now query all fills from API (paginated until the earliest history date)
   const fills = await getFills({ since: all[0].Time });
@@ -50,7 +50,7 @@ const backup = config.history_file.replace(
     f.timestampMin = f.timestamp - 30000;
   });
 
-  log.ok("first fill record: ", fills[0].created_at);
+  log.ok('first fill record: ', fills[0].created_at);
 
   // now go through the fills and match them to the history file
   // note: some fills might have been done outside this engine
@@ -58,7 +58,7 @@ const backup = config.history_file.replace(
   // so we do a fuzzy size+date match
   all.forEach(h => {
     const t = new Date(h.Time).getTime();
-    const s = h.Shares + "";
+    const s = h.Shares + '';
     let matches = fills.filter(f => {
       if (f.timestamp === t && f.size === s) return true; // exact match
       // fuzzy
@@ -78,7 +78,7 @@ const backup = config.history_file.replace(
     // add the ID column (new in 2.2.0)
     h.ID = matches[0].order_id;
 
-    const sold = matches[0].side === "sell";
+    const sold = matches[0].side === 'sell';
 
     let fee = 0;
     let shares = 0;
@@ -105,20 +105,20 @@ const backup = config.history_file.replace(
   });
 
   // write new history file
-  const headers = history.headerRow.includes("\tID")
+  const headers = history.headerRow.includes('\tID')
     ? history.headerRow
-    : history.headerRow + "\tID";
+    : history.headerRow + '\tID';
   const data = [
     `${headers}`,
-    ...all.map(row => map(row, v => v).join("\t")),
-  ].join("\n");
+    ...all.map(row => map(row, v => v).join('\t')),
+  ].join('\n');
 
   log.debug(data);
   const file = `${__dirname}/../data/history.${config.productID}.tsv`;
   fs.writeFileSync(file, data);
   log.ok(`updated history ${file} from api data`);
 
-  exec("node ./adjust.apy.js", process.env, (error, stdout, stderr) => {
+  exec('node ./adjust.apy.js', process.env, (error, stdout, stderr) => {
     if (error) {
       log.error(`exec error: ${error}`);
       return;
@@ -129,7 +129,7 @@ const backup = config.history_file.replace(
 
   // finally, touch the index file so our pm2 filewatcher will auto-restart the service
   // this will load the latest history file into memory for the next job run
-  await touch("../index.js");
+  await touch('../index.js');
 
-  log.ok("all done");
+  log.ok('all done');
 })();

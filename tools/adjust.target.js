@@ -3,12 +3,12 @@
  * - if the prior action was a sell, remove that value from the target (we don't expect the account to have grown by the APY + that $ value)
  */
 
-const config = require("../config");
-const fs = require("fs");
-const log = require("../lib/log");
-const history = require("../lib/history");
-const { subtract, add } = require("../lib/math");
-const map = require("lodash.map");
+const config = require('../config');
+const fs = require('fs');
+const log = require('../lib/log');
+const history = require('../lib/history');
+const { subtract, add } = require('../lib/math');
+const map = require('lodash.map');
 
 log.bot(`Position Builder Engine Updater`);
 
@@ -25,8 +25,8 @@ for (let i = 1; i < all.length; i++) {
 
 const data = [
   `${history.headerRow}`,
-  ...all.map(row => map(row, v => v).join("\t")),
-].join("\n");
+  ...all.map(row => map(row, v => v).join('\t')),
+].join('\n');
 
 log.debug(data);
 const file = `${__dirname}/../data/history.${config.productID}.fixed.tsv`;

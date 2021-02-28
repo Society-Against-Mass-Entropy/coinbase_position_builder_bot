@@ -1,13 +1,13 @@
-const { CronJob } = require("cron");
+const { CronJob } = require('cron');
 
-const config = require("./config");
-const apiKeys = require("./api.keys.js");
-const action = require("./lib/action");
-const getAccounts = require("./coinbase/accounts");
-const loadLastLog = require("./lib/load.lastLog");
-const log = require("./lib/log");
-const logOutput = require("./lib/log.output");
-const memory = require("./lib/memory");
+const config = require('./config');
+const apiKeys = require('./api.keys.js');
+const action = require('./lib/action');
+const getAccounts = require('./coinbase/accounts');
+const loadLastLog = require('./lib/load.lastLog');
+const log = require('./lib/log');
+const logOutput = require('./lib/log.output');
+const memory = require('./lib/memory');
 
 const job = new CronJob(config.freq, action);
 
@@ -16,31 +16,31 @@ const job = new CronJob(config.freq, action);
     !apiKeys.CPBB_APIKEY ||
     !apiKeys.CPBB_APISEC ||
     !apiKeys.CPBB_APIPASS ||
-    apiKeys.CPBB_APIKEY.includes("load your keys") ||
-    apiKeys.CPBB_APISEC.includes("load your keys") ||
-    apiKeys.CPBB_APIPASS.includes("load your keys")
+    apiKeys.CPBB_APIKEY.includes('load your keys') ||
+    apiKeys.CPBB_APISEC.includes('load your keys') ||
+    apiKeys.CPBB_APIPASS.includes('load your keys')
   ) {
     log.error(
-      "API Keys are not correctly configured.\nPlease check the setup instructions and load your API keys into the environment before starting.\nHalting the app now."
+      'API Keys are not correctly configured.\nPlease check the setup instructions and load your API keys into the environment before starting.\nHalting the app now.'
     );
     return;
   }
   log.bot(
     `Position Builder Bot ${config.pjson.version}, ${config.api} in ${
-      config.dry ? "DRY RUN" : "LIVE"
+      config.dry ? 'DRY RUN' : 'LIVE'
     } mode, ${config.vol} $${config.currency} ➡️  $${config.ticker} @ cron(${
       config.freq
     }), ${config.apy * 100}% APY, ${
-      process.env.VERBOSE === "true" ? `verbose logging` : ""
+      process.env.VERBOSE === 'true' ? `verbose logging` : ''
     }`
   );
   if (config.rebuy.drops) {
-    const sizes = process.env.CPBB_REBUY_SIZE.split(",");
-    const drops = process.env.CPBB_REBUY_AT.split(",");
+    const sizes = process.env.CPBB_REBUY_SIZE.split(',');
+    const drops = process.env.CPBB_REBUY_AT.split(',');
     log.now(
       `💵 REBUY up to $${config.rebuy.max} of ${config.ticker}: ${sizes
         .map((s, i) => `${s}@${drops[i]}%`)
-        .join(", ")}`
+        .join(', ')}`
     );
   }
   if (config.rebuy.only) {

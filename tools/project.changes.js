@@ -7,14 +7,14 @@
  * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_VOL=100 CPBB_APY=100 node project.changes.js 360 32000:100 41500:75 20000:200 37000:100 30000:200 100000:200 70000:400 300000:800
  * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_VOL=100 CPBB_APY=150 node project.changes.js 360 32000:100 41500:75 20000:200 37000:100 30000:200 100000:400 50000:400 300000:800
  */
-const fs = require("fs");
-const { add, divide, multiply } = require("../lib/math");
+const fs = require('fs');
+const { add, divide, multiply } = require('../lib/math');
 
-const config = require("../config");
-const calcAction = require("../lib/calculate.action");
-const log = require("../lib/log");
-const logSave = require("../lib/log.save");
-const memory = require("../lib/memory");
+const config = require('../config');
+const calcAction = require('../lib/calculate.action');
+const log = require('../lib/log');
+const logSave = require('../lib/log.save');
+const memory = require('../lib/memory');
 const ticker = `${config.ticker}-${config.currency}`;
 
 const historyFile = `${__dirname}/../data/history.${ticker}.tsv`;
@@ -38,10 +38,10 @@ log.debug(memory.lastLog);
 (async () => {
   for (let c = 0; c < changeSet.length; c++) {
     const change = changeSet[c];
-    const changeParts = change.split(":");
-    let usingPercent = changeParts[0].includes("%");
+    const changeParts = change.split(':');
+    let usingPercent = changeParts[0].includes('%');
     const percentage = usingPercent
-      ? Number(changeParts[0].replace("%", "")) / 100
+      ? Number(changeParts[0].replace('%', '')) / 100
       : Number(changeParts[0]) / memory.lastLog.Price - 1;
     const periods = Number(changeParts[1]);
     const targetPrice = usingPercent

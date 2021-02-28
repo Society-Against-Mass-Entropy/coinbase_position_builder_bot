@@ -2,9 +2,9 @@
  * playing with the coinbase api to get a handle on supply and demand
  *
  */
-const log = require("../lib/log");
-const request = require("../coinbase/cb.request");
-const { add, multiply } = require("../lib/math");
+const log = require('../lib/log');
+const request = require('../coinbase/cb.request');
+const { add, multiply } = require('../lib/math');
 const sleep = ms => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
@@ -22,49 +22,49 @@ const reduceFiatBTC = orders =>
   }, 0);
 
 const alts = [
-  "AAVE",
-  "ATOM",
-  "BAL",
-  "BAND",
-  "BCH",
-  "BNT",
-  "CGLD",
-  "COMP",
-  "DASH",
-  "EOS",
-  "ETC",
-  "ETH",
-  "FIL",
-  "GRT",
-  "KNC",
-  "LTC",
-  "MKR",
-  "NMR",
-  "NU",
-  "OMG",
-  "REN",
-  "REP",
-  "SNX",
-  "UMA",
-  "WBTC",
-  "XLM",
-  "XTZ",
-  "YFI",
-  "ZEC",
-  "ZRX",
+  'AAVE',
+  'ATOM',
+  'BAL',
+  'BAND',
+  'BCH',
+  'BNT',
+  'CGLD',
+  'COMP',
+  'DASH',
+  'EOS',
+  'ETC',
+  'ETH',
+  'FIL',
+  'GRT',
+  'KNC',
+  'LTC',
+  'MKR',
+  'NMR',
+  'NU',
+  'OMG',
+  'REN',
+  'REP',
+  'SNX',
+  'UMA',
+  'WBTC',
+  'XLM',
+  'XTZ',
+  'YFI',
+  'ZEC',
+  'ZRX',
 ];
-const fiat = ["USD", "USDC", "GBP", "EUR"];
+const fiat = ['USD', 'USDC', 'GBP', 'EUR'];
 
 (async () => {
   let supply = 0;
   let demand = 0;
-  let line = "";
+  let line = '';
 
   for (let i = 0; i < fiat.length; i++) {
     const f = fiat[i];
     const { json } = await request({
       requestPath: `/products/BTC-${f}/book?level=3`,
-      method: "GET",
+      method: 'GET',
     });
     const btcdemand = reduceFiatBTC(json.bids);
     const btcsupply = reduceFiatBTC(json.asks);
@@ -77,7 +77,7 @@ const fiat = ["USD", "USDC", "GBP", "EUR"];
     const alt = alts[i];
     const { json } = await request({
       requestPath: `/products/${alt}-BTC/book?level=3`,
-      method: "GET",
+      method: 'GET',
     });
     const btcdemand = reduceAltBTC(json.asks);
     const btcsupply = reduceAltBTC(json.bids);

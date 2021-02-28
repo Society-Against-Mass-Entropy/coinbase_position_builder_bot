@@ -2,15 +2,15 @@
  * sample config that runs BTC-USD every 2 hours but only with posting LIMIT orders
  * NO regular engine MAKER orders are performed
  */
-const apiKeys = require("./api.keys");
+const apiKeys = require('./api.keys');
 module.exports = {
   apps: [
     {
-      name: "cpbb_btcusd_limit",
-      script: ".",
-      watch: ["*.js", "coinbase", "lib"],
+      name: 'cpbb_btcusd_limit',
+      script: '.',
+      watch: ['*.js', 'coinbase', 'lib'],
       env: {
-        NODE_ENV: "production",
+        NODE_ENV: 'production',
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
@@ -18,9 +18,9 @@ module.exports = {
         // every 2 minutes (for testing)
         // NOTE: if you run this in a bear market, it can spend up to CPBB_REBUY_MAX every 2 minutes!
         // this config example is just for testing!
-        CPBB_FREQ: "*/2 * * * *",
-        CPBB_TICKER: "BTC",
-        CPBB_CURRENCY: "USD",
+        CPBB_FREQ: '*/2 * * * *',
+        CPBB_TICKER: 'BTC',
+        CPBB_CURRENCY: 'USD',
         // should the engine only create and manage the limit orders and not make normal accumulation trades
         // useful for testing this feature
         // or for running a bot that only wants to accumulate an asset via dips
@@ -36,11 +36,11 @@ module.exports = {
         // these could change in the future and allow you to make smaller size rebuy trades
         // rebuy logic will place up to  orders at this size until CPBB_REBUY_MAX is reached
         CPBB_REBUY_SIZE:
-          ".0001,.0001,.0002,.0002,.0003,.0003,.0004,.0004,.0005,.0005",
+          '.0001,.0001,.0002,.0002,.0003,.0003,.0004,.0004,.0005,.0005',
         // rebuy at these percentage drop targets
         // note: you have to define at least the number of points in CPBB_REBUY_SIZE
         // if the percentage drop is too low, it could cause you to lose profit in fees
-        CPBB_REBUY_AT: "-4,-6,-8,-10,-12,-14,-16,-20,-50,-80", // when should we cancel limit orders?
+        CPBB_REBUY_AT: '-4,-6,-8,-10,-12,-14,-16,-20,-50,-80', // when should we cancel limit orders?
         // default behavior is on the next action point (if they didn't fill)
         // if CPBB_REBUY_CANCEL is set, this is a number of minutes after the limit order
         // creation timestamp that it will be considered ready to cancel if not filled

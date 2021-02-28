@@ -3,14 +3,14 @@
  * goes within $15,000 to $100,000 until 2021-12-31 with $100 every 6 hours (360 minutes), a Target APY of 100% and a 0-10% price change each period, with a 50% chance of going down, but with a pull upward to the ceiling (up or down)
  * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_VOL=100 CPBB_APY=100 node project.target.js 360 2021-12-31 0.1 0.9
  */
-const fs = require("fs");
-const { add, divide, multiply, subtract } = require("../lib/math");
+const fs = require('fs');
+const { add, divide, multiply, subtract } = require('../lib/math');
 
-const config = require("../config");
-const calcAction = require("../lib/calculate.action");
-const log = require("../lib/log");
-const logSave = require("../lib/log.save");
-const memory = require("../lib/memory");
+const config = require('../config');
+const calcAction = require('../lib/calculate.action');
+const log = require('../lib/log');
+const logSave = require('../lib/log.save');
+const memory = require('../lib/memory');
 const ticker = `${config.ticker}-${config.currency}`;
 
 const historyFile = `${__dirname}/../data/history.${ticker}.tsv`;

@@ -3,14 +3,14 @@
  * CPBB_VOL=10 CPBB_APY=15 node project.forward.js
  * CPBB_VOL=10 CPBB_APY=10 node project.forward.js
  */
-const fs = require("fs");
-const { divide } = require("../lib/math");
+const fs = require('fs');
+const { divide } = require('../lib/math');
 
-const config = require("../config");
-const calcAction = require("../lib/calculate.action");
-const history = require("../lib/history");
-const log = require("../lib/log");
-const logSave = require("../lib/log.save");
+const config = require('../config');
+const calcAction = require('../lib/calculate.action');
+const history = require('../lib/history');
+const log = require('../lib/log');
+const logSave = require('../lib/log.save');
 // const memory = require('../lib/memory')
 const ticker = `${config.ticker}-${config.currency}`;
 

@@ -1,7 +1,7 @@
-const request = require("./cb.request");
-const config = require("../config");
-const log = require("../lib/log");
-const sleep = require("../lib/sleep");
+const request = require('./cb.request');
+const config = require('../config');
+const log = require('../lib/log');
+const sleep = require('../lib/sleep');
 
 module.exports = async ({ since }) => {
   const sinceDate = new Date(since);
@@ -14,9 +14,9 @@ module.exports = async ({ since }) => {
   for (let i = 0; i < 1000; i++) {
     let { json, headers } = await request({
       requestPath: `/fills?product_id=${config.productID}${
-        nextPage ? `&after=${nextPage}` : ""
+        nextPage ? `&after=${nextPage}` : ''
       }`,
-      method: "GET",
+      method: 'GET',
     }).catch(e => {
       console.error(
         e,
@@ -24,7 +24,7 @@ module.exports = async ({ since }) => {
       );
       process.exit();
     });
-    nextPage = headers["cb-after"];
+    nextPage = headers['cb-after'];
     if (!json || !json.length) break;
     fills = [...fills, ...json];
     log.ok(json[json.length - 1].created_at, `${json.length} records`);

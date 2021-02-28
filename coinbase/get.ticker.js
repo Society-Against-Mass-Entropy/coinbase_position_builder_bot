@@ -1,10 +1,10 @@
-const request = require("./cb.request");
-const config = require("../config");
+const request = require('./cb.request');
+const config = require('../config');
 
 module.exports = async () => {
   const { json } = await request({
     requestPath: `/products/${config.productID}/ticker`,
-    method: "GET",
+    method: 'GET',
   }).catch(e => {
     console.error(
       e,

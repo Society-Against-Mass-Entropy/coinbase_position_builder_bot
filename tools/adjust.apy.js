@@ -6,12 +6,12 @@
  * CPBB_TICKER=BTC CPBB_APY=150 node adjust.apy.js
  */
 const MS_PER_YEAR = 31556952000;
-const config = require("../config");
-const fs = require("fs");
-const history = require("../lib/history");
-const { divide, multiply, subtract, add, pow } = require("../lib/math");
-const log = require("../lib/log");
-const map = require("lodash.map");
+const config = require('../config');
+const fs = require('fs');
+const history = require('../lib/history');
+const { divide, multiply, subtract, add, pow } = require('../lib/math');
+const log = require('../lib/log');
+const map = require('lodash.map');
 log.bot(
   `Position Builder Engine Updater: Recalculating with ${multiply(
     config.apy,
@@ -19,7 +19,7 @@ log.bot(
   )}% APY`
 );
 const backup = config.history_file.replace(
-  ".tsv",
+  '.tsv',
   `_pre-recalulation.backup_${new Date().getTime()}.tsv`
 );
 fs.copyFileSync(config.history_file, backup);
@@ -58,14 +58,14 @@ for (let i = 1; i < all.length; i++) {
   all[i].TotalValue = add(all[i].EndValue, all[i].Realized);
   all[i].Liquid = subtract(all[i].TotalValue, all[i].TotalInput);
   all[i].Profit =
-    multiply(divide(all[i].Liquid, all[i].TotalInput), 100).toFixed(2) + "%";
+    multiply(divide(all[i].Liquid, all[i].TotalInput), 100).toFixed(2) + '%';
   if (i === 1) log.debug(all[i]);
 }
 
 const data = [
   `${history.headerRow}`,
-  ...all.map(row => map(row, v => v).join("\t")),
-].join("\n");
+  ...all.map(row => map(row, v => v).join('\t')),
+].join('\n');
 
 log.debug(data);
 const file = `${__dirname}/../data/history.${config.productID}.tsv`;
