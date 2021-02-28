@@ -86,13 +86,37 @@ pm2 start run.config.js && pm2 logs
 
 ## Upgrading The Project Version
 
-### Git Cloned
+### Git Cloned Directly
 
 If you downloaded the project via a `git clone`, upgrading is super easy:
 
 1. Make sure you are on the right branch: `git checkout stable` (stable for latest stable release, develop for next release)
 2. `git pull --rebase --autostash`
 3. You should be all set. PM2 watches the directory and will restart the processes with the latest code. All done.
+
+### Git Clone Via Fork
+
+If you have code that you want to modify or pull-request into this project through your own fork, you can manage your fork like so:
+
+```
+git clone [YOUR_FORK_PATH];
+cd coinbase_position_builder_bot;
+git remote add upstream git@github.com:jasonedison/coinbase_position_builder_bot.git;
+git fetch upstream;
+git checkout develop;
+git merge upstream/develop;
+npm i;
+npm test;
+```
+
+Latest code will always be commited to `develop`. When releases are made, they are merged into the `stable` branch.
+
+Please make pull-requests to `develop` branch and run `npm test` before making a pull-request.
+We use `Prettier` and `eslint` for formatting so make sure those are set as well. You can format any pull-requests with:
+
+```
+npm run format
+```
 
 ### Zip File Download
 
