@@ -34,7 +34,7 @@ const job = new CronJob(config.freq, action);
       process.env.VERBOSE === 'true' ? `verbose logging` : ''
     }`
   );
-  if (config.rebuy.drops) {
+  if (config.rebuy.drops.length) {
     const sizes = process.env.CPBB_REBUY_SIZE.split(',');
     const drops = process.env.CPBB_REBUY_AT.split(',');
     log.now(
