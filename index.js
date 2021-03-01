@@ -4,10 +4,10 @@ const config = require('./config');
 const apiKeys = require('./api.keys.js');
 const action = require('./lib/action');
 const getAccounts = require('./coinbase/accounts');
-const loadLastLog = require('./lib/load.lastLog');
 const log = require('./lib/log');
 const logOutput = require('./lib/log.output');
 const memory = require('./lib/memory');
+const { divide } = require('./lib/math');
 
 const job = new CronJob(config.freq, action);
 
@@ -30,8 +30,8 @@ const job = new CronJob(config.freq, action);
       config.dry ? 'DRY RUN' : 'LIVE'
     } mode, ${config.vol} $${config.currency} ➡️  $${config.ticker} @ cron(${
       config.freq
-    }), ${config.apy * 100}% APY, ${
-      process.env.VERBOSE === 'true' ? `verbose logging` : ''
+    }), ${config.apy * 100}% APY${
+      process.env.VERBOSE === 'true' ? `, verbose logging` : ''
     }`
   );
   if (config.rebuy.drops.length) {
@@ -52,14 +52,6 @@ const job = new CronJob(config.freq, action);
 
   log.debug(memory.lastLog);
 
-  log.now(
-    `📒 history loaded: holding ${(
-      memory.lastLog.Holding + memory.lastLog.Shares
-    ).toFixed(8)} ${config.ticker} worth ${
-      memory.lastLog.EndValue
-    }, liquid profit ${memory.lastLog.Profit}`
-  );
-
   const accounts = await getAccounts().catch(e => console.error(e));
 
   if (!accounts) {
@@ -69,10 +61,11 @@ const job = new CronJob(config.freq, action);
     return;
   }
   // find the trading account we care about
-  // eslint-disable-next-line prefer-destructuring
   memory.account = accounts.filter(a => a.currency === config.currency)[0];
   log.now(
-    `🏦 $${config.currency} account loaded with ${memory.account.available}`
+    `🏦 $${config.currency} account loaded with ${
+      memory.account.available
+    } (${Math.floor(divide(memory.account.available, config.vol))} buy actions)`
   );
 
   // immediate kick off (testing mode)
@@ -80,9 +73,8 @@ const job = new CronJob(config.freq, action);
 
   // start the cronjob
   job.start();
-  memory.logData = loadLastLog();
   log.ok(`last transaction for ${config.productID}:`);
-  logOutput(memory.logData);
+  logOutput(memory.lastLog);
   const nextDate = job.nextDates();
   log.now(`🕟 next run ${nextDate.fromNow()}, on ${nextDate.local().format()}`);
 })();

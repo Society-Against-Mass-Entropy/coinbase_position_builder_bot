@@ -56,7 +56,7 @@ module.exports = {
         // using the rebuy config to create new orders
         // NOTE: if you use this setting, it is recommended that you set it higher than
         // the number of items in your CPBB_REBUY_AT config so it doesn't excessively rebuild
-        // the same oders over and over
+        // the same orders over and over
         CPBB_REBUY_REBUILD: 12,
       },
     },

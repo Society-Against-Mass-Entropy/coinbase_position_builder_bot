@@ -10,5 +10,5 @@ module.exports = async id => {
     method: 'DELETE',
   });
 
-  return response ? response.json : undefined;
+  return response ? response.json : false;
 };
