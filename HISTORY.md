@@ -1,3 +1,28 @@
+# 2.6.0
+
+- New Rebuild/Rebuy algorithm uses ALL of MAX funds. The remainder of the funds will be applied to the next drop point. If that creates an order that is too small to place based on the `base_min_size`, it will be added to the previous valid order size.
+
+### Example Rebuy Running against ETH-USD
+
+```
+⚡ Creating limit orders to rebuy from $1525.77 up to $15 worth of ETH
+⬇️  posted limit order for 0.001 ETH @ 1464.74 = $1.4647 (-4% drop)
+⬇️  posted limit order for 0.002 ETH @ 1434.22 = $2.8684 (-6% drop)
+⬇️  posted limit order for 0.003 ETH @ 1403.71 = $4.2111 (-8% drop)
+⬇️  posted limit order for 0.00471722 ETH @ 1373.19 = $6.4558 (-10% drop)
+✅ REBUY: Added 4 limit buys totaling $15. Now 14 limit orders totaling $72.1509
+```
+
+In this case, there was a remainder of `0.00071722` ETH which is too small for the minimum order size according to the API. So we took that size and added it to the previous valid order (.004) to use all the $15 available.
+
+- fixed rebuy base-price calculation
+- `tools/project.changes.js` fixed to work with new libraries
+- APY and ID are no longer parsed in memory as number (NaN), which didn't break anything but good to not do
+- now stripping commas out of log history (if they exist): fixes #12
+- upgrade dependencies and nvm to stable (15.10.0)
+- now better handling response states from API
+- lots of logging improvements
+
 # 2.5.3
 
 - Fix bug with running engine without CPBB_REBUY_AT being set in ENV
