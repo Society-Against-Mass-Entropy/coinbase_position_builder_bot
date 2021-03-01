@@ -2,7 +2,7 @@ const request = require('./cb.request');
 const config = require('../config');
 
 module.exports = async () => {
-  const { json } = await request({
+  const response = await request({
     requestPath: `/products/${config.productID}/ticker`,
     method: 'GET',
   }).catch(e => {
@@ -12,5 +12,5 @@ module.exports = async () => {
     );
     process.exit();
   });
-  return json;
+  return response ? response.json : response;
 };

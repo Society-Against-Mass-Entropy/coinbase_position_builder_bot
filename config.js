@@ -58,7 +58,7 @@ let historySubName = '';
 if (process.env.CPBB_TEST) historySubName = '.sandbox';
 if (process.env.CPBB_DRY_RUN) historySubName = '.dryrun';
 config.history_file = `${__dirname}/data/history.${historyName}${historySubName}.tsv`;
-log.ok(config.history_file);
+log.debug(config.history_file);
 if (!fs.existsSync(config.history_file)) {
   // copy the template
   log.zap('creating log file from template', config.history_file);
@@ -68,7 +68,7 @@ if (!fs.existsSync(config.history_file)) {
   );
 }
 config.maker_file = `${__dirname}/data/maker.orders.${historyName}${historySubName}.json`;
-log.ok(config.maker_file);
+log.debug(config.maker_file);
 if (!fs.existsSync(config.maker_file)) {
   // copy the template
   log.zap('creating maker file from template', config.maker_file);
