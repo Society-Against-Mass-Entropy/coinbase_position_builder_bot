@@ -213,12 +213,9 @@ The above config will cause the engine to attempt to set up to $50 worth of limi
 
 ### Volume and Frequency
 
-Unfortunately, the Coinbase Pro API will only allow market taker orders of `$10` or more. So my original idea of buying $1 or $2 worth every hour (or even more frequently) went bust--unless you want to make a $10/hour order, which adds up fast if you are in a continuous recession (always buying mode).
+The Coinbase Pro API will only allow market taker orders of `$5` or more. So my original idea of buying $1 or $2 worth every hour (or even more frequently) went bust. Keep in mind when setting your VOL config that you should be able to feed the engine through a year-long bear market.
 
-$10/hour = $240/day = $1680/week = $87,600/year max buy.
-
-If you've got an extra $87K/year to build a position into Bitcoin, `more power to you`. But otherwise you might be better off with some of these options:
-
+- $10/hour = $240/day = $1680/week = $87,600/year max buy.
 - $10/(2 hours) = $120/day = $840/week = $43,800/year
   - `CPBB_FREQ='0 */2 * * *' node .`
 - $10/(3 hours) = $80/day = $560/week = $29,120/year
