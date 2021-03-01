@@ -4,6 +4,7 @@ const config = require('./config');
 const apiKeys = require('./api.keys.js');
 const action = require('./lib/action');
 const getAccounts = require('./coinbase/accounts');
+const getProduct = require('./coinbase/get.product');
 const log = require('./lib/log');
 const logOutput = require('./lib/log.output');
 const memory = require('./lib/memory');
@@ -12,6 +13,15 @@ const { divide } = require('./lib/math');
 const job = new CronJob(config.freq, action);
 
 (async () => {
+  const product = await getProduct(config.productID);
+  memory.product = product;
+  log.now(
+    `${product.status === 'online' ? '🆗' : '🚨'} ${config.productID} ${
+      product.status
+    }, min size ${product.base_min_size}, min funds ${
+      product.min_market_funds
+    } ${product.status_message}`
+  );
   if (
     !apiKeys.CPBB_APIKEY ||
     !apiKeys.CPBB_APISEC ||

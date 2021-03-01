@@ -37,8 +37,13 @@ module.exports = async opts => {
     requestConfig.headers['Content-Type'] = 'application/json';
   }
   // log.debug({ requestConfig });
-  return request(requestConfig).catch(e => {
-    if (process.env.VERBOSE)
-      log.error(opts.method, opts.requestPath, `status error`, e);
+  return request(requestConfig).catch(({ reason, json }) => {
+    log.error(
+      opts.method,
+      opts.requestPath,
+      `status error`,
+      reason,
+      json || ''
+    );
   });
 };
