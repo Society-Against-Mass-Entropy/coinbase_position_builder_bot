@@ -6,7 +6,7 @@ test('sleep 0', async () => {
   const endTime = new Date().getTime();
   const elapsed = endTime - startTime;
   expect(elapsed).toBeGreaterThan(-1);
-  expect(elapsed).toBeLessThan(50);
+  expect(elapsed).toBeLessThan(200);
 });
 test('sleep 200ms', async () => {
   const startTime = new Date().getTime();
@@ -14,5 +14,5 @@ test('sleep 200ms', async () => {
   const endTime = new Date().getTime();
   const elapsed = endTime - startTime;
   expect(elapsed).toBeGreaterThan(199);
-  expect(elapsed).toBeLessThan(500);
+  expect(elapsed).toBeLessThan(1000);
 });
