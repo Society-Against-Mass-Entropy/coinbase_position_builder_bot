@@ -7,6 +7,7 @@ module.exports = nock(config.api)
   .get('/products/TEST-USD/ticker')
   .reply(200, () => {
     const price = getPrice();
+    console.log(price);
     const payload = {
       trade_id: 4729088,
       price,
