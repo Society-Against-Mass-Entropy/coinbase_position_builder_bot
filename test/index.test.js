@@ -1,5 +1,6 @@
 // TEST CONFIG
 process.env.CPBB_TICKER = 'TEST';
+process.env.CPBB_CURRENCY = 'USD';
 process.env.CPBB_VOL = 100;
 process.env.CPBB_FREQ = '1 1 1 1 1';
 process.env.CPBB_APY = 25;
@@ -101,10 +102,10 @@ describe('Engine', () => {
     if (verbose) process.stdout.write('\n\n');
     // delete test output files
     fs.unlinkSync(
-      `${__dirname}/../data/history.${process.env.CPBB_TICKER}-USD.sandbox.tsv`
+      `${__dirname}/../data/history.${process.env.CPBB_TICKER}-${process.env.CPBB_CURRENCY}.sandbox.tsv`
     );
     fs.unlinkSync(
-      `${__dirname}/../data/maker.orders.${process.env.CPBB_TICKER}-USD.sandbox.json`
+      `${__dirname}/../data/maker.orders.${process.env.CPBB_TICKER}-${process.env.CPBB_CURRENCY}.sandbox.json`
     );
   });
 });
