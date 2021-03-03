@@ -3,6 +3,8 @@ const log = require('../lib/log');
 module.exports = params => {
   const makeRequest = function (resolve, reject) {
     log.debug({ params });
+    params.resolve = resolve;
+    params.reject = reject;
     const req = http.request(params, function (res) {
       const body = [];
       res.on('data', function (chunk) {
@@ -15,7 +17,7 @@ module.exports = params => {
           json = JSON.parse(responseBody);
         } catch (e) {
           log.error('failed to parse response from API', e);
-          reject({ reason: e.message });
+          params.reject({ reason: e.message });
         }
         if (res.statusCode === 429) {
           log.error(
@@ -30,17 +32,16 @@ module.exports = params => {
             process.exit();
           }
           log.debug(`${res.statusCode} error:`, responseBody);
-          return reject({ reason: res.statusCode, json });
+          return params.reject({ reason: res.statusCode, json });
         }
-        resolve({ json, headers: res.headers });
-        // resolve(json);
+        params.resolve({ json, headers: res.headers });
       });
     });
     // reject on request error
     req.on('error', function (err) {
       // This is not a "Second reject", just a different sort of failure
       log.error(`error in API request/response`, err);
-      reject({ reason: err });
+      params.reject({ reason: err });
     });
     if (params.body) {
       // log.info(`write body`, params.body);

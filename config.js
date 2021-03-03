@@ -3,20 +3,18 @@ const log = require('./lib/log');
 const pjson = require('./package');
 
 const { divide } = require('./lib/math');
+const testMode = process.env.CPBB_TEST;
 const config = {
-  api: process.env.CPBB_TEST
+  api: testMode
     ? 'https://api-public.sandbox.pro.coinbase.com'
     : 'https://api.pro.coinbase.com',
   dry: process.env.CPBB_DRY_RUN === 'true',
   // default run once per 12 hours at the 5th minute (crontab syntax)
-  // testing mode will run every minute
-  freq: process.env.CPBB_TEST
-    ? '* * * * *'
-    : process.env.CPBB_FREQ || '5 */12 * * *',
+  freq: process.env.CPBB_FREQ || '5 */12 * * *',
   // default $10 action
   vol: Number(process.env.CPBB_VOL || 10),
   // default 15% APY target (we aim to shave off any excess from this gain)
-  apy: Number(process.env.CPBB_APY || 15) / 100,
+  apy: divide(process.env.CPBB_APY || 15, 100),
   rebuy: {
     // ms after limit order placed before it is able to be canceled due to not filling
     cancel: Number(process.env.CPBB_REBUY_CANCEL || 0) * 60000,
@@ -39,6 +37,12 @@ const config = {
   ticker: process.env.CPBB_TICKER || 'BTC',
   // default home currency is USD
   currency: process.env.CPBB_CURRENCY || 'USD',
+  sleep: {
+    product: testMode ? 0 : 500,
+    rebuyCheck: testMode ? 0 : 1000,
+    rebuyPost: testMode ? 0 : 1000,
+    cancelOrder: testMode ? 0 : 500,
+  },
   pjson,
 };
 config.productID = `${config.ticker}-${config.currency}`;
@@ -55,7 +59,7 @@ if (
   log.zap(`running in reverse logic mode to support inverted ticker`);
 }
 let historySubName = '';
-if (process.env.CPBB_TEST) historySubName = '.sandbox';
+if (testMode) historySubName = '.sandbox';
 if (process.env.CPBB_DRY_RUN) historySubName = '.dryrun';
 config.history_file = `${__dirname}/data/history.${historyName}${historySubName}.tsv`;
 log.debug(config.history_file);
