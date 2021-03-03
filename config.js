@@ -2,7 +2,7 @@ const fs = require('fs');
 const log = require('./lib/log');
 const pjson = require('./package');
 
-const { divide } = require('./lib/math');
+const { divide, multiply } = require('./lib/math');
 const testMode = process.env.CPBB_TEST;
 const config = {
   api: testMode
@@ -20,7 +20,7 @@ const config = {
     cancel: Number(process.env.CPBB_REBUY_CANCEL || 0) * 60000,
     drops: (process.env.CPBB_REBUY_AT || '')
       .split(',')
-      .map(p => (p ? divide(p, 100) : null))
+      .map(p => (p ? divide(multiply(Math.abs(p), -1), 100) : null))
       .filter(i => i),
     max: Number(process.env.CPBB_REBUY_MAX || 0),
     only: process.env.CPBB_REBUY_ONLY === 'true',
