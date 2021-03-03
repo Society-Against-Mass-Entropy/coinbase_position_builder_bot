@@ -30,6 +30,7 @@
     "start:3": "CPBB_FREQ='5 */3 * * *' node .",
     "start:4": "CPBB_FREQ='5 */4 * * *' node .",
     "test": "./node_modules/eslint/bin/eslint.js . && echo '✅ No Lint' && ./node_modules/jest/bin/jest.js --verbose --coverage && echo '✅ Tests'",
+    "test:debug": "VERBOSE_TEST=true ./node_modules/jest/bin/jest.js --verbose",
     "test:watch": "./node_modules/jest/bin/jest.js --watch",
     "coverage": "./node_modules/jest/bin/jest.js --coverage"
   },

@@ -1,13 +1,13 @@
 const config = require('../../config');
 const nock = require('nock');
-const getPrice = require('../lib/get.price');
+const testMemory = require('../lib/test.memory');
 const { add, subtract } = require('../../lib/math');
 
 module.exports = nock(config.api)
   .persist()
   .get('/products/TEST-USD/ticker')
   .reply(200, () => {
-    const price = getPrice();
+    const price = testMemory.price;
     // console.log(price);
     const payload = {
       trade_id: 4729088,

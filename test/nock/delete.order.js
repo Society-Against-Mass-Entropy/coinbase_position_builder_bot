@@ -4,4 +4,4 @@ const nock = require('nock');
 module.exports = nock(config.api)
   .persist()
   .delete(/\/orders\/.+/)
-  .reply(200);
+  .reply(200, {});

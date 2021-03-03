@@ -1,4 +1,4 @@
-// deterministic UUIDv4 values to use for orderids when running tests
+// deterministic UUIDv4 values to use for order ids when running tests
 
 let index = 0;
 const uuids = [
