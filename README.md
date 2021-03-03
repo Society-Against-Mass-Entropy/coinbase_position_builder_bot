@@ -242,7 +242,20 @@ CPBB_VOL=15 CPBB_FREQ='0 */12 * * *' node .
 
 ## Test
 
-There are two ways to test:
+The project comes with development tests that measure the output logs and mock market conditions:
+
+```
+npm i
+npm test
+```
+
+### Test Code Coverage
+
+```
+open ./coverage/lcov-report/index.html
+```
+
+There are two ways to test your own configs:
 
 ### 1. Using the Coinbase Sandbox API
 
@@ -259,7 +272,7 @@ Then run the app against the Sandbox API
 export CPBB_APIPASS="API Password"
 export CPBB_APIKEY="SANDBOX API KEY"
 export CPBB_APISEC="SANDBOX API SECRET"
-CPBB_TEST=1 node .
+CPBB_TEST=true node .
 ```
 
 ### 2. Using CPBB_DRY_RUN feature
