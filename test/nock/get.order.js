@@ -1,5 +1,4 @@
 const config = require('../../config');
-const mockOrders = require('../lib/mock.orders');
 const nock = require('nock');
 const testMemory = require('../lib/test.memory');
 
@@ -8,8 +7,8 @@ module.exports = nock(config.api)
   .get(/\/orders\/.+/)
   .reply(200, uri => {
     const id = uri.replace('/orders/', '');
-    // console.log(JSON.stringify(mockOrders));
-    const order = mockOrders[id];
+    // console.log(JSON.stringify(testMemory.orders));
+    const order = testMemory.orders[id];
     if (!order) {
       console.error('order not found', id);
       return;

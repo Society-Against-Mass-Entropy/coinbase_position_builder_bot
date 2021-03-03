@@ -2,7 +2,6 @@ const config = require('../../config');
 const nock = require('nock');
 const testConfig = require('../test.config');
 const getID = require('../lib/get.id');
-const mockOrders = require('../lib/mock.orders');
 const testMemory = require('../lib/test.memory');
 
 const { divide, multiply, subtract } = require('../../lib/math');
@@ -47,8 +46,8 @@ module.exports = nock(config.api)
       settled: !isLimit,
     };
     // cache this in memory so the get.order API can find the details of the order
-    if (isLimit) mockOrders[id] = response;
-    // console.log(JSON.stringify(mockOrders));
+    if (isLimit) testMemory.orders[id] = response;
+    // console.log(JSON.stringify(testMemory.orders));
     // console.log({ response });
     return response;
   });
