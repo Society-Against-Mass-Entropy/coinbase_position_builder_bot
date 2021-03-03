@@ -12,7 +12,7 @@ const { divide } = require('./lib/math');
 
 const job = new CronJob(config.freq, action);
 
-(async () => {
+const startEngine = async () => {
   const product = await getProduct(config.productID);
   memory.product = product;
   log.now(
@@ -71,7 +71,7 @@ const job = new CronJob(config.freq, action);
     return;
   }
   // find the trading account we care about
-  memory.account = accounts.filter(a => a.currency === config.currency)[0];
+  memory.account = accounts.find(a => a.currency === config.currency);
   log.now(
     `🏦 $${config.currency} account loaded with ${
       memory.account.available
@@ -79,14 +79,17 @@ const job = new CronJob(config.freq, action);
   );
 
   // immediate kick off (testing mode)
-  if (process.env.CPBB_TEST || config.dry) action();
+  if (config.dry) await action();
 
   // start the cronjob
   job.start();
+
   log.ok(`last transaction for ${config.productID}:`);
   logOutput(memory.lastLog);
   const nextDate = job.nextDates();
   log.now(`🕟 next run ${nextDate.fromNow()}, on ${nextDate.local().format()}`);
-})();
 
-module.exports = job;
+  return job;
+};
+
+module.exports = startEngine();

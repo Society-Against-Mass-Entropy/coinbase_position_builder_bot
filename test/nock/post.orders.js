@@ -2,19 +2,28 @@ const config = require('../../config');
 const nock = require('nock');
 const testConfig = require('../test.config');
 const getID = require('../lib/get.id');
+const getPrice = require('../lib/get.price');
+const mockOrders = require('../lib/mock.orders');
 
 const { divide, multiply, subtract } = require('../../lib/math');
 
 module.exports = nock(config.api)
+  .persist()
   .post('/orders')
   .reply(200, (uri, order) => {
+    // console.log({ order });
     if (order.type === 'market') {
-      order.price = testConfig.price;
+      order.price = getPrice();
       order.size = divide(order.funds, order.price);
+      // }else{
+      // order.size = multiply(executed, order.price);
     }
     const funds = multiply(order.size, order.price);
     const fees = multiply(funds, testConfig.feeRate);
     const executed = subtract(funds, fees);
+    order.size = divide(executed, order.price);
+
+    // console.log({ funds, fees, executed, order });
     const response = {
       id: getID(),
       size: order.size.toFixed(8),
@@ -34,6 +43,8 @@ module.exports = nock(config.api)
       status: 'done',
       settled: true,
     };
+    // cache this in memory so the get.order API can find the details of the order
+    mockOrders.id = response;
     // console.log({ response });
     return response;
   });
