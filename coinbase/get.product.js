@@ -1,3 +1,4 @@
+const config = require('../config');
 const request = require('./cb.request');
 const sleep = require('../lib/sleep');
 
@@ -6,6 +7,6 @@ module.exports = async productID => {
     requestPath: `/products/${productID}`,
     method: 'GET',
   });
-  await sleep(500); // prevent rate limiting at startup
+  await sleep(config.sleep.product); // prevent rate limiting at startup
   return response ? response.json : response;
 };

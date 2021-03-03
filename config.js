@@ -3,8 +3,9 @@ const log = require('./lib/log');
 const pjson = require('./package');
 
 const { divide } = require('./lib/math');
+const testMode = process.env.CPBB_TEST;
 const config = {
-  api: process.env.CPBB_TEST
+  api: testMode
     ? 'https://api-public.sandbox.pro.coinbase.com'
     : 'https://api.pro.coinbase.com',
   dry: process.env.CPBB_DRY_RUN === 'true',
@@ -36,6 +37,12 @@ const config = {
   ticker: process.env.CPBB_TICKER || 'BTC',
   // default home currency is USD
   currency: process.env.CPBB_CURRENCY || 'USD',
+  sleep: {
+    product: testMode ? 0 : 500,
+    rebuyCheck: testMode ? 0 : 1000,
+    rebuyPost: testMode ? 0 : 1000,
+    cancelOrder: testMode ? 0 : 500,
+  },
   pjson,
 };
 config.productID = `${config.ticker}-${config.currency}`;
@@ -52,7 +59,7 @@ if (
   log.zap(`running in reverse logic mode to support inverted ticker`);
 }
 let historySubName = '';
-if (process.env.CPBB_TEST) historySubName = '.sandbox';
+if (testMode) historySubName = '.sandbox';
 if (process.env.CPBB_DRY_RUN) historySubName = '.dryrun';
 config.history_file = `${__dirname}/data/history.${historyName}${historySubName}.tsv`;
 log.debug(config.history_file);
