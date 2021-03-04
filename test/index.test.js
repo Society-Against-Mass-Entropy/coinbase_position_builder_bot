@@ -5,8 +5,9 @@ process.env.CPBB_VOL = 100;
 process.env.CPBB_FREQ = '1 1 1 1 1';
 process.env.CPBB_APY = 25;
 process.env.CPBB_REBUY_MAX = 50;
-process.env.CPBB_REBUY_SIZE = '.0001,.0002,.0003,.0004,.0005';
-process.env.CPBB_REBUY_AT = '-2,-4,-6,-8,-10';
+process.env.CPBB_REBUY = '.0001@2,.0002@4,.0003@6,.0004@8,.0005@10';
+// process.env.CPBB_REBUY_SIZE = '.0001,.0002,.0003,.0004,.0005';
+// process.env.CPBB_REBUY_AT = '-2,-4,-6,-8,-10';
 process.env.CPBB_REBUY_CANCEL = 60 * 24 * 1;
 process.env.CPBB_REBUY_REBUILD = 6;
 
@@ -66,7 +67,7 @@ const run = async price => {
 
 describe('Engine', () => {
   // as we load up the log expectations, we iterate over their position in the real log output
-  let logIndex = 0;
+  let logIndex = -1;
 
   beforeAll(async () => {
     // make sure everything loaded and started
@@ -87,8 +88,8 @@ describe('Engine', () => {
       const expectedLog = getLog(name);
       expectedLog.forEach(l => {
         if (!l) return;
-        expect(log.out[logIndex]).toEqual(l);
         logIndex++;
+        expect(log.out[logIndex]).toEqual(l);
       });
     });
   });

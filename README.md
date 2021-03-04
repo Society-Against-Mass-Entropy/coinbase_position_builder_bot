@@ -184,10 +184,7 @@ CPBB_REBUY_MAX: 50,
 // etc: try to make absurdly small limit orders via coinbase UI to get an error with the limit
 // these could change in the future and allow you to make smaller size rebuy trades
 // rebuy logic will place up to  orders at this size until CPBB_REBUY_MAX is reached
-CPBB_REBUY_SIZE: ".0001,.0001,.0002,.0002,.0003,.0003,.0004,.0004,.0005,.0005",
-// rebuy at these percentage drop targets (-1%, -2%, etc)
-// note: you have to define at least the number of points in CPBB_REBUY_SIZE
-CPBB_REBUY_AT: "-2,-4,-6,-8,-10,-12,-15,-25,-50,-80",
+CPBB_REBUY: '.0001@4,.0002@6,.0003@8,.0004@10,.0005@12,.001@15,.002@20,.004@25,.008@30,.016@35,.032@40,.064@50,.128@60,.256@70,.512@80,1.024@90',
 // default behavior is on the next action point (if they didn't fill)
 // if CPBB_REBUY_CANCEL is set, this is a number of minutes after the limit order
 // creation timestamp that it will be considered ready to cancel if not filled
@@ -202,14 +199,14 @@ CPBB_REBUY_CANCEL: 60 * 24 * 3,
 // used for all the limit orders that existed, starting with the price at the highest limit value
 // using the rebuy config to create new orders
 // NOTE: if you use this setting, it is recommended that you set it higher than
-// the number of items in your CPBB_REBUY_AT config so it doesn't excessively rebuild
+// the number of items in your CPBB_REBUY config so it doesn't excessively rebuild
 // the same orders over and over
 // NOTE: this feature only matters if you are using a non-zero CPBB_REBUY_CANCEL config
 // NOTE: enabling this feature also sets new created_at timestamps for limit orders so the expiration is continuously pushed out until they are filled
 CPBB_REBUY_REBUILD: 12
 ```
 
-The above config will cause the engine to attempt to set up to $50 worth of limit orders for the asset after each `sell` action. The orders will be placed as .0001 @ -.01% drop (very soon), .0001 @ -2% drop, etc until the $50 spending threshold is met.
+The above config will cause the engine to attempt to set $50 worth of limit orders for the asset after each `sell` action. The orders will be placed as .0001 @ -2% drop, .0001 @ -4% drop, etc until the $50 spending threshold is met. If the remaining funds in the last order is too little to create an order (would create a size too low for the API to accept), those funds are added to the last valid order.
 
 ### Volume and Frequency
 

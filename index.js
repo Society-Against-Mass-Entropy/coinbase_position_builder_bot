@@ -8,7 +8,7 @@ const getProduct = require('./coinbase/get.product');
 const log = require('./lib/log');
 const logOutput = require('./lib/log.output');
 const memory = require('./lib/memory');
-const { divide } = require('./lib/math');
+const { divide, multiply } = require('./lib/math');
 
 const job = new CronJob(config.freq, action);
 
@@ -45,11 +45,11 @@ const startEngine = async () => {
     }`
   );
   if (config.rebuy.drops.length) {
-    const sizes = process.env.CPBB_REBUY_SIZE.split(',');
-    const drops = process.env.CPBB_REBUY_AT.split(',');
+    const sizes = config.rebuy.sizes;
+    const drops = config.rebuy.drops;
     log.now(
-      `💵 REBUY up to $${config.rebuy.max} of ${config.ticker}: ${sizes
-        .map((s, i) => `${s}@${drops[i]}%`)
+      `💵 REBUY $${config.rebuy.max} of ${config.ticker}: ${sizes
+        .map((s, i) => `${s}@${multiply(drops[i], 100)}%`)
         .join(', ')}`
     );
   }
