@@ -6,7 +6,7 @@ const apiKeys = require('./api.keys');
 module.exports = {
   apps: [
     {
-      name: 'cpbb_ltcbtc',
+      name: 'ltcbtc',
       script: '.',
       watch: ['*.js', 'coinbase', 'lib'],
       env: {

@@ -1,6 +1,6 @@
 {
   "name": "coinbase_position_builder_bot",
-  "version": "2.5.4",
+  "version": "2.7.0",
   "description": "Position Building Bot for Accumulating Bitcoin (or other assets) via Coinbase Pro, while taking advantage of pumps",
   "jest": {
     "collectCoverageFrom": [
@@ -29,8 +29,10 @@
     "start:2": "CPBB_FREQ='5 */2 * * *' node .",
     "start:3": "CPBB_FREQ='5 */3 * * *' node .",
     "start:4": "CPBB_FREQ='5 */4 * * *' node .",
-    "test": "./node_modules/eslint/bin/eslint.js . && echo '✅ No Lint' && ./node_modules/jest/bin/jest.js --coverage && echo '✅ Tests'",
-    "test:watch": "./node_modules/jest/bin/jest.js --watch"
+    "test": "./node_modules/eslint/bin/eslint.js . && echo '✅ No Lint' && ./node_modules/jest/bin/jest.js --verbose --coverage && echo '✅ Tests'",
+    "test:debug": "VERBOSE_TEST=true ./node_modules/jest/bin/jest.js --verbose",
+    "test:watch": "./node_modules/jest/bin/jest.js --watch",
+    "coverage": "./node_modules/jest/bin/jest.js --coverage"
   },
   "repository": {
     "type": "git",
@@ -54,6 +56,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "husky": "^5.1.1",
     "jest": "^26.6.3",
+    "nock": "13.0.9",
     "prettier": "^2.2.1"
   }
 }

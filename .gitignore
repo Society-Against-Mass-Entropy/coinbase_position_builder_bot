@@ -6,3 +6,4 @@ data/fills_*
 data/maker.orders.*.json
 data/history.*.tsv
 coverage
+!test/data/*.log

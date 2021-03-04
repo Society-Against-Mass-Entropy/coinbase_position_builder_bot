@@ -1,3 +1,48 @@
+# 2.7.0
+
+- More tests!
+- When new users start, log `0` for profit instead of `undefined`
+- No longer requiring negative sign on CPBB_REBUY configs (they are still valid but the rebuy percentage drop point is automatically converted to a negative percentage)
+- New configuration option and recommendation for REBUY that collapses the size and percentage drop point into one, which prevents accidentally defining a drop point with no target (uneven definitions). This also makes it easier to see side by side at what percentage drop point you would be setting a limit buy to recapture the size:
+
+```
+CPBB_REBUY: '.0001@4,.0002@6,.0004@8,.0008@10,.001@12,.002@15,.004@20,.008@25,.016@30,.032@35,.064@40,.128@50,.256@60,.512@70,1.024@80,2.048@90',
+```
+
+This replaces the former config that looked like this (also still supported and valid):
+
+```
+CPBB_REBUY_SIZE: '.0001,.0002,.0004,.0008,.001,.002,.004,.008,.016,.032,.064,.128,.256,.512,1.024,2.048',
+CPBB_REBUY_AT: '-4,-6,-8,-10,-12,-15,-20,-25,-30,-35,-40,-50,-60,-70,-80,-90',
+```
+
+The above version is not recommended but will continue to be supported until the next major version upgrade.
+
+# 2.6.0
+
+- New Rebuild/Rebuy algorithm uses ALL of MAX funds. The remainder of the funds will be applied to the next drop point. If that creates an order that is too small to place based on the `base_min_size`, it will be added to the previous valid order size.
+
+### Example Rebuy Running against ETH-USD
+
+```
+⚡ Creating limit orders to rebuy $15 worth of ETH starting from $1525.77
+⬇️  posted limit order for 0.001 ETH @ 1464.74 = $1.4647 (-4% drop)
+⬇️  posted limit order for 0.002 ETH @ 1434.22 = $2.8684 (-6% drop)
+⬇️  posted limit order for 0.003 ETH @ 1403.71 = $4.2111 (-8% drop)
+⬇️  posted limit order for 0.00471722 ETH @ 1373.19 = $6.4558 (-10% drop)
+✅ REBUY: Added 4 limit buys totaling $15. Now 14 limit orders totaling $72.1509
+```
+
+In this case, there was a remainder of `0.00071722` ETH which is too small for the minimum order size according to the API. So we took that size and added it to the previous valid order (.004) to use all the $15 available.
+
+- fixed rebuy base-price calculation
+- `tools/project.changes.js` fixed to work with new libraries
+- APY and ID are no longer parsed in memory as number (NaN), which didn't break anything but good to not do
+- now stripping commas out of log history (if they exist): fixes #12
+- upgrade dependencies and nvm to stable (15.10.0)
+- now better handling response states from API
+- lots of logging improvements
+
 # 2.5.3
 
 - Fix bug with running engine without CPBB_REBUY_AT being set in ENV

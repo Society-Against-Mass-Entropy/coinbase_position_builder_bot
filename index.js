@@ -8,11 +8,11 @@ const getProduct = require('./coinbase/get.product');
 const log = require('./lib/log');
 const logOutput = require('./lib/log.output');
 const memory = require('./lib/memory');
-const { divide } = require('./lib/math');
+const { divide, multiply } = require('./lib/math');
 
 const job = new CronJob(config.freq, action);
 
-(async () => {
+const startEngine = async () => {
   const product = await getProduct(config.productID);
   memory.product = product;
   log.now(
@@ -45,11 +45,11 @@ const job = new CronJob(config.freq, action);
     }`
   );
   if (config.rebuy.drops.length) {
-    const sizes = process.env.CPBB_REBUY_SIZE.split(',');
-    const drops = process.env.CPBB_REBUY_AT.split(',');
+    const sizes = config.rebuy.sizes;
+    const drops = config.rebuy.drops;
     log.now(
-      `💵 REBUY up to $${config.rebuy.max} of ${config.ticker}: ${sizes
-        .map((s, i) => `${s}@${drops[i]}%`)
+      `💵 REBUY $${config.rebuy.max} of ${config.ticker}: ${sizes
+        .map((s, i) => `${s}@${multiply(drops[i], 100)}%`)
         .join(', ')}`
     );
   }
@@ -71,7 +71,7 @@ const job = new CronJob(config.freq, action);
     return;
   }
   // find the trading account we care about
-  memory.account = accounts.filter(a => a.currency === config.currency)[0];
+  memory.account = accounts.find(a => a.currency === config.currency);
   log.now(
     `🏦 $${config.currency} account loaded with ${
       memory.account.available
@@ -79,12 +79,17 @@ const job = new CronJob(config.freq, action);
   );
 
   // immediate kick off (testing mode)
-  if (process.env.CPBB_TEST || config.dry) action();
+  if (config.dry) await action();
 
   // start the cronjob
   job.start();
+
   log.ok(`last transaction for ${config.productID}:`);
   logOutput(memory.lastLog);
   const nextDate = job.nextDates();
   log.now(`🕟 next run ${nextDate.fromNow()}, on ${nextDate.local().format()}`);
-})();
+
+  return job;
+};
+
+module.exports = startEngine();
