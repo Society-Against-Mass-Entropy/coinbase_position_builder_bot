@@ -51,7 +51,7 @@ for (let i = 1; i < all.length; i++) {
   all[i].EndValue = add(all[i].Value, all[i].Funds);
   all[i].Realized = add(
     last.Realized,
-    all[i].Funds > 0 ? 0 : all[i].Funds * -1
+    all[i].Funds > 0 ? 0 : multiply(all[i].Funds, -1)
   );
   // total input does not subtract when we take profit (that's realized profit)
   all[i].TotalInput = add(last.TotalInput, all[i].Funds > 0 ? all[i].Funds : 0);

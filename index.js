@@ -40,7 +40,7 @@ const startEngine = async () => {
       config.dry ? 'DRY RUN' : 'LIVE'
     } mode, ${config.vol} $${config.currency} ➡️  $${config.ticker} @ cron(${
       config.freq
-    }), ${config.apy * 100}% APY${
+    }), ${multiply(config.apy, 100)}% APY${
       process.env.VERBOSE === 'true' ? `, verbose logging` : ''
     }`
   );

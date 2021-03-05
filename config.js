@@ -17,7 +17,7 @@ const config = {
   apy: divide(process.env.CPBB_APY || 15, 100),
   rebuy: {
     // ms after limit order placed before it is able to be canceled due to not filling
-    cancel: Number(process.env.CPBB_REBUY_CANCEL || 0) * 60000,
+    cancel: multiply(process.env.CPBB_REBUY_CANCEL || 0, 60000),
     drops: process.env.CPBB_REBUY
       ? process.env.CPBB_REBUY.split(',')
           .map(p => {

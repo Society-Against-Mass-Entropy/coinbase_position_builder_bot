@@ -42,8 +42,8 @@ log.debug(memory.lastLog);
     const changeParts = change.split(':');
     let usingPercent = changeParts[0].includes('%');
     const percentage = usingPercent
-      ? Number(changeParts[0].replace('%', '')) / 100
-      : Number(changeParts[0]) / memory.lastLog.Price - 1;
+      ? divide(changeParts[0].replace('%', ''), 100)
+      : divide(changeParts[0], memory.lastLog.Price) - 1;
     const periods = Number(changeParts[1]);
     const targetPrice = usingPercent
       ? add(memory.lastLog.Price, multiply(memory.lastLog.Price, percentage))
@@ -51,7 +51,7 @@ log.debug(memory.lastLog);
     // const starting = memory.lastLog.Price;
     if (usingPercent) {
       log.zap(
-        `targeting ${percentage * 100}% change from $${
+        `targeting ${multiply(percentage, 100)}% change from $${
           memory.lastLog.Price
         } in ${periods} periods, which ends at $${targetPrice}`
       );
@@ -65,10 +65,10 @@ log.debug(memory.lastLog);
     for (let i = 0; i < periods; i++) {
       let price = memory.lastLog.Price;
       let remainingPeriods = periods - i;
-      let percentRemaining = remainingPeriods / periods;
+      let percentRemaining = divide(remainingPeriods, periods);
       let changeRemaining = targetPrice - price;
       // if we had even change to our target
-      let changePerPeriod = changeRemaining / remainingPeriods;
+      let changePerPeriod = divide(changeRemaining, remainingPeriods);
 
       let change = changePerPeriod; // linear change
 
@@ -76,7 +76,7 @@ log.debug(memory.lastLog);
       // let change = multiply(changePerPeriod, changeMultiplier);
       change = multiply(
         change,
-        Math.random() < 0.5 * percentRemaining ? -1 : 1
+        Math.random() < multiply(0.5, percentRemaining) ? -1 : 1
       );
 
       price = add(price, change);
