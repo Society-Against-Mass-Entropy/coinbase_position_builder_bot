@@ -1,3 +1,11 @@
+# 2.7.2
+
+- use product info to calculate precision for limit order size
+- reduce log and add note about Insufficient Funds
+- validate rebuy size and drop points before startup
+- use multiply and divide everywhere
+- correct rounding error on printing drop target with limit order status (just in log)
+
 # 2.7.0
 
 - More tests!
