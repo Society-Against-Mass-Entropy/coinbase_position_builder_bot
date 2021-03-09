@@ -21,7 +21,7 @@ const uniqFilter = (value, index, self) => {
 };
 
 // const fills = require(`../data/fills_${config.productID}.json`);
-const { add, subtract } = require('../lib/math');
+const { add, subtract, multiply } = require('../lib/math');
 const backup = config.history_file.replace(
   '.tsv',
   `_backup_${new Date().getTime()}.tsv`
@@ -91,8 +91,8 @@ const backup = config.history_file.replace(
     });
 
     if (sold) {
-      shares = shares * -1;
-      usd = subtract(usd, fee) * -1;
+      shares = multiply(shares, -1);
+      usd = multiply(subtract(usd, fee), -1);
     } else {
       usd = add(usd, fee);
     }

@@ -1,6 +1,6 @@
 ⚡ creating log file from template ./data/history.TEST-USD.sandbox.tsv
 ⚡ creating maker file from template ./data/maker.orders.TEST-USD.sandbox.json
-🆗 TEST-USD online, min size 0.00100000, min funds 5
+🆗 TEST-USD online, min size 0.00100000, precision: 0.00000001 (8), min funds 5
 🤖 Position Builder Bot [VERSION], https://api-public.sandbox.pro.coinbase.com in LIVE mode, 100 $USD ➡️  $TEST @ cron(1 1 1 1 1), 25% APY
 💵 REBUY $50 of TEST: 0.0001@-2%, 0.0002@-4%, 0.0003@-6%, 0.0004@-8%, 0.0005@-10%
 🏦 $USD account loaded with 9900.2266348066930000 (99 buy actions)

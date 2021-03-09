@@ -17,7 +17,7 @@ const config = {
   apy: divide(process.env.CPBB_APY || 15, 100),
   rebuy: {
     // ms after limit order placed before it is able to be canceled due to not filling
-    cancel: Number(process.env.CPBB_REBUY_CANCEL || 0) * 60000,
+    cancel: multiply(process.env.CPBB_REBUY_CANCEL || 0, 60000),
     drops: process.env.CPBB_REBUY
       ? process.env.CPBB_REBUY.split(',')
           .map(p => {
@@ -62,6 +62,19 @@ const config = {
   },
   pjson,
 };
+
+if (config.rebuy.drops.length !== config.rebuy.sizes.length) {
+  log.error(
+    `Rebuy is misconfigured. You have ${config.rebuy.drops.length} drop points and ${config.rebuy.sizes.length} order sizes. Perhaps the new single CPBB_REBUY config will make it easier.`
+  );
+  if (process.env.CPBB_REBUY_AT) {
+    log.error(
+      `Consider switching CPBB_REBUY_AT and CPBB_REBUY_SIZE to the new single CPBB_REBUY config.`
+    );
+  }
+  process.exit(1);
+}
+
 config.productID = `${config.ticker}-${config.currency}`;
 let historyName = config.productID;
 // currenly, we only support reversing BTC orders to support ticker pairs that don't exist
@@ -98,4 +111,5 @@ if (!fs.existsSync(config.maker_file)) {
     config.maker_file
   );
 }
+
 module.exports = config;

@@ -48,7 +48,7 @@ let periodCounter = 0;
     let remainingPeriods = periods - i;
     let price = memory.lastLog.Price;
     let change = multiply(price, Math.random(), targetVolatility);
-    let percentRemaining = remainingPeriods / periods;
+    let percentRemaining = divide(remainingPeriods, periods);
     targetFloor = add(targetFloor, multiply(targetFloor, 0.001));
     targetCeiling = add(targetCeiling, multiply(targetCeiling, 0.001));
 
@@ -74,7 +74,7 @@ let periodCounter = 0;
         // are we really going to do it?
         change = multiply(
           change,
-          Math.random() < targetDownChance * percentRemaining ? -1 : 1
+          Math.random() < multiply(targetDownChance, percentRemaining) ? -1 : 1
         );
       }
       price = add(price, change);
@@ -99,8 +99,9 @@ let periodCounter = 0;
   log.now(
     `projected ${ticker} between $${targetFloor} - $${targetCeiling} until ${targetDate} with $${
       config.vol
-    } every ${targetMinutes} minutes, targeting ${
-      config.apy * 100
-    }% APY, and a ${targetDownChance} chance of going down rather than up (diminishing over time)`
+    } every ${targetMinutes} minutes, targeting ${multiply(
+      config.apy,
+      100
+    )}% APY, and a ${targetDownChance} chance of going down rather than up (diminishing over time)`
   );
 })();
