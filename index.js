@@ -14,13 +14,19 @@ const job = new CronJob(config.freq, action);
 
 const startEngine = async () => {
   const product = await getProduct(config.productID);
+  product.precision = product.base_increment
+    .replace('0.', '')
+    .replace(/1[0]+/, '1').length;
   memory.product = product;
+  // log.now({product})
   log.now(
     `${product.status === 'online' ? '🆗' : '🚨'} ${config.productID} ${
       product.status
-    }, min size ${product.base_min_size}, min funds ${
-      product.min_market_funds
-    } ${product.status_message}`
+    }, min size ${product.base_min_size}, precision: ${
+      product.base_increment
+    } (${product.precision}), min funds ${product.min_market_funds} ${
+      product.status_message
+    }`
   );
   if (
     !apiKeys.CPBB_APIKEY ||

@@ -122,5 +122,28 @@ module.exports = {
         CPBB_REBUY_REBUILD: 17,
       },
     },
+    {
+      name: 'xtz',
+      script,
+      watch: watch,
+      env: {
+        NODE_ENV: 'production',
+        CPBB_APIPASS: apiKeys.CPBB_APIPASS,
+        CPBB_APIKEY: apiKeys.CPBB_APIKEY,
+        CPBB_APISEC: apiKeys.CPBB_APISEC,
+        CPBB_FREQ: '45 */4 * * *',
+        CPBB_TICKER: 'XTZ',
+        CPBB_CURRENCY: 'USD',
+        CPBB_VOL: 10,
+        CPBB_APY: 100,
+        // max $ spend on limit rebuys
+        CPBB_REBUY_MAX: 5,
+        // minimum order is 1 XTZ, with a max precision of .01 XTZ
+        CPBB_REBUY:
+          '1@2,2@4,3@6,4@8,5@10,6@12,7@14,8@16,9@18,10@20,11@22,12@24,13@26,14@28,15@30,16@32,17@34,18@36,19@38,20@40,25@50,50@60,100@80',
+        CPBB_REBUY_CANCEL: 60 * 24 * 14,
+        CPBB_REBUY_REBUILD: 17,
+      },
+    },
   ],
 };
