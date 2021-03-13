@@ -1,8 +1,11 @@
+const config = require('../config');
 const log = require('../lib/log');
 const request = require('./cb.request');
-module.exports = async () => {
+module.exports = async ({ status }) => {
   const opts = {
-    requestPath: `/orders`,
+    requestPath:
+      `/orders?product_id=${config.productID}` +
+      (status ? `&status=${status}` : ''),
     method: 'GET',
   };
   log.debug(opts);
