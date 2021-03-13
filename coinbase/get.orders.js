@@ -1,14 +1,28 @@
 const config = require('../config');
-const log = require('../lib/log');
 const request = require('./cb.request');
+const sleep = require('../lib/sleep');
 module.exports = async ({ status }) => {
-  const opts = {
-    requestPath:
-      `/orders?product_id=${config.productID}` +
-      (status ? `&status=${status}` : ''),
-    method: 'GET',
-  };
-  log.debug(opts);
-  const response = await request(opts);
-  return response ? response.json : response;
+  let orders = [];
+  let nextPage = 0;
+  for (let i = 0; i < 1000; i++) {
+    let { json, headers } = await request({
+      requestPath:
+        `/orders?product_id=${config.productID}` +
+        (status ? `&status=${status}` : '') +
+        (nextPage ? `&after=${nextPage}` : ''),
+      method: 'GET',
+    }).catch(e => {
+      console.error(
+        e,
+        `failed to get orders for ${config.productID}. Please make sure this ticker exists and that your network is connected.`
+      );
+      process.exit();
+    });
+    nextPage = headers['cb-after'];
+    if (!json || !json.length) break;
+    orders = [...orders, ...json];
+    // done requesting once we have a fill at or before our since
+    await sleep(1000); // avoid rate limit issues
+  }
+  return orders;
 };
