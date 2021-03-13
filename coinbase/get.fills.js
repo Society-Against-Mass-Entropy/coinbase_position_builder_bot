@@ -12,7 +12,7 @@ module.exports = async ({ since }) => {
   let fills = [];
   let nextPage = 0;
   for (let i = 0; i < 1000; i++) {
-    let { json, headers } = await request({
+    let { json, res } = await request({
       requestPath: `/fills?product_id=${config.productID}${
         nextPage ? `&after=${nextPage}` : ''
       }`,
@@ -24,7 +24,7 @@ module.exports = async ({ since }) => {
       );
       process.exit();
     });
-    nextPage = headers['cb-after'];
+    nextPage = res.headers['cb-after'];
     if (!json || !json.length) break;
     fills = [...fills, ...json];
     log.ok(json[json.length - 1].created_at, `${json.length} records`);

@@ -6,6 +6,6 @@ const log = require('../lib/log');
 const id = process.argv[2];
 log.zap('checking order', id);
 (async () => {
-  const response = await getOrder({ id });
-  log.ok({ response });
+  const { json } = await getOrder({ id });
+  log.ok({ json });
 })();
