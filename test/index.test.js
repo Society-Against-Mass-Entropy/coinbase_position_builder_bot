@@ -11,6 +11,13 @@ process.env.CPBB_REBUY = '.0001@2,.0002@4,.0003@6,.0004@8,.0005@10';
 process.env.CPBB_REBUY_CANCEL = 60 * 24 * 1;
 process.env.CPBB_REBUY_REBUILD = 6;
 
+const deleteOutputFiles = () => {
+  const historyFile = `${__dirname}/../data/history.${process.env.CPBB_TICKER}-${process.env.CPBB_CURRENCY}.sandbox.tsv`;
+  const ordersFile = `${__dirname}/../data/maker.orders.${process.env.CPBB_TICKER}-${process.env.CPBB_CURRENCY}.sandbox.json`;
+  if (fs.existsSync(historyFile)) fs.unlinkSync(historyFile);
+  if (fs.existsSync(ordersFile)) fs.unlinkSync(ordersFile);
+};
+
 const priceChanges = [
   '50000',
   '51000',
@@ -48,6 +55,8 @@ const log = require('./lib/log');
 require('./nock/delete.order');
 require('./nock/get.accounts');
 require('./nock/get.order');
+require('./nock/get.order.netfail');
+require('./nock/get.order.404');
 require('./nock/get.product');
 require('./nock/get.ticker');
 require('./nock/post.orders');
@@ -59,6 +68,8 @@ const engine = require('../index');
 const getLog = require('./lib/get.log');
 const sleep = require('../lib/sleep');
 const testMemory = require('./lib/test.memory');
+const checkRebuys = require('../lib/rebuys.check');
+const memory = require('../lib/memory');
 
 const run = async price => {
   testMemory.price = price;
@@ -70,6 +81,7 @@ describe('Engine', () => {
   let logIndex = -1;
 
   beforeAll(async () => {
+    deleteOutputFiles();
     // make sure everything loaded and started
     const app = await engine;
     // we will manually run action as if we are hitting cron timers
@@ -94,6 +106,27 @@ describe('Engine', () => {
     });
   });
 
+  test('404 condition for limit order', async () => {
+    memory.makerOrders.orders[0].id = '404';
+    await checkRebuys();
+    const expectedLog = getLog('06.limit404');
+    expectedLog.forEach(l => {
+      if (!l) return;
+      logIndex++;
+      expect(log.out[logIndex]).toEqual(l);
+    });
+  });
+  test('Network failure during limit check', async () => {
+    memory.makerOrders.orders[0].id = 'fail';
+    await checkRebuys();
+    const expectedLog = getLog('07.networkfail');
+    expectedLog.forEach(l => {
+      if (!l) return;
+      logIndex++;
+      expect(log.out[logIndex]).toEqual(l);
+    });
+  });
+
   test(`no error outputs`, () => {
     expect(log.warn.length).toBe(0);
     expect(log.err.length).toBe(0);
@@ -101,12 +134,6 @@ describe('Engine', () => {
 
   afterAll(() => {
     if (verbose) process.stdout.write('\n\n');
-    // delete test output files
-    fs.unlinkSync(
-      `${__dirname}/../data/history.${process.env.CPBB_TICKER}-${process.env.CPBB_CURRENCY}.sandbox.tsv`
-    );
-    fs.unlinkSync(
-      `${__dirname}/../data/maker.orders.${process.env.CPBB_TICKER}-${process.env.CPBB_CURRENCY}.sandbox.json`
-    );
+    deleteOutputFiles();
   });
 });

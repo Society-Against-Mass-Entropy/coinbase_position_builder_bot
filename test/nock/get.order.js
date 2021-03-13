@@ -4,7 +4,7 @@ const testMemory = require('../lib/test.memory');
 
 module.exports = nock(config.api)
   .persist()
-  .get(/\/orders\/.+/)
+  .get(/\/orders\/(?!404)(?!fail).+/)
   .reply(200, uri => {
     const id = uri.replace('/orders/', '');
     // console.log(JSON.stringify(testMemory.orders));

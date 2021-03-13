@@ -37,7 +37,9 @@ module.exports = async opts => {
     requestConfig.headers['Content-Type'] = 'application/json';
   }
   // log.debug({ requestConfig });
-  return request(requestConfig).catch(({ reason, json }) => {
-    log.error(opts.method, opts.requestPath, reason, json || '');
+  return request(requestConfig).catch(({ reason, json, res }) => {
+    if (res && res.statusCode !== 404)
+      log.error(opts.method, opts.requestPath, reason, json || '');
+    return { reason, json, res };
   });
 };

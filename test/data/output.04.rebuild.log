@@ -1,9 +1,9 @@
-⏰ limit fcf959ae-374c-4bd4-bace-666171939dc5 has more time: 0.0001 TEST @ 68600.07 = $6.8600 | expires a day
-⏰ limit 45ddc4eb-88c3-4d41-b0b6-7a46e8e93679 has more time: 0.0002 TEST @ 67200.07 = $13.4400 | expires a day
-⏰ limit c3003fb4-b371-4ee2-8eb2-5b152a761189 has more time: 0.00045466 TEST @ 65800.07 = $29.7 | expires a day
-⏰ limit 5dfe2666-da52-4350-bf0e-826de8376f6a has more time: 0.0001 TEST @ 69580.03 = $6.9580 | expires a day
-⏰ limit 6714510b-189d-40b0-a28a-c656e91b9e30 has more time: 0.0002 TEST @ 68160.03 = $13.6320 | expires a day
-⏰ limit 28a1d24a-86f0-403b-88da-8e983d467933 has more time: 0.00044372 TEST @ 66740.03 = $29.41 | expires a day
+⏰ limit fcf959ae-374c-4bd4-bace-666171939dc5 has more time: 0.0001 TEST @ 68600.07 = $6.8600 | expires in a day
+⏰ limit 45ddc4eb-88c3-4d41-b0b6-7a46e8e93679 has more time: 0.0002 TEST @ 67200.07 = $13.4400 | expires in a day
+⏰ limit c3003fb4-b371-4ee2-8eb2-5b152a761189 has more time: 0.00045466 TEST @ 65800.07 = $29.7 | expires in a day
+⏰ limit 5dfe2666-da52-4350-bf0e-826de8376f6a has more time: 0.0001 TEST @ 69580.03 = $6.9580 | expires in a day
+⏰ limit 6714510b-189d-40b0-a28a-c656e91b9e30 has more time: 0.0002 TEST @ 68160.03 = $13.6320 | expires in a day
+⏰ limit 28a1d24a-86f0-403b-88da-8e983d467933 has more time: 0.00044372 TEST @ 66740.03 = $29.41 | expires in a day
 ⚡ rebuilding 6 limits with $100 starting at $69580.03 (base price $71000.0306122449)
 🚫 canceled limit order fcf959ae-374c-4bd4-bace-666171939dc5 for 0.0001 TEST @ 68600.07 = $6.8600
 🚫 canceled limit order 45ddc4eb-88c3-4d41-b0b6-7a46e8e93679 for 0.0002 TEST @ 67200.07 = $13.4400
