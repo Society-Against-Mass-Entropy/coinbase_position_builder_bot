@@ -17,14 +17,13 @@ const { multiply } = require('../lib/math');
 
 log.zap('updating orders db file with orders from the remote books');
 (async () => {
-  const json = await getOrders();
+  const json = await getOrders({ status: 'open' });
   if (!json) {
     log.error('failed to fetch orders.');
     return;
   }
-  log.ok(`found ${json.length} orders`);
   memory.makerOrders = json
-    .filter(o => o.side === 'buy' && !o.settled)
+    .filter(o => o.side === 'buy')
     .map(o => ({
       created_at: o.created_at,
       pair: o.product_id,
@@ -36,6 +35,7 @@ log.zap('updating orders db file with orders from the remote books');
     .sort((a, b) => {
       return Number(a.price) > Number(b.price) ? -1 : 1;
     });
+  log.ok(`found ${memory.makerOrders.length} orders`);
   // we store a lighter schema:
   /**
  * {
