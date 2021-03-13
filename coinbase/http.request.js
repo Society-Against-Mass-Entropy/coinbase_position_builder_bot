@@ -40,7 +40,8 @@ module.exports = params => {
     // reject on request error
     req.on('error', function (err) {
       // This is not a "Second reject", just a different sort of failure
-      log.error(`error in API request/response`, err);
+      // already logging in cb.request outer level
+      // log.error(`error in API request/response`, err);
       params.reject({ reason: err });
     });
     if (params.body) {
