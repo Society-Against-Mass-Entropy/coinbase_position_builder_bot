@@ -11,19 +11,25 @@ module.exports = params => {
         body.push(chunk);
       });
       res.on('end', function () {
+        if (res.statusCode === 429) {
+          log.error(
+            'Error 429: rate limited. Please file an issue here: https://github.com/jasonedison/coinbase_position_builder_bot/issues'
+          );
+          return params.reject({ reason: res.statusCode, res });
+        }
+        if (res.statusCode === 404) {
+          return params.reject({ reason: res.statusCode, res });
+        }
+
         const responseBody = Buffer.concat(body).toString();
         let json;
         try {
           json = JSON.parse(responseBody);
         } catch (e) {
-          log.error('failed to parse response from API', e);
-          params.reject({ reason: e.message });
+          // log.error('failed to parse response from API', e);
+          params.reject({ reason: e.message, res });
         }
-        if (res.statusCode === 429) {
-          log.error(
-            'Error 429: rate limited. Please file an issue here: https://github.com/jasonedison/coinbase_position_builder_bot/issues'
-          );
-        }
+
         if (res.statusCode < 200 || res.statusCode >= 300) {
           if (json && json.message === 'invalid signature') {
             log.error(
@@ -32,7 +38,7 @@ module.exports = params => {
             process.exit();
           }
           log.debug(`${res.statusCode} error:`, responseBody);
-          return params.reject({ reason: res.statusCode, json });
+          return params.reject({ reason: res.statusCode, json, res });
         }
         params.resolve({
           json,

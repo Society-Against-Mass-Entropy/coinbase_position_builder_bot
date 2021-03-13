@@ -9,6 +9,7 @@ const log = {
 // convert all console.log output to make it generically testable
 global.console.log = (...args) => {
   const line = args
+    .map(a => (typeof a === 'object' ? JSON.stringify(a) : a))
     .join(' ')
     .replace(
       /Position Builder Bot .+, http/,
@@ -29,12 +30,16 @@ global.console.log = (...args) => {
   if (verbose) process.stdout.write('\n' + line);
 };
 global.console.warn = (...args) => {
-  const line = args.join(' ');
+  const line = args
+    .map(a => (typeof a === 'object' ? JSON.stringify(a) : a))
+    .join(' ');
   log.warn.push(line);
   if (verbose) process.stdout.write('\n' + line);
 };
 global.console.error = (...args) => {
-  const line = args.join(' ');
+  const line = args
+    .map(a => (typeof a === 'object' ? JSON.stringify(a) : a))
+    .join(' ');
   log.err.push(line);
   if (verbose) process.stderr.write('\n' + line);
 };

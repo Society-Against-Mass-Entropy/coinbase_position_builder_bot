@@ -25,8 +25,8 @@ module.exports = async order => {
     };
     log.debug(opts);
     const result = await request(opts);
-    log.debug(result);
     const json = result ? result.json : result;
+    log.debug({ json });
     // NOTE: we allow limit orders to be unsettled and even not found (sometimes limits get purged due to maintenance or other conditions)
     if (
       order.type === 'market' &&

@@ -41,8 +41,8 @@ module.exports = async (opts, retries = 0) => {
       method: 'POST',
       body: opts,
     });
-    log.debug(result);
     const json = result ? result.json : result;
+    log.debug(json);
     // if retries are enabled for this type of order, allow retry
     if (retries && !json) {
       retryCount++;
