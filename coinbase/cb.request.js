@@ -38,12 +38,6 @@ module.exports = async opts => {
   }
   // log.debug({ requestConfig });
   return request(requestConfig).catch(({ reason, json }) => {
-    log.error(
-      opts.method,
-      opts.requestPath,
-      `status error`,
-      reason,
-      json || ''
-    );
+    log.error(opts.method, opts.requestPath, reason, json || '');
   });
 };

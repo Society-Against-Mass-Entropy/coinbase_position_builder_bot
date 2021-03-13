@@ -1,3 +1,8 @@
+# 2.7.3
+
+- handling failure to post order case for limit rebuy
+- new `tools/get.limits.js` script for restoring limit buy orders on the order books
+
 # 2.7.2
 
 - use product info to calculate precision for limit order size
