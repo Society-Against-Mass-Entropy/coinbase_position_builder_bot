@@ -1,4 +1,4 @@
-# 2.7.4
+# 2.7.5
 
 - handling failure to post order case for limit rebuy
 - new `tools/get.limits.js` script for restoring limit buy orders on the order books
