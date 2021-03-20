@@ -20,7 +20,7 @@ module.exports = {
         CPBB_VOL: 100,
         CPBB_APY: 150,
         // max $ spend on limit rebuys
-        CPBB_REBUY_MAX: 75,
+        CPBB_REBUY_MAX: 100,
         // minimum order is .0001 BTC ($5 at $50K)
         // rebuy logic will place up orders at this size until CPBB_REBUY_MAX is reached
         // CPBB_REBUY_SIZE:
@@ -30,7 +30,7 @@ module.exports = {
         // CPBB_REBUY_AT:
         //   '-4,-6,-8,-10,-12,-15,-20,-25,-30,-35,-40,-50,-60,-70,-80,-90',
         CPBB_REBUY:
-          '.0001@2,.0002@3,.0003@4,.0004@5,.0005@6,.0006@7,.0007@8,.0008@10,.001@12,.002@15,.004@20,.008@25,.016@30,.032@35,.064@40,.128@50,.256@60,.512@70,1.024@80,2.048@90',
+          '.0001@1,.0002@2,.0003@3,.0004@4,.0005@5,.0006@6,.0007@7,.0008@8,.0009@9,.001@10,.0015@12,.002@15,.004@20,.008@25,.016@30,.032@35,.064@40,.128@45,.256@50,.512@55,1@60,2@65,4@70,8@75,16@80,32@85,64@90,128@95,200@96,200@97,200@98,200@99',
         // when should we cancel limit orders?
         // default behavior is on the next action point (if they didn't fill)
         // if CPBB_REBUY_CANCEL is set, this is a number of minutes after the limit order
@@ -137,7 +137,7 @@ module.exports = {
         CPBB_VOL: 10,
         CPBB_APY: 100,
         // max $ spend on limit rebuys
-        CPBB_REBUY_MAX: 5,
+        CPBB_REBUY_MAX: 10,
         // minimum order is 1 XTZ, with a max precision of .01 XTZ
         CPBB_REBUY:
           '1@2,2@4,3@6,4@8,5@10,6@12,7@14,8@16,9@18,10@20,11@22,12@24,13@26,14@28,15@30,16@32,17@34,18@36,19@38,20@40,25@50,50@60,100@80',

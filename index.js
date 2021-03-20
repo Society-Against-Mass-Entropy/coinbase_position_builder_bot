@@ -44,7 +44,7 @@ const startEngine = async () => {
   log.bot(
     `Position Builder Bot ${config.pjson.version}, ${config.api} in ${
       config.dry ? 'DRY RUN' : 'LIVE'
-    } mode, ${config.vol} $${config.currency} ➡️  $${config.ticker} @ cron(${
+    } mode, ${config.vol} $${config.currency} ➡️  $${config.ticker} @cron(${
       config.freq
     }), ${multiply(config.apy, 100)}% APY${
       process.env.VERBOSE === 'true' ? `, verbose logging` : ''

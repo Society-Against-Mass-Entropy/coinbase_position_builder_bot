@@ -1,3 +1,7 @@
+# 2.7.6
+
+- Adjust log output to show total $ input and use dollarize method to add $ for USD trades
+
 # 2.7.5
 
 - handling failure to post order case for limit rebuy
