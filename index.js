@@ -5,10 +5,12 @@ const apiKeys = require('./api.keys.js');
 const action = require('./lib/action');
 const getAccounts = require('./coinbase/accounts');
 const getProduct = require('./coinbase/get.product');
+const getAPY = require('./lib/getAPY');
+const getTicker = require('./coinbase/get.ticker');
 const log = require('./lib/log');
 const logOutput = require('./lib/log.output');
 const memory = require('./lib/memory');
-const { divide, multiply } = require('./lib/math');
+const { add, divide, multiply, subtract } = require('./lib/math');
 
 const job = new CronJob(config.freq, action);
 
@@ -85,15 +87,48 @@ const startEngine = async () => {
   );
 
   // immediate kick off (testing mode)
-  if (config.dry) await action();
+  if (config.dry) {
+    log.now('dry run, kicking off test run now:');
+    await action();
+  }
 
   // start the cronjob
   job.start();
 
   log.ok(`last transaction for ${config.productID}:`);
   logOutput(memory.lastLog);
+  const ticker = await getTicker();
+
   const nextDate = job.nextDates();
-  log.now(`🕟 next run ${nextDate.fromNow()}, on ${nextDate.local().format()}`);
+  const currentHolding = add(memory.lastLog.Holding, memory.lastLog.Shares);
+  const holdingValue = multiply(ticker.price, currentHolding);
+  const liquidValue = add(holdingValue, memory.lastLog.Realized);
+  log.now(
+    `🕟 next run ${nextDate.fromNow()}, on ${nextDate
+      .local()
+      .format()}, holding ${currentHolding} @${
+      ticker.price
+    } (market) = $${holdingValue}, paid ${memory.lastLog.TotalInput.toFixed(
+      2
+    )}, target APY calculation ${multiply(
+      getAPY({
+        totalInput: memory.lastLog.TotalInput,
+        endValue: holdingValue,
+        dateNow: new Date(),
+      }),
+      100
+    ).toFixed(2)}% (liquid gain ${
+      memory.lastLog.TotalInput
+        ? multiply(
+            divide(
+              subtract(liquidValue, memory.lastLog.TotalInput),
+              memory.lastLog.TotalInput
+            ),
+            100
+          ).toFixed(2)
+        : 0
+    }%)`
+  );
 
   return job;
 };

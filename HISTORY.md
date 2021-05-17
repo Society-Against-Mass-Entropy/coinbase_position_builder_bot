@@ -1,3 +1,10 @@
+# 3.0.0
+
+- New APY calculation using Simple Interest Rate (since we are not compounding based on the period but extrapolating what an annual rate would be with the same growth rate per period)
+- Now showing calcualted APY in each log item
+- Now showing liquid APY at startup
+- Corrected APY adjuster to prevent negative period rate and expected gain calculations with limit orders that filled and logged out of time sequence
+
 # 2.7.6
 
 - Adjust log output to show total $ input and use dollarize method to add $ for USD trades

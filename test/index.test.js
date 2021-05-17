@@ -6,6 +6,7 @@ process.env.CPBB_FREQ = '1 1 1 1 1';
 process.env.CPBB_APY = 25;
 process.env.CPBB_REBUY_MAX = 50;
 process.env.CPBB_REBUY = '.0001@2,.0002@4,.0003@6,.0004@8,.0005@10';
+process.env.FIRST_LOG_DATE = '2021-01-01T00:00:00.000Z';
 // process.env.CPBB_REBUY_SIZE = '.0001,.0002,.0003,.0004,.0005';
 // process.env.CPBB_REBUY_AT = '-2,-4,-6,-8,-10';
 process.env.CPBB_REBUY_CANCEL = 60 * 24 * 1;
@@ -71,9 +72,12 @@ const testMemory = require('./lib/test.memory');
 const checkRebuys = require('../lib/rebuys.check');
 const memory = require('../lib/memory');
 
+// dates to begin test sequence
+let currentDate = new Date('2021-01-01');
 const run = async price => {
   testMemory.price = price;
-  return action();
+  currentDate.setDate(currentDate.getDate() + 1);
+  return action({ dateOverride: currentDate });
 };
 
 describe('Engine', () => {
@@ -108,7 +112,8 @@ describe('Engine', () => {
 
   test('404 condition for limit order', async () => {
     memory.makerOrders.orders[0].id = '404';
-    await checkRebuys();
+    currentDate.setHours(currentDate.getHours() + 1);
+    await checkRebuys({ dateOverride: currentDate });
     const expectedLog = getLog('06.limit404');
     expectedLog.forEach(l => {
       if (!l) return;
@@ -118,7 +123,8 @@ describe('Engine', () => {
   });
   test('Network failure during limit check', async () => {
     memory.makerOrders.orders[0].id = 'fail';
-    await checkRebuys();
+    currentDate.setHours(currentDate.getHours() + 1);
+    await checkRebuys({ dateOverride: currentDate });
     const expectedLog = getLog('07.networkfail');
     expectedLog.forEach(l => {
       if (!l) return;
