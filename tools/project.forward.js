@@ -43,7 +43,7 @@ const processLog = async idx => {
   action.dateNow = dateOverride;
   logSave({
     action,
-    response: {
+    order: {
       filled_size: divide(config.vol, d.Price).toFixed(8),
     },
   });

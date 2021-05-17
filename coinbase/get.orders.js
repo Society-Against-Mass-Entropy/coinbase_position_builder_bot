@@ -5,7 +5,7 @@ module.exports = async ({ status }) => {
   let orders = [];
   let nextPage = 0;
   for (let i = 0; i < 1000; i++) {
-    let { json, headers } = await request({
+    let { json, res } = await request({
       requestPath:
         `/orders?product_id=${config.productID}` +
         (status ? `&status=${status}` : '') +
@@ -18,7 +18,7 @@ module.exports = async ({ status }) => {
       );
       process.exit();
     });
-    nextPage = headers['cb-after'];
+    nextPage = res.headers['cb-after'];
     if (!json || !json.length) break;
     orders = [...orders, ...json];
     // done requesting once we have a fill at or before our since

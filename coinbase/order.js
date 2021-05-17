@@ -36,13 +36,13 @@ module.exports = async (opts, retries = 0) => {
     if (retryCount === 2) {
       log.now(`retry #${retryCount}`, opts);
     }
-    const response = await request({
+    const result = await request({
       requestPath: '/orders',
       method: 'POST',
       body: opts,
     });
-    log.debug(response);
-    const json = response ? response.json : response;
+    const json = result ? result.json : result;
+    log.debug(json);
     // if retries are enabled for this type of order, allow retry
     if (retries && !json) {
       retryCount++;

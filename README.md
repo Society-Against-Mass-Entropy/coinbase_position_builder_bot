@@ -237,7 +237,7 @@ Additionally, could alter the dollar amount and act with `$15` twice a day (for 
 CPBB_VOL=15 CPBB_FREQ='0 */12 * * *' node .
 ```
 
-## Test
+## Tests
 
 The project comes with development tests that measure the output logs and mock market conditions:
 
@@ -254,11 +254,9 @@ open ./coverage/lcov-report/index.html
 
 There are two ways to test your own configs:
 
-### 1. Using the Coinbase Sandbox API
+### Using the Coinbase Sandbox API (legacy)
 
-The first option is not great for testing strategies because it uses the sandbox API network which does not support many trading pairs and has fake liquidity and transactions. This path exists, only for testing code updates (to make sure the app still works after big code refactors). This option also requires a different API key, and is probably more headache than it's worth for regular testing.
-
-> The second option is the recommended path for users
+The sandbox API network isn't a great testing environment as it does not support many trading pairs and has fake liquidity and transactions. This path exists for legacy testing. This option also requires a different API key, and is probably more headache than it's worth for regular testing.
 
 1. Create a Sandbox API account and API Keyset here: https://public.sandbox.pro.coinbase.com/profile/api
 2. You will also need to fake transfer USD from Coinbase into the Sandbox
@@ -272,7 +270,7 @@ export CPBB_APISEC="SANDBOX API SECRET"
 CPBB_TEST=true node .
 ```
 
-### 2. Using CPBB_DRY_RUN feature
+### Using CPBB_DRY_RUN feature
 
 The real coinbase API can also be run in a "dry run" mode, which will calculate and record transactions into a special dry run history log as if actions were taken, even though no buy/sell orders are made against the API.
 
@@ -310,25 +308,9 @@ Time	Price	Holding	Value	Funds	Shares	PeriodRate	ExpectedGain	TotalInput	Target	
 2020-01-21T04:35:02.496Z	8670	0.01269249	110.04	10	0.0011511	0.00001123	0	120	120	-9.96	120.04	0	120.04	0.04	0.04%
 ```
 
-# Projecting Future Gains
-
-We can't predict the future, but we can take historical data and backtest it
-as if it will go that way again. The easiest way to do this from our existing history
-is to model the price reversing course from the last log back to the start of our history.
-
-There is another provided tool for taking an existing history file and running a projection based on that history repeating in reverse from the last log.
-
-It can be used to examine what it might look like if we alter the volume or APY target in th event that the price reverses in the same pattern as our current log of transactions.
-
-Note: this model runs using the existing engine log with the price/timestamps listed in the history. So it will model those prices and intervals in reverse. You will need to have run this engine for some amount of time prior to running the future projection tool in order to project from your particular history:
-
-```
-CPBB_VOL=20 CPBB_APY=20 node project.forward.js
-```
-
-This will examine your current history file (e.g. `./data/history.BTC-USD.tsv`), reverse the data, and run it as projected future events. Then it will save the result in a corresponding projection file (e.g. `./data/history.BTC-USD.projection.tsv`).
-
 # Scripting Tools
+
+There are many single run scripted tools in the `tools` directory of this project. Each file documents what it does and how to use it. here are a couple of interesting ones in more detail:
 
 ## Tax Calculator
 

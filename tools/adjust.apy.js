@@ -9,7 +9,7 @@ const MS_PER_YEAR = 31556952000;
 const config = require('../config');
 const fs = require('fs');
 const history = require('../lib/history');
-const { divide, multiply, subtract, add, pow } = require('../lib/math');
+const { divide, multiply, subtract, add } = require('../lib/math');
 const log = require('../lib/log');
 const map = require('lodash.map');
 log.bot(
@@ -31,14 +31,21 @@ for (let i = 1; i < all.length; i++) {
   if (i === 1) log.debug(all[i]);
   let dateNow = new Date(all[i].Time);
   let dateLast = new Date(last.Time);
+  if (dateNow < dateLast) {
+    // limit orders that previously were marked as completed out of order
+    // fix
+    dateNow = dateLast;
+  }
   let msPassed = dateNow - dateLast; // milliseconds delta
 
   all[i].Holding = add(last.Holding, last.Shares);
   all[i].Value = multiply(all[i].Holding, all[i].Price);
-  all[i].PeriodRate = subtract(
-    pow(1 + config.apy, divide(1, divide(MS_PER_YEAR, msPassed))),
-    1
-  );
+  // all[i].PeriodRate = subtract(
+  //   pow(1 + config.apy, divide(1, divide(MS_PER_YEAR, msPassed))),
+  //   1
+  // );
+  all[i].PeriodRate = divide(config.apy, divide(MS_PER_YEAR, msPassed));
+
   all[i].ExpectedGain = multiply(last.Target, all[i].PeriodRate);
   all[i].Target = add(
     add(Math.abs(all[i].Funds), all[i].ExpectedGain),

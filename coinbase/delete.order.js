@@ -5,10 +5,10 @@ const request = require('./cb.request');
 
 module.exports = async id => {
   if (config.dry) return true;
-  const response = await request({
+  const result = await request({
     requestPath: `/orders/${id}`,
     method: 'DELETE',
   });
 
-  return response ? response.json : false;
+  return result ? result.json : false;
 };

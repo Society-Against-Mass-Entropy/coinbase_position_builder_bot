@@ -91,7 +91,7 @@ let periodCounter = 0;
     action.dateNow = dateOverride;
     logSave({
       action,
-      response: {
+      order: {
         filled_size: divide(config.vol, price).toFixed(8),
       },
     });

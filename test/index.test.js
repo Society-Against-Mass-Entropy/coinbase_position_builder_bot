@@ -6,10 +6,18 @@ process.env.CPBB_FREQ = '1 1 1 1 1';
 process.env.CPBB_APY = 25;
 process.env.CPBB_REBUY_MAX = 50;
 process.env.CPBB_REBUY = '.0001@2,.0002@4,.0003@6,.0004@8,.0005@10';
+process.env.FIRST_LOG_DATE = '2021-01-01T00:00:00.000Z';
 // process.env.CPBB_REBUY_SIZE = '.0001,.0002,.0003,.0004,.0005';
 // process.env.CPBB_REBUY_AT = '-2,-4,-6,-8,-10';
 process.env.CPBB_REBUY_CANCEL = 60 * 24 * 1;
 process.env.CPBB_REBUY_REBUILD = 6;
+
+const deleteOutputFiles = () => {
+  const historyFile = `${__dirname}/../data/history.${process.env.CPBB_TICKER}-${process.env.CPBB_CURRENCY}.sandbox.tsv`;
+  const ordersFile = `${__dirname}/../data/maker.orders.${process.env.CPBB_TICKER}-${process.env.CPBB_CURRENCY}.sandbox.json`;
+  if (fs.existsSync(historyFile)) fs.unlinkSync(historyFile);
+  if (fs.existsSync(ordersFile)) fs.unlinkSync(ordersFile);
+};
 
 const priceChanges = [
   '50000',
@@ -48,6 +56,8 @@ const log = require('./lib/log');
 require('./nock/delete.order');
 require('./nock/get.accounts');
 require('./nock/get.order');
+require('./nock/get.order.netfail');
+require('./nock/get.order.404');
 require('./nock/get.product');
 require('./nock/get.ticker');
 require('./nock/post.orders');
@@ -59,10 +69,15 @@ const engine = require('../index');
 const getLog = require('./lib/get.log');
 const sleep = require('../lib/sleep');
 const testMemory = require('./lib/test.memory');
+const checkRebuys = require('../lib/rebuys.check');
+const memory = require('../lib/memory');
 
+// dates to begin test sequence
+let currentDate = new Date('2021-01-01');
 const run = async price => {
   testMemory.price = price;
-  return action();
+  currentDate.setDate(currentDate.getDate() + 1);
+  return action({ dateOverride: currentDate });
 };
 
 describe('Engine', () => {
@@ -70,6 +85,7 @@ describe('Engine', () => {
   let logIndex = -1;
 
   beforeAll(async () => {
+    deleteOutputFiles();
     // make sure everything loaded and started
     const app = await engine;
     // we will manually run action as if we are hitting cron timers
@@ -94,6 +110,29 @@ describe('Engine', () => {
     });
   });
 
+  test('404 condition for limit order', async () => {
+    memory.makerOrders.orders[0].id = '404';
+    currentDate.setHours(currentDate.getHours() + 1);
+    await checkRebuys({ dateOverride: currentDate });
+    const expectedLog = getLog('06.limit404');
+    expectedLog.forEach(l => {
+      if (!l) return;
+      logIndex++;
+      expect(log.out[logIndex]).toEqual(l);
+    });
+  });
+  test('Network failure during limit check', async () => {
+    memory.makerOrders.orders[0].id = 'fail';
+    currentDate.setHours(currentDate.getHours() + 1);
+    await checkRebuys({ dateOverride: currentDate });
+    const expectedLog = getLog('07.networkfail');
+    expectedLog.forEach(l => {
+      if (!l) return;
+      logIndex++;
+      expect(log.out[logIndex]).toEqual(l);
+    });
+  });
+
   test(`no error outputs`, () => {
     expect(log.warn.length).toBe(0);
     expect(log.err.length).toBe(0);
@@ -101,12 +140,6 @@ describe('Engine', () => {
 
   afterAll(() => {
     if (verbose) process.stdout.write('\n\n');
-    // delete test output files
-    fs.unlinkSync(
-      `${__dirname}/../data/history.${process.env.CPBB_TICKER}-${process.env.CPBB_CURRENCY}.sandbox.tsv`
-    );
-    fs.unlinkSync(
-      `${__dirname}/../data/maker.orders.${process.env.CPBB_TICKER}-${process.env.CPBB_CURRENCY}.sandbox.json`
-    );
+    deleteOutputFiles();
   });
 });
