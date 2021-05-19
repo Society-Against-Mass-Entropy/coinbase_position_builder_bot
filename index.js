@@ -110,24 +110,26 @@ const startEngine = async () => {
       ticker.price
     } (market) = $${holdingValue}, paid ${memory.lastLog.TotalInput.toFixed(
       2
-    )}, target APY calculation ${multiply(
-      getAPY({
-        totalInput: memory.lastLog.TotalInput,
-        endValue: holdingValue,
-        dateNow: new Date(),
-      }),
-      100
-    ).toFixed(2)}% (liquid gain ${
-      memory.lastLog.TotalInput
-        ? multiply(
-            divide(
-              subtract(liquidValue, memory.lastLog.TotalInput),
-              memory.lastLog.TotalInput
-            ),
-            100
-          ).toFixed(2)
-        : 0
-    }%)`
+    )},` +
+      // ` target APY calculation ${multiply(
+      //   getAPY({
+      //     totalInput: memory.lastLog.TotalInput,
+      //     endValue: holdingValue,
+      //     dateNow: new Date(),
+      //   }),
+      //   100
+      // ).toFixed(2)}%`+
+      ` liquid gain ${
+        memory.lastLog.TotalInput
+          ? multiply(
+              divide(
+                subtract(liquidValue, memory.lastLog.TotalInput),
+                memory.lastLog.TotalInput
+              ),
+              100
+            ).toFixed(2)
+          : 0
+      }%`
   );
 
   return job;
