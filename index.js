@@ -5,7 +5,7 @@ const apiKeys = require('./api.keys.js');
 const action = require('./lib/action');
 const getAccounts = require('./coinbase/accounts');
 const getProduct = require('./coinbase/get.product');
-const getAPY = require('./lib/getAPY');
+// const getAPY = require('./lib/getAPY');
 const getTicker = require('./coinbase/get.ticker');
 const log = require('./lib/log');
 const logOutput = require('./lib/log.output');
@@ -110,24 +110,26 @@ const startEngine = async () => {
       ticker.price
     } (market) = $${holdingValue}, paid ${memory.lastLog.TotalInput.toFixed(
       2
-    )}, target APY calculation ${multiply(
-      getAPY({
-        totalInput: memory.lastLog.TotalInput,
-        endValue: holdingValue,
-        dateNow: new Date(),
-      }),
-      100
-    ).toFixed(2)}% (liquid gain ${
-      memory.lastLog.TotalInput
-        ? multiply(
-            divide(
-              subtract(liquidValue, memory.lastLog.TotalInput),
-              memory.lastLog.TotalInput
-            ),
-            100
-          ).toFixed(2)
-        : 0
-    }%)`
+    )},` +
+      // ` target APY calculation ${multiply(
+      //   getAPY({
+      //     totalInput: memory.lastLog.TotalInput,
+      //     endValue: holdingValue,
+      //     dateNow: new Date(),
+      //   }),
+      //   100
+      // ).toFixed(2)}%`+
+      ` liquid gain ${
+        memory.lastLog.TotalInput
+          ? multiply(
+              divide(
+                subtract(liquidValue, memory.lastLog.TotalInput),
+                memory.lastLog.TotalInput
+              ),
+              100
+            ).toFixed(2)
+          : 0
+      }%`
   );
 
   return job;
