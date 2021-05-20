@@ -79,25 +79,20 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
     }
     all[i].Diff = subtract(current.Value, current.Target);
     all[i].EndValue = add(current.Value, current.Funds);
-    all[i].Realized = add(
-      last.Realized,
-      all[i].Funds > 0 ? 0 : multiply(current.Funds, -1)
-    );
-    // total input does not subtract when we take profit (that's realized profit)
-    all[i].TotalInput = add(
-      last.TotalInput,
-      all[i].Funds > 0 ? current.Funds : 0
-    );
 
-    // new test logic
     if (isRebuy) {
-      console.log(
-        `removing ${current.ID} ${current.Funds} from TotalInput and Realized`
-      );
-      // remove the value we added to TotalInput
-      all[i].TotalInput = subtract(current.TotalInput, current.Funds);
-      // remove from Realized
       all[i].Realized = subtract(current.Realized, current.Funds);
+      all[i].TotalInput = last.TotalInput || 0;
+    } else {
+      all[i].Realized = add(
+        last.Realized,
+        all[i].Funds > 0 ? 0 : multiply(current.Funds, -1)
+      );
+      // total input does not subtract when we take profit (that's realized profit)
+      all[i].TotalInput = add(
+        last.TotalInput,
+        all[i].Funds > 0 ? current.Funds : 0
+      );
     }
 
     all[i].TotalValue = add(current.EndValue, current.Realized);
