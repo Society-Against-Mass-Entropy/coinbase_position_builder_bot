@@ -81,7 +81,7 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
     all[i].EndValue = add(current.Value, current.Funds);
 
     if (isRebuy) {
-      all[i].Realized = subtract(current.Realized, current.Funds);
+      all[i].Realized = subtract(last.Realized, current.Funds);
       all[i].TotalInput = last.TotalInput || 0;
     } else {
       all[i].Realized = add(
