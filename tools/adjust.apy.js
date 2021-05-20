@@ -42,7 +42,7 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
 
     if (!fill) {
       fill = fills.find(f => f.created_at === current.Time);
-      all[i].ID = fill.order_id;
+      if (fill) all[i].ID = fill.order_id;
       // log.error(`fixing order id`, fill.order_id);
     }
 
