@@ -70,11 +70,15 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
     all[i].PeriodRate = divide(config.apy, divide(MS_PER_YEAR, msPassed));
 
     all[i].ExpectedGain = multiply(last.Target, current.PeriodRate);
-    all[i].Target = add(
-      add(Math.abs(current.Funds), current.ExpectedGain),
-      last.Target
-    );
+
+    // add expected gain to the target (no matter what),
+    // this is the baseline interest growth between the last log and this one
+    all[i].Target = add(last.Target, current.ExpectedGain);
+    // do not add fund value if this is a rebuy
+    // (already added the first time we bought)
+    if (!isRebuy) all[i].Target = add(all[i].Target, Math.abs(current.Funds));
     if (last.Funds < 0) {
+      // however, if we sold on the last action, that vol shouldn't add to our growth target
       all[i].Target = add(current.Target, last.Funds);
     }
     all[i].Diff = subtract(current.Value, current.Target);
