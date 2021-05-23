@@ -8,6 +8,9 @@ module.exports = async ({ since }) => {
   const sinceDate = new Date(since);
   const cacheFile = `${__dirname}/../data/fills_${config.productID}.json`;
   if (fs.existsSync(cacheFile)) {
+    log.bot(
+      `USING CACHED DATA FROM API IN ${cacheFile}. DELETE THIS FILE TO RENEW FROM API.`
+    );
     return JSON.parse(fs.readFileSync(cacheFile).toString());
   }
   // fetch fill data since the iso8601 datetime provided

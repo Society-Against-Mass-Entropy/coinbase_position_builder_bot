@@ -1,3 +1,25 @@
+# 3.1.0
+
+- https://github.com/jasonedison/coinbase_position_builder_bot/pull/35:
+  - Fix a bug with the expected gain not being calculated in sale transactions:
+- Rebuy fixes: https://github.com/jasonedison/coinbase_position_builder_bot/pull/34
+  - Do not apply rebuy funds to target (already applied the first time the buy happened)
+  - Rebuys no longer add to the TotalInput, preventing adding the same funds to the base input over and over and artificially inflating the target gain
+  - The original idea behind rebuy logic was to effectively undo a sell action with a better rate and buy a dip on an upward charge.
+    The current logic applies spent funds in rebuy purchases to the `TotalInput`, and adds to an increase In the `Target` value. This is ok, but it means that a lot of rebuy activity can unintuitively increase the `Target` when the expected reason for rebuying is to effectively undo an erroneous sale point (and benefit from a dip).
+  - Since we are using `Realized` funds for rebuy actions, we can deduct the rebought funds from `Realized` instead of adding them to `TotalInput`. This prevents the rebuy funds from pivoting upward on the `Target` value of the held funds. Essentially, rebuys let us reduce cost basis as if a part of the sell action didn't happen at the expense of the `Realized` gains bucket.
+  - The tools/adjust.apy.js script now fetches fill data from the API in order to see if the record was a Maker or Taker action--rebuys are Makers ("M") and it uses that information to adjust the history to fix the TotalInput and Realized values for rebuys.
+  - Ongoing, the funds for rebuys are now deducted from the `Realized` bucket and prevented from adding to the `TotalInput`
+
+> NOTE: for this update, you should run the following (changing to your APY target value for each ticker you track):
+
+```
+cd tools
+CPBB_TICKER=BTC CPBB_APY=100 node adjust.apy.js
+```
+
+> Any time you run tools/adjust.apy.js, you should delete the cached file in data/fills\_\*.json unless you want to use it
+
 # 3.0.0
 
 - New APY calculation using Simple Interest Rate (since we are not compounding based on the period but extrapolating what an annual rate would be with the same growth rate per period)
