@@ -54,15 +54,12 @@ const config = {
       ? process.env.CPBB_RESELL.split(',')
           .map(p => {
             if (!p) return;
-            return multiply(
-              divide(p.replace('-', '').replace('%', '').split('@')[1], 100),
-              -1
-            );
+            return divide(p.replace('%', '').split('@')[1], 100);
           })
           .filter(i => i && !isNaN(i))
       : (process.env.CPBB_RESELL_AT || '') // legacy support
           .split(',')
-          .map(p => (p ? divide(multiply(Math.abs(p), -1), 100) : null))
+          .map(p => (p ? divide(Math.abs(p), 100) : null))
           .filter(i => i && !isNaN(i)),
     max: Number(process.env.CPBB_RESELL_MAX || 0),
     rebuild: Number(process.env.CPBB_RESELL_REBUILD || 0),

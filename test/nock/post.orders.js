@@ -11,7 +11,7 @@ module.exports = nock(config.api)
   .persist()
   .post('/orders')
   .reply(200, (uri, order) => {
-    // console.log(JSON.stringify(order));
+    // console.log(`post.orders order`, JSON.stringify(order));
     const id = getID();
     const isLimit = order.type === 'limit';
     let funds = Number(
@@ -48,7 +48,7 @@ module.exports = nock(config.api)
     };
     // cache this in memory so the get.order API can find the details of the order
     if (isLimit) testMemory.orders[id] = response;
-    // console.log(JSON.stringify(testMemory.orders));
-    // console.log({ response });
+    // console.log(`post.orders memory`, JSON.stringify(testMemory.orders));
+    // console.log(`post.orders response`,{ response });
     return response;
   });

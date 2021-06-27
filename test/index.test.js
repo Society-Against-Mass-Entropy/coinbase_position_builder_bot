@@ -22,6 +22,7 @@ const deleteOutputFiles = () => {
 };
 
 const priceChanges = [
+  // buy, set resell orders
   '50000',
   '51000',
   '52000',
@@ -30,10 +31,19 @@ const priceChanges = [
   '55000',
   '56000',
   '58000',
+  // sell (over APY), creates rebuy orders
   '70000',
+  // rebuys have more time, sell, create more rebuy limits (rebuild rebuys)
   '71000',
+  // now enought time has passed to make our APY target buy this price
+  // trigger resell limits
   '72000',
+  // trigger rebuy limits
   '66000',
+  '65000',
+  '64000',
+  '63000',
+  '69000',
 ];
 
 // a list of filenames in ./data/output.${name}.log that group
@@ -45,6 +55,8 @@ const logExpectations = [
   '03.rebuy',
   '04.rebuild',
   '05.rebuy.fill',
+  '06.resell',
+  '07.resell.fill',
 ];
 
 // END TEST CONFIG
@@ -66,6 +78,7 @@ require('./nock/post.orders');
 
 const fs = require('fs');
 
+const config = require('../config');
 const action = require('../lib/action');
 const engine = require('../index');
 const getLog = require('./lib/get.log');
@@ -113,10 +126,14 @@ describe('Engine', () => {
   });
 
   test('404 condition for limit order', async () => {
-    memory.makerOrders.orders[0].id = '404';
+    memory.makerOrders.push({
+      id: '404',
+      pair: config.productID,
+      side: 'buy',
+    });
     currentDate.setHours(currentDate.getHours() + 1);
     await checkLimits({ dateOverride: currentDate });
-    const expectedLog = getLog('06.limit404');
+    const expectedLog = getLog('err.limit404');
     expectedLog.forEach(l => {
       if (!l) return;
       logIndex++;
@@ -124,10 +141,14 @@ describe('Engine', () => {
     });
   });
   test('Network failure during limit check', async () => {
-    memory.makerOrders.orders[0].id = 'fail';
+    memory.makerOrders.push({
+      id: 'fail',
+      pair: config.productID,
+      side: 'buy',
+    });
     currentDate.setHours(currentDate.getHours() + 1);
     await checkLimits({ dateOverride: currentDate });
-    const expectedLog = getLog('07.networkfail');
+    const expectedLog = getLog('err.networkfail');
     expectedLog.forEach(l => {
       if (!l) return;
       logIndex++;
