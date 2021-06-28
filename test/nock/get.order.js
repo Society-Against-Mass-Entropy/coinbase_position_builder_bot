@@ -13,8 +13,10 @@ module.exports = nock(config.api)
       console.error('order not found', id);
       return;
     }
+    const price = Number(testMemory.price);
+    const target = Number(order.price);
     // console.log(`order id ${id}`, testMemory.price);
-    if (Number(testMemory.price) < Number(order.price)) {
+    if (order.side === 'sell' ? price >= target : price < target) {
       order.status = 'done';
       order.settled = true;
     }
