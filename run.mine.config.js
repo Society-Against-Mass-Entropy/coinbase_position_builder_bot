@@ -54,7 +54,7 @@ module.exports = {
         CPBB_TICKER: 'ETH',
         CPBB_CURRENCY: 'USD',
         CPBB_VOL: 25,
-        CPBB_APY: 100,
+        CPBB_APY: 50,
         // max $ spend on limit rebuys
         // CPBB_REBUY_MAX: 10,
         // // minimum order is .001 ETH ($5 at $5K)
@@ -78,7 +78,7 @@ module.exports = {
         CPBB_TICKER: 'LTC',
         CPBB_CURRENCY: 'USD',
         CPBB_VOL: 20,
-        CPBB_APY: 100,
+        CPBB_APY: 50,
         // max $ spend on limit rebuys
         // CPBB_REBUY_MAX: 10,
         // // minimum order is in LTC (.01, which is $5 at $500)
@@ -102,7 +102,7 @@ module.exports = {
         CPBB_TICKER: 'DASH',
         CPBB_CURRENCY: 'USD',
         CPBB_VOL: 5,
-        CPBB_APY: 15,
+        CPBB_APY: 10,
         // max $ spend on limit rebuys
         // CPBB_REBUY_MAX: 5,
         // // minimum order is in DASH (.01, which is $5 at $500)
@@ -125,11 +125,11 @@ module.exports = {
         CPBB_APIPASS: apiKeys.CPBB_APIPASS,
         CPBB_APIKEY: apiKeys.CPBB_APIKEY,
         CPBB_APISEC: apiKeys.CPBB_APISEC,
-        CPBB_FREQ: '46 */4 * * *',
+        CPBB_FREQ: '46 */12 * * *',
         CPBB_TICKER: 'XTZ',
         CPBB_CURRENCY: 'USD',
         CPBB_VOL: 25,
-        CPBB_APY: 150,
+        CPBB_APY: 100,
         // max $ spend on limit rebuys
         // CPBB_REBUY_MAX: 10,
         // // minimum order is 1 XTZ, with a max precision of .01 XTZ
