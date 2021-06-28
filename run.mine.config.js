@@ -29,8 +29,8 @@ module.exports = {
         // default behavior is on the next action point (if they didn't fill)
         // if CPBB_REBUY_CANCEL is set, this is a number of minutes after the limit order
         // creation timestamp that it will be considered ready to cancel if not filled
-        CPBB_REBUY_CANCEL: 60 * 24 * 14,
-        // if there are twelve unfilled limit orders remaining on the books, expire them
+        // CPBB_REBUY_CANCEL: 60 * 24 * 14,
+        // if there are this many unfilled limit orders remaining on the books, expire them
         // and rebuild the limit order set immediately using the sum total of funds
         // used for all the limit orders and starting with the price at the highest limit value
         // using the rebuy config to create new orders
