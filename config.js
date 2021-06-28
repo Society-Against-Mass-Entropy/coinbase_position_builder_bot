@@ -29,10 +29,7 @@ const config = {
             );
           })
           .filter(i => i && !isNaN(i))
-      : (process.env.CPBB_REBUY_AT || '') // legacy support
-          .split(',')
-          .map(p => (p ? divide(multiply(Math.abs(p), -1), 100) : null))
-          .filter(i => i && !isNaN(i)),
+      : [],
     max: Number(process.env.CPBB_REBUY_MAX || 0),
     rebuild: Number(process.env.CPBB_REBUY_REBUILD || 0),
     sizes: process.env.CPBB_REBUY
@@ -42,10 +39,7 @@ const config = {
             return Number(p.split('@')[0]);
           })
           .filter(i => i && !isNaN(i))
-      : (process.env.CPBB_REBUY_SIZE || '')
-          .split(',')
-          .map(s => (s ? Number(s) : null))
-          .filter(i => i && !isNaN(i)),
+      : [],
   },
   resell: {
     // ms after limit order placed before it is able to be canceled due to not filling
@@ -57,10 +51,7 @@ const config = {
             return divide(p.replace('%', '').split('@')[1], 100);
           })
           .filter(i => i && !isNaN(i))
-      : (process.env.CPBB_RESELL_AT || '') // legacy support
-          .split(',')
-          .map(p => (p ? divide(Math.abs(p), 100) : null))
-          .filter(i => i && !isNaN(i)),
+      : [],
     max: Number(process.env.CPBB_RESELL_MAX || 0),
     rebuild: Number(process.env.CPBB_RESELL_REBUILD || 0),
     sizes: process.env.CPBB_RESELL
@@ -70,10 +61,7 @@ const config = {
             return Number(p.split('@')[0]);
           })
           .filter(i => i && !isNaN(i))
-      : (process.env.CPBB_RESELL_SIZE || '')
-          .split(',')
-          .map(s => (s ? Number(s) : null))
-          .filter(i => i && !isNaN(i)),
+      : [],
   },
   // if the trading pair ordering doesn't exist (e.g. BTC-LTC)
   // we have to reverse our logic to run from the trading pair that does exist (e.g. LTC-BTC)
