@@ -1,3 +1,10 @@
+# 4.0.0
+
+- breaking change in configs: removing support for old `CPBB_REBUY_AT` and `CPBB_REBUY_SIZE` split env configs. Use new `CPBB_REBUY` (single config)
+- Resell feature: New `CPBB_RESELL` configs to match REBUY configs (opposite side)
+- NOTE: be careful with resell configuration. Having RESELL/REBUY too tight and persisting too long will ruin the point of the bot (buying the dip and accumulating a position). Use sparingly and carefully.
+- More notes in the pull-request for this feature: https://github.com/jasonedison/coinbase_position_builder_bot/pull/39
+
 # 3.1.0
 
 - https://github.com/jasonedison/coinbase_position_builder_bot/pull/35:
