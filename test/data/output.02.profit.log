@@ -1,52 +1,107 @@
-🤑 [DATE] 0.00010000 TEST ➡️  $5.19 @52142.42	✊ 0.01742151 @51071.19 =$889.74 💧 gain 18.69, basis 51071.19 💵 0.00 💹 2.10% 💸 <62365.41
-🤑 [DATE] 0.00050000 TEST ➡️  $26.20 @52653.62	✊ 0.01692151 @51032.22 =$863.54 💧 gain 27.57, basis 51032.22 💵 0.00 💹 3.19% 💸 <62049.91
-💸 [DATE] $100 ➡️  0.00163115 TEST @60999.91	✊ 0.01855266 @51935.53 =$963.54 💧 gain 168.67, basis 51935.53 💵 0.00 💹 17.51% 💸 <60563.81
+🤑 [DATE] 0.00010000 TEST ➡️  $5.19 @52142.42	✊ 0.01742151 @51071.19 =$889.74 💧 gain 18.69, basis 51071.19 💵 0.00 💹 2.10% 💸 <62465.41
+🤑 [DATE] 0.00050000 TEST ➡️  $26.20 @52653.62	✊ 0.01692151 @51032.22 =$863.54 💧 gain 27.57, basis 51032.22 💵 0.00 💹 3.19% 💸 <62149.91
+💸 [DATE] $100 ➡️  0.00163115 TEST @60999.91	✊ 0.01855266 @51935.53 =$963.54 💧 gain 168.67, basis 51935.53 💵 0.00 💹 17.51% 💸 <60663.81
 ⚡ Creating limit orders to resell $50 worth of TEST starting from $60999.90804033964
 ⬆️  posted limit sell order for 0.0001 TEST @62219.91 =$6.222 (2% pump)
 ⬆️  posted limit sell order for 0.0005 TEST @62829.91 =$31.415 (3% pump)
 ✅ RESELL: Added 2 limit sells totaling $37.637. Now 2 limit orders totaling $37.637
-🤑 [DATE] 0.00010000 TEST ➡️  $6.19 @62219.91	✊ 0.01845266 @51881.48 =$957.35 💧 gain 190.80, basis 51881.48 💵 0.00 💹 19.93% 💸 <66018.09
-🤑 [DATE] 0.00050000 TEST ➡️  $31.26 @62829.91	✊ 0.01795266 @51585.30 =$926.09 💧 gain 202.03, basis 51585.30 💵 0.00 💹 21.82% 💸 <65428.73
-🤑 [DATE] 0.00099010 TEST ➡️  $99.50 @100999.90	✊ 0.01696256 @54596.32 =$926.09 💧 gain 886.63, basis 48730.46 💵 99.50 💹 95.74% 💸 <73306.20
+🤑 [DATE] 0.00010000 TEST ➡️  $6.19 @62219.91	✊ 0.01845266 @51881.48 =$957.35 💧 gain 190.80, basis 51881.48 💵 0.00 💹 19.93% 💸 <66118.09
+🤑 [DATE] 0.00050000 TEST ➡️  $31.26 @62829.91	✊ 0.01795266 @51585.30 =$926.09 💧 gain 202.03, basis 51585.30 💵 0.00 💹 21.82% 💸 <65528.73
+🤑 [DATE] 0.00099010 TEST ➡️  $99.50 @100999.90	✊ 0.01696256 @54596.32 =$926.09 💧 gain 886.63, basis 48730.46 💵 99.50 💹 95.74% 💸 <73406.20
 ⚡ Creating limit orders to rebuy $50 worth of TEST starting from $100999.899000101
 ⬇️  posted limit buy order for 0.0001 TEST @98979.90 =$9.8980 (-2% drop)
 ⬇️  posted limit buy order for 0.00041814 TEST @96959.90 =$40.102 (-4% drop)
 ✅ REBUY: Added 2 limit buys totaling $50. Now 2 limit orders totaling $50
+<<<<<<< HEAD
 ⏰ limit buy [UUID] has more time: 0.00041814 TEST @96959.9 =$40.102 | expires in a day
 💸 [DATE] $9.90 ➡️  0.00010000 TEST @98979.90	✊ 0.01706256 @54276.34 =$926.09 💧 gain 832.56, basis 49024.96 💵 89.60 💹 89.90% 💸 <61262.97
 🤑 [DATE] 0.00102041 TEST ➡️  $99.50 @97999.82	✊ 0.01604215 @57728.76 =$926.09 💧 gain 835.14, basis 45940.94 💵 189.10 💹 90.18% 💸 <71399.73
+||||||| parent of 3339b3e (correcting buyUnder log)
+💸 [DATE] $9.90 ➡️  0.00010000 TEST @98979.90	✊ 0.01706256 @54276.34 =$926.09 💧 gain 832.56, basis 49024.96 💵 89.60 💹 89.90% 💸 <61262.97
+⏰ limit buy b1910eaa-ad60-449f-b52e-52ea51dfe6b5 has more time: 0.00041814 TEST @96959.90 =$40.102 | expires in a day
+🤑 [DATE] 0.00102041 TEST ➡️  $99.50 @97999.82	✊ 0.01604215 @57728.76 =$926.09 💧 gain 835.14, basis 45940.94 💵 189.10 💹 90.18% 💸 <71399.73
+=======
+💸 [DATE] $9.90 ➡️  0.00010000 TEST @98979.90	✊ 0.01706256 @54276.34 =$926.09 💧 gain 832.56, basis 49024.96 💵 89.60 💹 89.90% 💸 <61362.97
+⏰ limit buy b1910eaa-ad60-449f-b52e-52ea51dfe6b5 has more time: 0.00041814 TEST @96959.90 =$40.102 | expires in a day
+🤑 [DATE] 0.00102041 TEST ➡️  $99.50 @97999.82	✊ 0.01604215 @57728.76 =$926.09 💧 gain 835.14, basis 45940.94 💵 189.10 💹 90.18% 💸 <71499.73
+>>>>>>> 3339b3e (correcting buyUnder log)
 ⚡ Creating limit orders to rebuy $50 worth of TEST starting from $97999.82360031753
 ⬇️  posted limit buy order for 0.0001 TEST @96039.83 =$9.6040 (-2% drop)
 ⬇️  posted limit buy order for 0.00043426 TEST @94079.83 =$40.396 (-4% drop)
 ✅ REBUY: Added 2 limit buys totaling $50. Now 3 limit orders totaling $90.102
+<<<<<<< HEAD
 ⏰ limit buy [UUID] has more time: 0.00043426 TEST @94079.83 =$40.396 | expires in a day
 ⏰ limit buy [UUID] has more time: 0.0001 TEST @96039.83 =$9.604 | expires in a day
 ⏰ limit buy [UUID] has more time: 0.00041814 TEST @96959.9 =$40.102 | expires in a day
 🤑 [DATE] 0.00103093 TEST ➡️  $99.50 @96999.80	✊ 0.01501122 @61693.41 =$926.09 💧 gain 818.60, basis 42467.66 💵 288.60 💹 88.39% 💸 <76395.74
+||||||| parent of 3339b3e (correcting buyUnder log)
+⏰ limit buy b1910eaa-ad60-449f-b52e-52ea51dfe6b5 has more time: 0.00041814 TEST @96959.90 =$40.102 | expires in a day
+⏰ limit buy 00f6b8ea-fd0c-45a4-aea9-4a7b8d6d64b2 has more time: 0.0001 TEST @96039.83 =$9.604 | expires in a day
+⏰ limit buy 00885bb1-872a-4602-81fc-609f283ba07e has more time: 0.00043426 TEST @94079.83 =$40.396 | expires in a day
+🤑 [DATE] 0.00103093 TEST ➡️  $99.50 @96999.80	✊ 0.01501122 @61693.41 =$926.09 💧 gain 818.60, basis 42467.66 💵 288.60 💹 88.39% 💸 <76395.74
+=======
+⏰ limit buy b1910eaa-ad60-449f-b52e-52ea51dfe6b5 has more time: 0.00041814 TEST @96959.90 =$40.102 | expires in a day
+⏰ limit buy 00f6b8ea-fd0c-45a4-aea9-4a7b8d6d64b2 has more time: 0.0001 TEST @96039.83 =$9.604 | expires in a day
+⏰ limit buy 00885bb1-872a-4602-81fc-609f283ba07e has more time: 0.00043426 TEST @94079.83 =$40.396 | expires in a day
+🤑 [DATE] 0.00103093 TEST ➡️  $99.50 @96999.80	✊ 0.01501122 @61693.41 =$926.09 💧 gain 818.60, basis 42467.66 💵 288.60 💹 88.39% 💸 <76495.74
+>>>>>>> 3339b3e (correcting buyUnder log)
 ⚡ Creating limit orders to rebuy $50 worth of TEST starting from $96999.79630042777
 ⬇️  posted limit buy order for 0.0001 TEST @95059.80 =$9.5060 (-2% drop)
 ⬇️  posted limit buy order for 0.00043986 TEST @93119.80 =$40.494 (-4% drop)
 ✅ REBUY: Added 2 limit buys totaling $50. Now 5 limit orders totaling $140.102
+<<<<<<< HEAD
 ⏰ limit buy [UUID] has more time: 0.00043986 TEST @93119.8 =$40.494 | expires in a day
 ⏰ limit buy [UUID] has more time: 0.00043426 TEST @94079.83 =$40.396 | expires in a day
 ⏰ limit buy [UUID] has more time: 0.0001 TEST @95059.8 =$9.506 | expires in a day
 💸 [DATE] $9.60 ➡️  0.00010000 TEST @96039.83	✊ 0.01511122 @61285.15 =$926.09 💧 gain 784.98, basis 42822.18 💵 279.00 💹 84.76% 💸 <62772.52
 💸 [DATE] $40.54 ➡️  0.00041814 TEST @96959.90	✊ 0.01552936 @59635.00 =$926.09 💧 gain 737.00, basis 44279.88 💵 238.46 💹 79.58% 💸 <61698.07
 🤑 [DATE] 0.00104167 TEST ➡️  $99.50 @95999.69	✊ 0.01448769 @63922.78 =$926.09 💧 gain 802.68, basis 40595.72 💵 337.96 💹 86.67% 💸 <73043.78
+||||||| parent of 3339b3e (correcting buyUnder log)
+💸 [DATE] $40.54 ➡️  0.00041814 TEST @96959.90	✊ 0.01542936 @60021.50 =$926.09 💧 gain 736.91, basis 43944.41 💵 248.06 💹 79.57% 💸 <61476.14
+💸 [DATE] $9.60 ➡️  0.00010000 TEST @96039.83	✊ 0.01552936 @59635.00 =$926.09 💧 gain 784.59, basis 44279.88 💵 238.46 💹 84.72% 💸 <63690.34
+⏰ limit buy 00885bb1-872a-4602-81fc-609f283ba07e has more time: 0.00043426 TEST @94079.83 =$40.396 | expires in a day
+⏰ limit buy 515baceb-0021-4212-ae88-2e92dbaf2355 has more time: 0.0001 TEST @95059.80 =$9.506 | expires in a day
+⏰ limit buy da205d01-9367-4e01-8db8-c696e7eec065 has more time: 0.00043986 TEST @93119.80 =$40.494 | expires in a day
+🤑 [DATE] 0.00104167 TEST ➡️  $99.50 @95999.69	✊ 0.01448769 @63922.78 =$926.09 💧 gain 802.68, basis 40595.72 💵 337.96 💹 86.67% 💸 <75179.30
+=======
+💸 [DATE] $40.54 ➡️  0.00041814 TEST @96959.90	✊ 0.01542936 @60021.50 =$926.09 💧 gain 736.91, basis 43944.41 💵 248.06 💹 79.57% 💸 <61576.14
+💸 [DATE] $9.60 ➡️  0.00010000 TEST @96039.83	✊ 0.01552936 @59635.00 =$926.09 💧 gain 784.59, basis 44279.88 💵 238.46 💹 84.72% 💸 <63790.34
+⏰ limit buy 00885bb1-872a-4602-81fc-609f283ba07e has more time: 0.00043426 TEST @94079.83 =$40.396 | expires in a day
+⏰ limit buy 515baceb-0021-4212-ae88-2e92dbaf2355 has more time: 0.0001 TEST @95059.80 =$9.506 | expires in a day
+⏰ limit buy da205d01-9367-4e01-8db8-c696e7eec065 has more time: 0.00043986 TEST @93119.80 =$40.494 | expires in a day
+🤑 [DATE] 0.00104167 TEST ➡️  $99.50 @95999.69	✊ 0.01448769 @63922.78 =$926.09 💧 gain 802.68, basis 40595.72 💵 337.96 💹 86.67% 💸 <75279.30
+>>>>>>> 3339b3e (correcting buyUnder log)
 ⚡ Creating limit orders to rebuy $50 worth of TEST starting from $95999.69280098303
 ⬇️  posted limit buy order for 0.0001 TEST @94079.70 =$9.4080 (-2% drop)
 ⬇️  posted limit buy order for 0.00044557 TEST @92159.71 =$40.592 (-4% drop)
 ✅ REBUY: Added 2 limit buys totaling $50. Now 5 limit orders totaling $140.396
+<<<<<<< HEAD
 ⏰ limit buy [UUID] has more time: 0.00044557 TEST @92159.71 =$40.592 | expires in a day
 ⏰ limit buy [UUID] has more time: 0.00043986 TEST @93119.8 =$40.494 | expires in a day
 ⏰ limit buy [UUID] has more time: 0.0001 TEST @94079.7 =$9.408 | expires in a day
 ⏰ limit buy [UUID] has more time: 0.00043426 TEST @94079.83 =$40.396 | expires in a day
 💸 [DATE] $9.51 ➡️  0.00010000 TEST @95059.80	✊ 0.01458769 @63484.58 =$926.09 💧 gain 770.05, basis 40969.07 💵 328.45 💹 83.15% 💸 <58950.45
 🤑 [DATE] 0.00105263 TEST ➡️  $99.50 @95000.14	✊ 0.01353506 @68421.82 =$926.09 💧 gain 787.69, basis 36803.99 💵 427.95 💹 85.05% 💸 <70931.07
+||||||| parent of 3339b3e (correcting buyUnder log)
+⏰ limit buy 00885bb1-872a-4602-81fc-609f283ba07e has more time: 0.00043426 TEST @94079.83 =$40.396 | expires in a day
+💸 [DATE] $9.51 ➡️  0.00010000 TEST @95059.80	✊ 0.01458769 @63484.58 =$926.09 💧 gain 770.05, basis 40969.07 💵 328.45 💹 83.15% 💸 <61072.79
+⏰ limit buy da205d01-9367-4e01-8db8-c696e7eec065 has more time: 0.00043986 TEST @93119.80 =$40.494 | expires in a day
+⏰ limit buy 3e2a0865-3715-4b9d-a7de-d2de1bc5128e has more time: 0.0001 TEST @94079.70 =$9.408 | expires in a day
+⏰ limit buy 75a50b14-3064-41fd-837b-249a275869b1 has more time: 0.00044557 TEST @92159.71 =$40.592 | expires in a day
+🤑 [DATE] 0.00105263 TEST ➡️  $99.50 @95000.14	✊ 0.01353506 @68421.82 =$926.09 💧 gain 787.69, basis 36803.99 💵 427.95 💹 85.05% 💸 <73218.46
+=======
+⏰ limit buy 00885bb1-872a-4602-81fc-609f283ba07e has more time: 0.00043426 TEST @94079.83 =$40.396 | expires in a day
+💸 [DATE] $9.51 ➡️  0.00010000 TEST @95059.80	✊ 0.01458769 @63484.58 =$926.09 💧 gain 770.05, basis 40969.07 💵 328.45 💹 83.15% 💸 <61172.79
+⏰ limit buy da205d01-9367-4e01-8db8-c696e7eec065 has more time: 0.00043986 TEST @93119.80 =$40.494 | expires in a day
+⏰ limit buy 3e2a0865-3715-4b9d-a7de-d2de1bc5128e has more time: 0.0001 TEST @94079.70 =$9.408 | expires in a day
+⏰ limit buy 75a50b14-3064-41fd-837b-249a275869b1 has more time: 0.00044557 TEST @92159.71 =$40.592 | expires in a day
+🤑 [DATE] 0.00105263 TEST ➡️  $99.50 @95000.14	✊ 0.01353506 @68421.82 =$926.09 💧 gain 787.69, basis 36803.99 💵 427.95 💹 85.05% 💸 <73318.46
+>>>>>>> 3339b3e (correcting buyUnder log)
 ⚡ Creating limit orders to rebuy $50 worth of TEST starting from $95000.14250021375
 ⬇️  posted limit buy order for 0.0001 TEST @93100.14 =$9.3100 (-2% drop)
 ⬇️  posted limit buy order for 0.00045140 TEST @91200.14 =$40.69 (-4% drop)
 ✅ REBUY: Added 2 limit buys totaling $50. Now 6 limit orders totaling $180.89
+<<<<<<< HEAD
 ⏰ limit buy [UUID] has more time: 0.00045140 TEST @91200.14 =$40.69 | expires in a day
 ⏰ limit buy [UUID] has more time: 0.00044557 TEST @92159.71 =$40.592 | expires in a day
 ⏰ limit buy [UUID] has more time: 0.0001 TEST @93100.14 =$9.31 | expires in a day
@@ -54,10 +109,28 @@
 💸 [DATE] $9.41 ➡️  0.00010000 TEST @94079.70	✊ 0.01363506 @67920.01 =$926.09 💧 gain 756.41, basis 37224.05 💵 418.54 💹 81.68% 💸 <55863.65
 💸 [DATE] $40.86 ➡️  0.00043426 TEST @94079.83	✊ 0.01406932 @65823.61 =$926.09 💧 gain 693.52, basis 38978.94 💵 377.69 💹 74.89% 💸 <54804.98
 🤑 [DATE] 0.00106383 TEST ➡️  $99.50 @93999.98	✊ 0.01300549 @71207.88 =$926.09 💧 gain 773.61, basis 34516.75 💵 477.19 💹 83.53% 💸 <66985.19
+||||||| parent of 3339b3e (correcting buyUnder log)
+💸 [DATE] $40.86 ➡️  0.00043426 TEST @94079.83	✊ 0.01396932 @66294.81 =$926.09 💧 gain 693.52, basis 38584.50 💵 387.09 💹 74.89% 💸 <56742.35
+⏰ limit buy da205d01-9367-4e01-8db8-c696e7eec065 has more time: 0.00043986 TEST @93119.80 =$40.494 | expires in a day
+💸 [DATE] $9.41 ➡️  0.00010000 TEST @94079.70	✊ 0.01406932 @65823.61 =$926.09 💧 gain 756.41, basis 38978.94 💵 377.69 💹 81.68% 💸 <59242.18
+⏰ limit buy 75a50b14-3064-41fd-837b-249a275869b1 has more time: 0.00044557 TEST @92159.71 =$40.592 | expires in a day
+⏰ limit buy 215d296f-0fd6-4308-a59b-290e4be15ee7 has more time: 0.0001 TEST @93100.14 =$9.31 | expires in a day
+⏰ limit buy 7e0c3030-f942-49ff-809e-25edae6462f6 has more time: 0.00045140 TEST @91200.14 =$40.69 | expires in a day
+🤑 [DATE] 0.00106383 TEST ➡️  $99.50 @93999.98	✊ 0.01300549 @71207.88 =$926.09 💧 gain 773.61, basis 34516.75 💵 477.19 💹 83.53% 💸 <71785.34
+=======
+💸 [DATE] $40.86 ➡️  0.00043426 TEST @94079.83	✊ 0.01396932 @66294.81 =$926.09 💧 gain 693.52, basis 38584.50 💵 387.09 💹 74.89% 💸 <56842.35
+⏰ limit buy da205d01-9367-4e01-8db8-c696e7eec065 has more time: 0.00043986 TEST @93119.80 =$40.494 | expires in a day
+💸 [DATE] $9.41 ➡️  0.00010000 TEST @94079.70	✊ 0.01406932 @65823.61 =$926.09 💧 gain 756.41, basis 38978.94 💵 377.69 💹 81.68% 💸 <59342.18
+⏰ limit buy 75a50b14-3064-41fd-837b-249a275869b1 has more time: 0.00044557 TEST @92159.71 =$40.592 | expires in a day
+⏰ limit buy 215d296f-0fd6-4308-a59b-290e4be15ee7 has more time: 0.0001 TEST @93100.14 =$9.31 | expires in a day
+⏰ limit buy 7e0c3030-f942-49ff-809e-25edae6462f6 has more time: 0.00045140 TEST @91200.14 =$40.69 | expires in a day
+🤑 [DATE] 0.00106383 TEST ➡️  $99.50 @93999.98	✊ 0.01300549 @71207.88 =$926.09 💧 gain 773.61, basis 34516.75 💵 477.19 💹 83.53% 💸 <71885.34
+>>>>>>> 3339b3e (correcting buyUnder log)
 ⚡ Creating limit orders to rebuy $50 worth of TEST starting from $93999.98120000376
 ⬇️  posted limit buy order for 0.0001 TEST @92119.98 =$9.2120 (-2% drop)
 ⬇️  posted limit buy order for 0.00045736 TEST @90239.98 =$40.788 (-4% drop)
 ✅ REBUY: Added 2 limit buys totaling $50. Now 6 limit orders totaling $181.086
+<<<<<<< HEAD
 ⏰ limit buy [UUID] has more time: 0.00045736 TEST @90239.98 =$40.788 | expires in a day
 ⏰ limit buy [UUID] has more time: 0.00045140 TEST @91200.14 =$40.69 | expires in a day
 💸 [DATE] $9.21 ➡️  0.00010000 TEST @92119.98	✊ 0.01310549 @70664.54 =$926.09 💧 gain 730.73, basis 34956.28 💵 467.97 💹 78.91% 💸 <51334.40
@@ -65,6 +138,23 @@
 💸 [DATE] $9.31 ➡️  0.00010000 TEST @93100.14	✊ 0.01365106 @67840.40 =$926.09 💧 gain 743.80, basis 37249.33 💵 417.60 💹 80.32% 💸 <52961.71
 💸 [DATE] $40.96 ➡️  0.00043986 TEST @93119.80	✊ 0.01409092 @65722.71 =$926.09 💧 gain 680.77, basis 38993.37 💵 376.64 💹 73.51% 💸 <51966.05
 🤑 [DATE] 0.00108696 TEST ➡️  $99.50 @91999.71	✊ 0.01300396 @71216.26 =$926.09 💧 gain 746.41, basis 34601.19 💵 476.14 💹 80.60% 💸 <64008.05
+||||||| parent of 3339b3e (correcting buyUnder log)
+💸 [DATE] $40.96 ➡️  0.00043986 TEST @93119.80	✊ 0.01344535 @68878.34 =$926.09 💧 gain 680.24, basis 36433.93 💵 436.23 💹 73.45% 💸 <54680.58
+💸 [DATE] $41.06 ➡️  0.00044557 TEST @92159.71	✊ 0.01389092 @66668.97 =$926.09 💧 gain 667.13, basis 38221.41 💵 395.16 💹 72.04% 💸 <55872.08
+💸 [DATE] $9.31 ➡️  0.00010000 TEST @93100.14	✊ 0.01399092 @66192.46 =$926.09 💧 gain 743.70, basis 38613.65 💵 385.85 💹 80.30% 💸 <58407.04
+⏰ limit buy 7e0c3030-f942-49ff-809e-25edae6462f6 has more time: 0.00045140 TEST @91200.14 =$40.69 | expires in a day
+💸 [DATE] $9.21 ➡️  0.00010000 TEST @92119.98	✊ 0.01409092 @65722.71 =$926.09 💧 gain 730.18, basis 38993.37 💵 376.64 💹 78.85% 💸 <58652.54
+⏰ limit buy 87f17044-2fcd-4bcc-bc76-6ddc549cea14 has more time: 0.00045736 TEST @90239.98 =$40.788 | expires in a day
+🤑 [DATE] 0.00108696 TEST ➡️  $99.50 @91999.71	✊ 0.01300396 @71216.26 =$926.09 💧 gain 746.41, basis 34601.19 💵 476.14 💹 80.60% 💸 <71253.44
+=======
+💸 [DATE] $40.96 ➡️  0.00043986 TEST @93119.80	✊ 0.01344535 @68878.34 =$926.09 💧 gain 680.24, basis 36433.93 💵 436.23 💹 73.45% 💸 <54780.58
+💸 [DATE] $41.06 ➡️  0.00044557 TEST @92159.71	✊ 0.01389092 @66668.97 =$926.09 💧 gain 667.13, basis 38221.41 💵 395.16 💹 72.04% 💸 <55972.08
+💸 [DATE] $9.31 ➡️  0.00010000 TEST @93100.14	✊ 0.01399092 @66192.46 =$926.09 💧 gain 743.70, basis 38613.65 💵 385.85 💹 80.30% 💸 <58507.04
+⏰ limit buy 7e0c3030-f942-49ff-809e-25edae6462f6 has more time: 0.00045140 TEST @91200.14 =$40.69 | expires in a day
+💸 [DATE] $9.21 ➡️  0.00010000 TEST @92119.98	✊ 0.01409092 @65722.71 =$926.09 💧 gain 730.18, basis 38993.37 💵 376.64 💹 78.85% 💸 <58752.54
+⏰ limit buy 87f17044-2fcd-4bcc-bc76-6ddc549cea14 has more time: 0.00045736 TEST @90239.98 =$40.788 | expires in a day
+🤑 [DATE] 0.00108696 TEST ➡️  $99.50 @91999.71	✊ 0.01300396 @71216.26 =$926.09 💧 gain 746.41, basis 34601.19 💵 476.14 💹 80.60% 💸 <71353.44
+>>>>>>> 3339b3e (correcting buyUnder log)
 ⚡ Creating limit orders to rebuy $50 worth of TEST starting from $91999.70560094208
 ⬇️  posted limit buy order for 0.0001 TEST @90159.71 =$9.0160 (-2% drop)
 ⬇️  posted limit buy order for 0.00046966 TEST @88319.72 =$40.984 (-4% drop)

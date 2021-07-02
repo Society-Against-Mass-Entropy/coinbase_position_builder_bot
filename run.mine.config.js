@@ -59,7 +59,7 @@ module.exports = {
         CPBB_TICKER: 'ETH',
         CPBB_CURRENCY: 'USD',
         CPBB_VOL: 25,
-        CPBB_APY: 50,
+        CPBB_APY: 25,
         // max $ spend on limit rebuys
         // CPBB_REBUY_MAX: 10,
         // // minimum order is .001 ETH ($5 at $5K)
@@ -88,7 +88,7 @@ module.exports = {
         CPBB_TICKER: 'LTC',
         CPBB_CURRENCY: 'USD',
         CPBB_VOL: 20,
-        CPBB_APY: 50,
+        CPBB_APY: 25,
         // max $ spend on limit rebuys
         // CPBB_REBUY_MAX: 10,
         // // minimum order is in LTC (.01, which is $5 at $500)
