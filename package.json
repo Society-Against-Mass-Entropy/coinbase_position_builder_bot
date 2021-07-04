@@ -20,6 +20,8 @@
   },
   "main": "index.js",
   "scripts": {
+    "backtest": "./node_modules/jest/bin/jest.js --testPathIgnorePatterns=/node_modules/ --verbose -- test/backtest.test.js && echo '✅ Backtest'",
+    "backtest:debug": "VERBOSE_TEST=true ./node_modules/jest/bin/jest.js --detectOpenHandles --testPathIgnorePatterns=/node_modules/ --verbose -- test/backtest.test.js && echo '✅ Backtest'",
     "format": "npx prettier --write .",
     "postinstall": "husky install",
     "pre-commit": "npm test",

@@ -13,10 +13,10 @@ let endDate = new Date(start);
   while (endDate.getTime() < new Date().getTime()) {
     if (history.length) {
       // 1 hour after last
-      startDate = new Date(endDate.getTime() + 60 * 60 * 1000);
+      startDate.setTime(endDate.getTime() + 60 * 60 * 1000);
     }
     // 299 hours later (limit is 300 periods, but leap year throws this)
-    endDate = new Date(startDate.getTime() + 60 * 60 * 1000 * 299);
+    endDate.setTime(startDate.getTime() + 60 * 60 * 1000 * 299);
     let startISO = startDate.toISOString();
     let endISO = endDate.toISOString();
     console.log(
@@ -31,6 +31,8 @@ let endDate = new Date(start);
 
   fs.writeFileSync(
     `${__dirname}/../data/rates.hourly.${ticker}.json`,
-    JSON.stringify({ hourly: history })
+    JSON.stringify({
+      hourly: history.sort((a, b) => (a[0] < b[0] ? -1 : 1)),
+    })
   );
 })();
