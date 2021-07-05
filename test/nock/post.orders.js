@@ -34,7 +34,7 @@ module.exports = nock(config.api)
       product_id: config.productID,
       side: order.side,
       funds: isLimit ? undefined : funds.toFixed(16),
-      price: isLimit ? order.price : undefined,
+      price: isLimit ? Number(order.price) : undefined,
       specified_funds: funds.toFixed(16),
       type: order.type,
       post_only: isLimit,

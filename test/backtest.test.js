@@ -1,15 +1,13 @@
 // TEST CONFIG
 process.env.CPBB_TICKER = 'TEST';
 process.env.CPBB_CURRENCY = 'USD';
-process.env.CPBB_VOL = 100;
+process.env.CPBB_VOL = process.env.CPBB_VOL || 100;
 process.env.CPBB_FREQ = '1 1 1 1 1';
 // process.env.CPBB_APY = 100;
 process.env.CPBB_TEST = true;
 // process.env.CPBB_TEST_START = `2016-01-01`;
 // process.env.CPBB_REBUY_MAX = 50;
 // process.env.CPBB_REBUY = '.0001@2,.0002@4,.0003@6,.0004@8,.0005@10';
-// // process.env.CPBB_REBUY_SIZE = '.0001,.0002,.0003,.0004,.0005';
-// // process.env.CPBB_REBUY_AT = '-2,-4,-6,-8,-10';
 // process.env.CPBB_REBUY_CANCEL = 60 * 24 * 1;
 // process.env.CPBB_REBUY_REBUILD = 6;
 // process.env.CPBB_RESELL_MAX = 50;
@@ -19,12 +17,17 @@ process.env.CPBB_TEST = true;
 // process.env.CPBB_RESELL_REBUILD = 6;
 const verbose = process.env.VERBOSE_TEST === 'true';
 
+const interval = process.env.CPBB_RATE_INTERVAL || 'daily';
+const interval_mod = Number(process.env.CPBB_RATE_INTERVAL_MOD || 0);
+
 const fs = require('fs');
 // this must be included before loading anything else so we can capture console.log output
 const log = require('./lib/log.backtest');
 const deleteOutputFiles = require('./lib/delete.output.files');
 
-const priceHistory = require('../data/rates.daily.BTC-USD.json').daily;
+const priceHistory = require(`../data/rates.BTC-USD.${interval}.json`)[
+  interval
+];
 const startDate = new Date(process.env.CPBB_TEST_START);
 const testHistory = priceHistory.filter(
   h => new Date(h[0] * 1000) >= startDate
@@ -72,38 +75,61 @@ describe('Backtest Engine', () => {
     // mock market conditions and actions as if the cronjob triggered
     for (let i = 0; i < testHistory.length; i++) {
       let [time, low, high, open, close] = testHistory[i];
-      // if (i % 24) {
-      // checks limits and runs an action event
+
       testMemory.open = open;
       testMemory.price = close;
-      testMemory.low = low;
-      testMemory.high = high;
       currentDate.setTime(time * 1000);
-      // console.log(time, low, high, close, currentDate);
+      // use the built up high/low price fluctuations
+      if (!testMemory.high || testMemory.high < high) {
+        testMemory.high = high;
+      }
+      if (!testMemory.low || testMemory.low > low) {
+        testMemory.low = low;
+      }
+      if (interval_mod && i % interval_mod) {
+        // skipping this price data (e.g. interval_mod = 2 means every 2 hours)
+        // console.log('skip period', testMemory.low, testMemory.high);
+        continue; // skip action
+      }
+      // console.log(
+      //   time,
+      //   low,
+      //   high,
+      //   close,
+      //   testMemory.low,
+      //   testMemory.high
+      // );
+      // console.log('action period', testMemory.low, testMemory.high);
       await action({ dateOverride: currentDate });
+      // reset high/low so we can build up during skipped periods
+      delete testMemory.low;
+      delete testMemory.high;
       // }
     }
     return;
   });
 
-  logExpectations.forEach(name => {
-    test(`Log Output: ${name}`, () => {
-      const expectedLog = getLog(name);
-      if (!expectedLog.length) {
-        // no existing log file, creating snapshot
-        expectedLog.push(...log.out);
-        fs.writeFileSync(
-          `${__dirname}/data/output.${name}.log`,
-          expectedLog.join('\n')
-        );
-      }
-      expectedLog.forEach(l => {
-        if (!l) return;
-        logIndex++;
-        expect(log.out[logIndex]).toEqual(l);
+  if (!process.env.CPBB_BRUT_FORCE) {
+    logExpectations.forEach(name => {
+      test(`Log Output: ${name}`, () => {
+        const expectedLog = getLog(name);
+        if (!expectedLog.length) {
+          // no existing log file, creating snapshot
+          expectedLog.push(...log.out);
+
+          fs.writeFileSync(
+            `${__dirname}/data/output.${name}.log`,
+            expectedLog.join('\n')
+          );
+        }
+        expectedLog.forEach(l => {
+          if (!l) return;
+          logIndex++;
+          expect(log.out[logIndex]).toEqual(l);
+        });
       });
     });
-  });
+  }
 
   test(`no error outputs`, () => {
     expect(log.warn.length).toBe(0);
