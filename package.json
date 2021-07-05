@@ -32,8 +32,6 @@
     "backtest_2017_50": "CPBB_TEST_START=2017-01-01 CPBB_APY=50 ./node_modules/jest/bin/jest.js --testPathIgnorePatterns=/node_modules/ --verbose -- test/backtest.test.js && echo '✅ Backtest 2017, 50% APY'",
     "backtest_2016_100": "CPBB_TEST_START=2016-01-01 CPBB_APY=100 ./node_modules/jest/bin/jest.js --testPathIgnorePatterns=/node_modules/ --verbose -- test/backtest.test.js && echo '✅ Backtest 2016, 100% APY'",
     "backtest_2016_50": "CPBB_TEST_START=2016-01-01 CPBB_APY=50 ./node_modules/jest/bin/jest.js --testPathIgnorePatterns=/node_modules/ --verbose -- test/backtest.test.js && echo '✅ Backtest 2016, 50% APY'",
-    "backtest": "./node_modules/jest/bin/jest.js --testPathIgnorePatterns=/node_modules/ --verbose -- test/backtest.test.js && echo '✅ Backtest'",
-    "backtest:debug": "VERBOSE_TEST=true ./node_modules/jest/bin/jest.js --detectOpenHandles --testPathIgnorePatterns=/node_modules/ --verbose -- test/backtest.test.js && echo '✅ Backtest'",
     "format": "npx prettier --write .",
     "postinstall": "husky install",
     "pre-commit": "npm test",
