@@ -16,11 +16,12 @@ module.exports = nock(config.api)
     // console.log(`order id ${id}`, testMemory.price);
     if (
       order.side === 'sell'
-        ? testMemory.high >= order.price
+        ? testMemory.high > order.price
         : testMemory.low < order.price
     ) {
       order.status = 'done';
       order.settled = true;
+      delete testMemory.orders[id];
     }
     return order;
   });

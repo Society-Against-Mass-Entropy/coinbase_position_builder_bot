@@ -18,10 +18,10 @@ const startMonth = '06';
 // const CPBB_APY = [25, 50, 75, 100, 150, 200];
 const CPBB_VOL = 28;
 const apy = [100];
-const rebuy = ['', '.0001@3,.0001@6,.0001@9,.0009@12'];
-const resell = ['', '.0001@3,.0001@6,.0001@9,.0009@12'];
-const rebuy_max = [0, 14];
-const resell_max = [0, 14];
+const rebuy = ['.0001@3,.0001@6,.0001@9,.0009@12'];
+const resell = ['.0001@3,.0001@6,.0001@9,.0009@12'];
+const rebuy_max = [14];
+const resell_max = [14];
 // 100 year limit cancel (never)
 const CPBB_REBUY_CANCEL = 52560000;
 const CPBB_RESELL_CANCEL = 52560000;

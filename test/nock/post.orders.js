@@ -2,7 +2,7 @@ const config = require('../../config');
 const memory = require('../../lib/memory');
 const nock = require('nock');
 const testConfig = require('../test.config');
-const getID = require('../lib/get.id');
+const uuid = require('uuid');
 const testMemory = require('../lib/test.memory');
 
 const { divide, multiply, subtract } = require('../../lib/math');
@@ -12,7 +12,7 @@ module.exports = nock(config.api)
   .post('/orders')
   .reply(200, (uri, order) => {
     // console.log(`post.orders order`, JSON.stringify(order));
-    const id = getID();
+    const id = uuid.v4();
     const isLimit = order.type === 'limit';
     let funds = Number(
       isLimit ? multiply(order.size, order.price) : order.funds
