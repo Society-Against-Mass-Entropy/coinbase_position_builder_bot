@@ -1,3 +1,3 @@
-🚫 canceled sell limit order [UUID] for 0.0001 TEST @51000.00 =$5.1
-🚫 canceled sell limit order [UUID] for 0.0005 TEST @51500.00 =$25.75
+🚫 canceled sell limit order [UUID] for 0.0001 TEST @51000 =$5.1
+🚫 canceled sell limit order [UUID] for 0.0005 TEST @51500 =$25.75
 🗑️  limit order 404 not found (404) (must have been deleted manually or through platform maintenance), removing from tracking db.

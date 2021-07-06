@@ -17,7 +17,7 @@ module.exports = nock(config.api)
     let funds = Number(
       isLimit ? multiply(order.size, order.price) : order.funds
     );
-    let fees = multiply(funds, testConfig.feeRate);
+    const fees = multiply(funds, testConfig.feeRate);
     let executed = funds;
 
     if (order.side === 'buy') {
