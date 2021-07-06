@@ -87,7 +87,9 @@ const logExpectations = [
   '03.accumulate',
 ];
 const run = async price => {
-  testMemory.price = price;
+  testMemory.price = Number(price);
+  testMemory.high = Number(price);
+  testMemory.low = Number(price);
   currentDate.setDate(currentDate.getDate() + 1);
   return action({ dateOverride: currentDate });
 };

@@ -4,56 +4,56 @@
 ⬆️  posted limit sell order for 0.0005 TEST @51500.00 =$25.75 (3% pump)
 ✅ RESELL: Added 2 limit sells totaling $30.85. Now 2 limit orders totaling $30.85
 🤑 [DATE] 0.00010000 TEST ➡️  $5.07 @51000.00	✊ 0.00189000 @50225.13 =$94.93 💧 gain 1.49, basis 50225.13 💵 0.00 💹 1.57% 💸 <103071.40
-🚫 canceled sell limit order 2261715f-6aa5-4b11-82e1-28e726a05009 for 0.0005 TEST @51500.00 =$25.75
+🚫 canceled sell limit order [UUID] for 0.0005 TEST @51500 =$25.75
 💸 [DATE] $100 ➡️  0.00195060 TEST @51009.95	✊ 0.00384060 @50753.92 =$194.93 💧 gain 1.48, basis 50753.92 💵 0.00 💹 0.76% 💸 <75388.06
 ⚡ Creating limit orders to resell $50 worth of TEST starting from $51009.945657746335
 ⬆️  posted limit sell order for 0.0001 TEST @52030.14 =$5.203 (2% pump)
 ⬆️  posted limit sell order for 0.0005 TEST @52540.24 =$26.2701 (3% pump)
 ✅ RESELL: Added 2 limit sells totaling $31.4731. Now 2 limit orders totaling $31.4731
-🚫 canceled sell limit order abe3f70d-dc2b-420b-99df-7311709101ff for 0.0001 TEST @52030.14 =$5.203
-🚫 canceled sell limit order b4e023ef-9456-4a9c-b730-093702f5ff69 for 0.0005 TEST @52540.24 =$26.2701
+🚫 canceled sell limit order [UUID] for 0.0001 TEST @52030.14 =$5.203
+🚫 canceled sell limit order [UUID] for 0.0005 TEST @52540.24 =$26.2701
 💸 [DATE] $100 ➡️  0.00198801 TEST @50050.05	✊ 0.00582861 @50599.63 =$294.93 💧 gain -2.70, basis 50599.63 💵 0.00 💹 -0.92% 💸 <66831.55
 ⚡ Creating limit orders to resell $50 worth of TEST starting from $50050.05005005005
 ⬆️  posted limit sell order for 0.0001 TEST @51051.05 =$5.1051 (2% pump)
 ⬆️  posted limit sell order for 0.0005 TEST @51551.55 =$25.7758 (3% pump)
 ✅ RESELL: Added 2 limit sells totaling $30.8809. Now 2 limit orders totaling $30.8809
-🚫 canceled sell limit order 8091b569-6713-4d91-b168-7c442ed4828b for 0.0001 TEST @51051.05 =$5.1051
-🚫 canceled sell limit order c9ca8cd4-1160-4eab-a513-cf384b235b86 for 0.0005 TEST @51551.55 =$25.7758
+🚫 canceled sell limit order [UUID] for 0.0001 TEST @51051.05 =$5.1051
+🚫 canceled sell limit order [UUID] for 0.0005 TEST @51551.55 =$25.7758
 💸 [DATE] $100 ➡️  0.00194907 TEST @51049.99	✊ 0.00777768 @50776.77 =$394.93 💧 gain 2.63, basis 50776.77 💵 0.00 💹 0.66% 💸 <62950.28
 ⚡ Creating limit orders to resell $50 worth of TEST starting from $51049.98794296767
 ⬆️  posted limit sell order for 0.0001 TEST @52070.99 =$5.2071 (2% pump)
 ⬆️  posted limit sell order for 0.0005 TEST @52581.49 =$26.2907 (3% pump)
 ✅ RESELL: Added 2 limit sells totaling $31.4978. Now 2 limit orders totaling $31.4978
-🚫 canceled sell limit order 45ddc4eb-88c3-4d41-b0b6-7a46e8e93679 for 0.0001 TEST @52070.99 =$5.2071
-🚫 canceled sell limit order c3003fb4-b371-4ee2-8eb2-5b152a761189 for 0.0005 TEST @52581.49 =$26.2907
+🚫 canceled sell limit order [UUID] for 0.0001 TEST @52070.99 =$5.2071
+🚫 canceled sell limit order [UUID] for 0.0005 TEST @52581.49 =$26.2907
 💸 [DATE] $100 ➡️  0.00194716 TEST @51100.06	✊ 0.00972484 @50892.92 =$494.93 💧 gain 2.51, basis 50892.92 💵 0.00 💹 0.51% 💸 <60643.47
 ⚡ Creating limit orders to resell $50 worth of TEST starting from $51100.063682491425
 ⬆️  posted limit sell order for 0.0001 TEST @52122.06 =$5.2122 (2% pump)
 ⬆️  posted limit sell order for 0.0005 TEST @52633.07 =$26.3165 (3% pump)
 ✅ RESELL: Added 2 limit sells totaling $31.5287. Now 2 limit orders totaling $31.5287
-🚫 canceled sell limit order 5dfe2666-da52-4350-bf0e-826de8376f6a for 0.0001 TEST @52122.06 =$5.2122
-🚫 canceled sell limit order 6714510b-189d-40b0-a28a-c656e91b9e30 for 0.0005 TEST @52633.07 =$26.3165
+🚫 canceled sell limit order [UUID] for 0.0001 TEST @52122.06 =$5.2122
+🚫 canceled sell limit order [UUID] for 0.0005 TEST @52633.07 =$26.3165
 💸 [DATE] $100 ➡️  0.00195098 TEST @51000.01	✊ 0.01167582 @50953.64 =$594.93 💧 gain 1.04, basis 50953.64 💵 0.00 💹 0.18% 💸 <59092.84
 ⚡ Creating limit orders to resell $50 worth of TEST starting from $51000.01025125834
 ⬆️  posted limit sell order for 0.0001 TEST @52020.01 =$5.202 (2% pump)
 ⬆️  posted limit sell order for 0.0005 TEST @52530.01 =$26.265 (3% pump)
 ✅ RESELL: Added 2 limit sells totaling $31.467. Now 2 limit orders totaling $31.467
-🚫 canceled sell limit order d129a0b9-44ff-4fa1-9308-c65e52fced57 for 0.0001 TEST @52020.01 =$5.202
-🚫 canceled sell limit order 6f4a4994-6066-499e-bcd7-ef7fbe47affc for 0.0005 TEST @52530.01 =$26.265
+🚫 canceled sell limit order [UUID] for 0.0001 TEST @52020.01 =$5.202
+🚫 canceled sell limit order [UUID] for 0.0005 TEST @52530.01 =$26.265
 💸 [DATE] $100 ➡️  0.00194907 TEST @51049.99	✊ 0.01362489 @51004.12 =$694.93 💧 gain 1.13, basis 51004.12 💵 0.00 💹 0.16% 💸 <57999.40
 ⚡ Creating limit orders to resell $50 worth of TEST starting from $51049.98794296767
 ⬆️  posted limit sell order for 0.0001 TEST @52070.99 =$5.2071 (2% pump)
 ⬆️  posted limit sell order for 0.0005 TEST @52581.49 =$26.2907 (3% pump)
 ✅ RESELL: Added 2 limit sells totaling $31.4978. Now 2 limit orders totaling $31.4978
-🚫 canceled sell limit order 78347db9-e574-47bd-9555-7f9cd85502f3 for 0.0001 TEST @52070.99 =$5.2071
-🚫 canceled sell limit order 64bf0420-bee1-4e39-80d4-355c6e00b06c for 0.0005 TEST @52581.49 =$26.2907
+🚫 canceled sell limit order [UUID] for 0.0001 TEST @52070.99 =$5.2071
+🚫 canceled sell limit order [UUID] for 0.0005 TEST @52581.49 =$26.2907
 💸 [DATE] $100 ➡️  0.00195022 TEST @51019.88	✊ 0.01557511 @51038.19 =$794.93 💧 gain 0.22, basis 51038.19 💵 0.00 💹 0.03% 💸 <57179.84
 ⚡ Creating limit orders to resell $50 worth of TEST starting from $51019.88493605849
 ⬆️  posted limit sell order for 0.0001 TEST @52040.28 =$5.204 (2% pump)
 ⬆️  posted limit sell order for 0.0005 TEST @52550.48 =$26.2752 (3% pump)
 ✅ RESELL: Added 2 limit sells totaling $31.4792. Now 2 limit orders totaling $31.4792
-🚫 canceled sell limit order d8b5861d-9e0b-4efd-b3f8-2a9c2a34f76f for 0.0001 TEST @52040.28 =$5.204
-🚫 canceled sell limit order 3ee72c26-7339-437f-84f7-be2c69c0463e for 0.0005 TEST @52550.48 =$26.2752
+🚫 canceled sell limit order [UUID] for 0.0001 TEST @52040.28 =$5.204
+🚫 canceled sell limit order [UUID] for 0.0005 TEST @52550.48 =$26.2752
 💸 [DATE] $100 ➡️  0.00194640 TEST @51120.02	✊ 0.01752151 @51075.82 =$894.93 💧 gain 1.27, basis 51075.82 💵 0.00 💹 0.14% 💸 <56558.96
 ⚡ Creating limit orders to resell $50 worth of TEST starting from $51120.016440608306
 ⬆️  posted limit sell order for 0.0001 TEST @52142.42 =$5.2142 (2% pump)

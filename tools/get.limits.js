@@ -42,7 +42,7 @@ log.zap('updating orders db file with orders from the remote books');
       "created_at": "2021-03-13T14:05:37.303873Z",
       "pair": "BTC-USD",
       "funds": "5.6304",
-      "id": "e0c26b14-3ad3-4329-bcab-ddad9cd66d4a",
+      "id": "[UUID]",
       "price": "56304.31",
       "size": 0.0001
     },
