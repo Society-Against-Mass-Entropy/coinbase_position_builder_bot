@@ -80,12 +80,7 @@ const priceChanges = [
 
 // a list of filenames in ./data/output.${name}.log that group
 // chunks of expected stdout from the app
-const logExpectations = [
-  '00.boot',
-  '01.accumulate',
-  '02.profit',
-  '03.accumulate',
-];
+const logExpectations = ['engine'];
 const run = async price => {
   testMemory.price = Number(price);
   testMemory.high = Number(price);
