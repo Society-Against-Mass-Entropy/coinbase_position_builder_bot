@@ -3,18 +3,7 @@ process.env.CPBB_TICKER = 'TEST';
 process.env.CPBB_CURRENCY = 'USD';
 process.env.CPBB_VOL = process.env.CPBB_VOL || 100;
 process.env.CPBB_FREQ = '1 1 1 1 1';
-// process.env.CPBB_APY = 100;
 process.env.CPBB_TEST = true;
-// process.env.CPBB_TEST_START = `2016-01-01`;
-// process.env.CPBB_REBUY_MAX = 50;
-// process.env.CPBB_REBUY = '.0001@2,.0002@4,.0003@6,.0004@8,.0005@10';
-// process.env.CPBB_REBUY_CANCEL = 60 * 24 * 1;
-// process.env.CPBB_REBUY_REBUILD = 6;
-// process.env.CPBB_RESELL_MAX = 50;
-// process.env.CPBB_RESELL = '.0001@2,.0005@3';
-// // cancel any limit sells that have not filled before taking the next action
-// process.env.CPBB_RESELL_CANCEL = 0;
-// process.env.CPBB_RESELL_REBUILD = 6;
 const verbose = process.env.VERBOSE_TEST === 'true';
 
 const interval = process.env.CPBB_RATE_INTERVAL || 'daily';
@@ -24,7 +13,7 @@ const fs = require('fs');
 // this must be included before loading anything else so we can capture console.log output
 const log = require('./lib/log.backtest');
 const deleteOutputFiles = require('./lib/delete.output.files');
-
+deleteOutputFiles(true);
 const priceHistory = require(`../data/rates.BTC-USD.${interval}.json`)[
   interval
 ];
@@ -49,7 +38,7 @@ const getLog = require('./lib/get.log');
 const sleep = require('../lib/sleep');
 const testMemory = require('./lib/test.memory');
 // const checkLimits = require('../lib/limit.check');
-// const memory = require('../lib/memory');
+const memory = require('../lib/memory');
 
 // dates to begin test sequence
 let currentDate = new Date(testHistory[0][0] * 1000);
@@ -65,12 +54,11 @@ describe('Backtest Engine', () => {
   let logIndex = -1;
 
   beforeAll(async () => {
-    deleteOutputFiles();
     // make sure everything loaded and started
     const app = await engine;
     // we will manually run action as if we are hitting cron timers
     app.stop();
-    await sleep(2000);
+    await sleep(5000);
 
     // mock market conditions and actions as if the cronjob triggered
     for (let i = 0; i < testHistory.length; i++) {
@@ -99,11 +87,33 @@ describe('Backtest Engine', () => {
       //   testMemory.low,
       //   testMemory.high
       // );
+      // filter maker orders to only those that would have executed
+      // to save processing time in checking orders that are not filled
+      const infiniteLimits =
+        Number(process.env.CPBB_REBUY_CANCEL || 0) === 52560000;
+      if (infiniteLimits) {
+        memory.makerOrdersBackup = [...memory.makerOrders];
+        memory.makerOrders = memory.makerOrders.filter(
+          o => o.price < testMemory.high && o.price > testMemory.low
+        );
+        memory.makerOrderIds = memory.makerOrders.map(o => o.id);
+        // console.log(
+        //   `from ${memory.makerOrdersBackup.length} limits, found ${memory.makerOrders.length} limits between ${testMemory.low} and ${testMemory.high} that will fill`,
+        //   memory.makerOrders
+        // );
+      }
       // console.log('action period', testMemory.low, testMemory.high);
       await action({ dateOverride: currentDate });
       // reset high/low so we can build up during skipped periods
       delete testMemory.low;
       delete testMemory.high;
+      if (infiniteLimits) {
+        memory.makerOrders = [
+          ...[...memory.makerOrdersBackup, ...memory.makerOrders].filter(
+            o => !memory.makerOrderIds.includes(o.id)
+          ),
+        ];
+      }
       // }
     }
     return;

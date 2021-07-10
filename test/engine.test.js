@@ -22,7 +22,7 @@ const verbose = process.env.VERBOSE_TEST === 'true';
 // this must be included before loading anything else so we can capture console.log output
 const log = require('./lib/log');
 const deleteOutputFiles = require('./lib/delete.output.files');
-
+deleteOutputFiles();
 require('./nock/delete.order');
 require('./nock/get.accounts');
 require('./nock/get.order');
@@ -94,7 +94,6 @@ describe('Engine', () => {
   let logIndex = -1;
 
   beforeAll(async () => {
-    deleteOutputFiles();
     // make sure everything loaded and started
     const app = await engine;
     // we will manually run action as if we are hitting cron timers
@@ -158,6 +157,5 @@ describe('Engine', () => {
 
   afterAll(() => {
     if (verbose) process.stdout.write('\n\n');
-    deleteOutputFiles();
   });
 });
