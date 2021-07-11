@@ -3,7 +3,19 @@
 - breaking change in configs: removing support for old `CPBB_REBUY_AT` and `CPBB_REBUY_SIZE` split env configs. Use new `CPBB_REBUY` (single config)
 - Resell feature: New `CPBB_RESELL` configs to match REBUY configs (opposite side)
 - NOTE: be careful with resell configuration. Having RESELL/REBUY too tight and persisting too long will ruin the point of the bot (buying the dip and accumulating a position). Use sparingly and carefully.
-- More notes in the pull-request for this feature: https://github.com/jasonedison/coinbase_position_builder_bot/pull/39
+- new Type (`market`, `limit`) and Method (`cron`, `rebuy`, `resell`) columns in history logs
+
+  - running the `tools/adjust.apy.js` will recalculate everything and add these new header column names
+  - NOTE: delete `data/fills\_\*.json` cache files if you want updated order history to use for this recalculation (probably a good idea)
+
+- Fix issue where resell was double subtracting from Target, leading target to become negative in some heavy resell configs over time
+- reduce verbosity in runtime log so only historical actions are reported by default (all limit check/repost/cancel logs are now debug)
+- Now contains backtesting data from 2016-01-01 to 2021-07-05 and backtests
+- More notes in pull-requests for this release:
+  - https://github.com/jasonedison/coinbase_position_builder_bot/pull/39
+  - https://github.com/jasonedison/coinbase_position_builder_bot/pull/40
+  - https://github.com/jasonedison/coinbase_position_builder_bot/pull/41
+  - https://github.com/jasonedison/coinbase_position_builder_bot/pull/42
 
 # 3.1.0
 

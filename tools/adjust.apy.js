@@ -113,6 +113,10 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
     if (i === 1) log.debug(current);
   }
 
+  if (!history.headerRow.includes('	Type	Method')) {
+    history.headerRow += '	Type	Method';
+  }
+
   const data = [
     `${history.headerRow}`,
     ...all.map(row => map(row, v => v).join('\t')),
