@@ -58,6 +58,7 @@ const configs = require('../test/data/config.settings.js');
       // spawnSync(jest, jestSpawnArgs, processConfig);
       // console.log(`kicking off test ${start} ${i}`);
       const task = spawn(jest, jestSpawnArgs, processConfig);
+      // eslint-disable-next-line no-unused-vars
       for await (const data of task.stdout) {
         // console.log(data.toString());
       }
