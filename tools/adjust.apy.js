@@ -48,8 +48,10 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
 
     // if the fill data indicates that this was a Maker order (M) rather than a Taker (T)
     // then this transaction was made by a limit rebuy order
+    all[i].Type = fill && fill.liquidity === 'M' ? 'limit' : 'market';
     let isRebuy = fill ? current.Funds > 0 && fill.liquidity === 'M' : false;
     let isResell = fill ? current.Funds < 0 && fill.liquidity === 'M' : false;
+    all[i].Method = isRebuy ? 'rebuy' : isResell ? 'resell' : 'cron';
 
     if (i === 1) log.debug(current);
     let dateNow = new Date(current.Time);
