@@ -1,5 +1,5 @@
 module.exports = [
-  { // brendan suggested config
+  {
     CPBB_VOL: 28,
     CPBB_APY: 100,
     CPBB_RATE_INTERVAL: 'hourly',
@@ -9,18 +9,29 @@ module.exports = [
     CPBB_RESELL: '.0001@3,.0001@6,.0001@9,.0009@12',
     CPBB_REBUY_MAX: 14,
     CPBB_RESELL_MAX: 14,
-    // note: this is expected to be a bad idea
-    // if these never expire or rebuild, they will get stuck
-    // at places that will never fill and fail to rebuild around
-    // current price range
     CPBB_REBUY_CANCEL: 52560000, // 100 years
     CPBB_RESELL_CANCEL: 52560000,
     CPBB_REBUY_REBUILD: 52560000,
     CPBB_RESELL_REBUILD: 52560000,
-    // history file will be archived as data/history.TEST-USD.sandbox.tsv.brendan.tsv
     CPBB_TEST_NAME: 'brendan'
   },
-  { // brendan suggested config with cancel/rebuild
+  {
+    CPBB_VOL: 14,
+    CPBB_APY: 100,
+    CPBB_RATE_INTERVAL: 'hourly',
+    CPBB_RATE_INTERVAL_MOD: 2,
+    actions: '12/day',
+    CPBB_REBUY: '.0001@3,.0001@6,.0001@9,.0009@12',
+    CPBB_RESELL: '.0001@3,.0001@6,.0001@9,.0009@12',
+    CPBB_REBUY_MAX: 14,
+    CPBB_RESELL_MAX: 14,
+    CPBB_REBUY_CANCEL: 52560000, // 100 years
+    CPBB_RESELL_CANCEL: 52560000,
+    CPBB_REBUY_REBUILD: 52560000,
+    CPBB_RESELL_REBUILD: 52560000,
+    CPBB_TEST_NAME: 'brendan_14'
+  },
+  {
     CPBB_VOL: 28,
     CPBB_APY: 100,
     CPBB_RATE_INTERVAL: 'hourly',
@@ -52,22 +63,6 @@ module.exports = [
     CPBB_REBUY_REBUILD: 52560000,
     CPBB_RESELL_REBUILD: 52560000,
     CPBB_TEST_NAME: 'brendan_redo_all'
-  },
-  {
-    CPBB_VOL: 14,
-    CPBB_APY: 100,
-    CPBB_RATE_INTERVAL: 'hourly',
-    CPBB_RATE_INTERVAL_MOD: 2,
-    actions: '12/day',
-    CPBB_REBUY: '.0001@3,.0001@6,.0001@9,.0009@12',
-    CPBB_RESELL: '.0001@3,.0001@6,.0001@9,.0009@12',
-    CPBB_REBUY_MAX: 14,
-    CPBB_RESELL_MAX: 14,
-    CPBB_REBUY_CANCEL: 52560000, // 100 years
-    CPBB_RESELL_CANCEL: 52560000,
-    CPBB_REBUY_REBUILD: 52560000,
-    CPBB_RESELL_REBUILD: 52560000,
-    CPBB_TEST_NAME: 'brendan_14'
   },
   {
     CPBB_VOL: 14,
@@ -303,5 +298,44 @@ module.exports = [
     CPBB_REBUY_REBUILD: 5,
     CPBB_RESELL_REBUILD: 5,
     CPBB_TEST_NAME: 'brendan_daily_.1_rebuild'
+  },
+  { // brendan suggested config
+    CPBB_VOL: 28,
+    CPBB_APY: 100,
+    CPBB_RATE_INTERVAL: 'hourly',
+    CPBB_RATE_INTERVAL_MOD: 2,
+    actions: '12/day',
+    CPBB_REBUY: '.0001@3,.0001@6,.0001@9,.0009@12',
+    CPBB_RESELL: '.0001@3,.0001@6,.0001@9,.0009@12',
+    CPBB_REBUY_MAX: 14,
+    CPBB_RESELL_MAX: 14,
+    // note: this is expected to be a bad idea
+    // if these never expire or rebuild, they will get stuck
+    // at places that will never fill and fail to rebuild around
+    // current price range
+    CPBB_REBUY_CANCEL: 52560000, // 100 years
+    CPBB_RESELL_CANCEL: 52560000,
+    CPBB_REBUY_REBUILD: 52560000,
+    CPBB_RESELL_REBUILD: 52560000,
+    // history file will be archived as data/history.TEST-USD.sandbox.tsv.brendan.tsv
+    CPBB_TEST_NAME: 'brendan'
+  },
+  {
+    CPBB_VOL: 28,
+    CPBB_APY: 100,
+    CPBB_RATE_INTERVAL: 'hourly',
+    CPBB_RATE_INTERVAL_MOD: 2,
+    actions: '12/day',
+    // history file will be archived as data/history.TEST-USD.sandbox.tsv.brendan.tsv
+    CPBB_TEST_NAME: 'brendan_nolimits'
+  },
+  {
+    CPBB_VOL: 14,
+    CPBB_APY: 100,
+    CPBB_RATE_INTERVAL: 'hourly',
+    CPBB_RATE_INTERVAL_MOD: 2,
+    actions: '12/day',
+    // history file will be archived as data/history.TEST-USD.sandbox.tsv.brendan.tsv
+    CPBB_TEST_NAME: 'brendan_nolimits_14'
   },
 ];
