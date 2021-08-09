@@ -15,6 +15,7 @@ global.console.log = (...args) => {
       /Position Builder Bot .+, http/,
       `Position Builder Bot [VERSION], http`
     )
+    .replace(/next run in [^,]+, on/, `next run in [RUNTIME], on`)
     .replace(
       /[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/gi,
       '[UUID]'
