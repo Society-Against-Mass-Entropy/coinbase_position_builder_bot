@@ -208,6 +208,14 @@ CPBB_REBUY_REBUILD: 12
 
 The above config will cause the engine to attempt to set $50 worth of limit orders for the asset after each `sell` action. The orders will be placed as .0001 @ -2% drop, .0001 @ -4% drop, etc until the $50 spending threshold is met. If the remaining funds in the last order is too little to create an order (would create a size too low for the API to accept), those funds are added to the last valid order.
 
+### Resell Configuration
+
+Since `4.0.0`, resell is available. See configuration samples in `sample.btcusd.limit_only.config.js` and `run.mine.config.js` (for a single target that cancels if unfilled before the next action point).
+
+> Use carefully! The point of this bot is to accumulate a position and to buy the dip. If you are always setting limit sell orders to swap your purchases at some micro-pump in price, you are missing out on the long-term game and just running a day trading bot.
+
+The `REBUY` option undoes what seems like an erroneous short term sell (given high volatility). It removes the previously captured `Realized` cash gain when the rebuy is filled and it does not add to the Total Input because that accounting was already done the first time the buy was made. For `RESELL`, it's the same in reverse--undo an erroneous buy action giving high short-term volatility. So it should not clock `Realized` cash gains and instead remove the previously accounted funds from the `Total Input`. From that point, the target value for our APY calculation does not consider the previously added cash on the buy that we resold. However, if some time has passed between when the buy action filled and the limit resell fills, the APY still applies a gain expectation to the `Total Input` during the time that the funds were in the investment. This makes sense because we will be walking away with some extra bitcoin (or whatever the holding is) and will end up with a reduced cost-basis as a result of the buy + resell fulfilling.
+
 ### Volume and Frequency
 
 The Coinbase Pro API will only allow market taker orders of `$5` or more. So my original idea of buying $1 or $2 worth every hour (or even more frequently) went bust. Keep in mind when setting your VOL config that you should be able to feed the engine through a year-long bear market.

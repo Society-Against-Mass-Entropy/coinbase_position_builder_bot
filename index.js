@@ -61,10 +61,19 @@ const startEngine = async () => {
         .join(', ')}`
     );
   }
-  if (config.rebuy.only) {
+  if (config.resell.pumps.length) {
+    const sizes = config.resell.sizes;
+    const pumps = config.resell.pumps;
+    log.now(
+      `💵 RESELL $${config.resell.max} of ${config.ticker}: ${sizes
+        .map((s, i) => `${s}@${multiply(pumps[i], 100)}%`)
+        .join(', ')}`
+    );
+  }
+  if (config.limitOnly) {
     // this mode says "I want to buy this asset, but only when it's flashing downward during the timing interval"
     log.now(
-      `${config.productID} set to REBUY ONLY MODE (will not create market taker trades, only limit orders at drops)`
+      `${config.productID} set to LIMIT ONLY MODE (will not create market taker trades, only limit orders at drops/pumps)`
     );
   }
 

@@ -4,7 +4,7 @@ const getOrder = require('../coinbase/get.order');
 const log = require('../lib/log');
 
 const id = process.argv[2];
-log.zap('checking order', id);
+log.debug('checking order', id);
 (async () => {
   const { json } = await getOrder({ id });
   log.ok({ json });

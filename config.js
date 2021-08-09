@@ -15,6 +15,7 @@ const config = {
   vol: Number(process.env.CPBB_VOL || 10),
   // default 15% APY target (we aim to shave off any excess from this gain)
   apy: divide(process.env.CPBB_APY || 15, 100),
+  only: process.env.CPBB_LIMIT_ONLY === 'true',
   rebuy: {
     // ms after limit order placed before it is able to be canceled due to not filling
     cancel: multiply(process.env.CPBB_REBUY_CANCEL || 0, 60000),
@@ -28,12 +29,8 @@ const config = {
             );
           })
           .filter(i => i && !isNaN(i))
-      : (process.env.CPBB_REBUY_AT || '') // legacy support
-          .split(',')
-          .map(p => (p ? divide(multiply(Math.abs(p), -1), 100) : null))
-          .filter(i => i && !isNaN(i)),
+      : [],
     max: Number(process.env.CPBB_REBUY_MAX || 0),
-    only: process.env.CPBB_REBUY_ONLY === 'true',
     rebuild: Number(process.env.CPBB_REBUY_REBUILD || 0),
     sizes: process.env.CPBB_REBUY
       ? process.env.CPBB_REBUY.split(',')
@@ -42,10 +39,29 @@ const config = {
             return Number(p.split('@')[0]);
           })
           .filter(i => i && !isNaN(i))
-      : (process.env.CPBB_REBUY_SIZE || '')
-          .split(',')
-          .map(s => (s ? Number(s) : null))
-          .filter(i => i && !isNaN(i)),
+      : [],
+  },
+  resell: {
+    // ms after limit order placed before it is able to be canceled due to not filling
+    cancel: multiply(process.env.CPBB_RESELL_CANCEL || 0, 60000),
+    pumps: process.env.CPBB_RESELL
+      ? process.env.CPBB_RESELL.split(',')
+          .map(p => {
+            if (!p) return;
+            return divide(p.replace('%', '').split('@')[1], 100);
+          })
+          .filter(i => i && !isNaN(i))
+      : [],
+    max: Number(process.env.CPBB_RESELL_MAX || 0),
+    rebuild: Number(process.env.CPBB_RESELL_REBUILD || 0),
+    sizes: process.env.CPBB_RESELL
+      ? process.env.CPBB_RESELL.split(',')
+          .map(p => {
+            if (!p) return;
+            return Number(p.split('@')[0]);
+          })
+          .filter(i => i && !isNaN(i))
+      : [],
   },
   // if the trading pair ordering doesn't exist (e.g. BTC-LTC)
   // we have to reverse our logic to run from the trading pair that does exist (e.g. LTC-BTC)
@@ -56,8 +72,8 @@ const config = {
   currency: process.env.CPBB_CURRENCY || 'USD',
   sleep: {
     product: testMode ? 0 : 500,
-    rebuyCheck: testMode ? 0 : 1000,
-    rebuyPost: testMode ? 0 : 1000,
+    limitCheck: testMode ? 0 : 1000,
+    limitPost: testMode ? 0 : 1000,
     cancelOrder: testMode ? 0 : 500,
   },
   pjson,

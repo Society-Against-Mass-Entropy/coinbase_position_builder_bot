@@ -48,7 +48,10 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
 
     // if the fill data indicates that this was a Maker order (M) rather than a Taker (T)
     // then this transaction was made by a limit rebuy order
+    all[i].Type = fill && fill.liquidity === 'M' ? 'limit' : 'market';
     let isRebuy = fill ? current.Funds > 0 && fill.liquidity === 'M' : false;
+    let isResell = fill ? current.Funds < 0 && fill.liquidity === 'M' : false;
+    all[i].Method = isRebuy ? 'rebuy' : isResell ? 'resell' : 'cron';
 
     if (i === 1) log.debug(current);
     let dateNow = new Date(current.Time);
@@ -77,8 +80,9 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
     // do not add fund value if this is a rebuy
     // (already added the first time we bought)
     if (!isRebuy) all[i].Target = add(all[i].Target, Math.abs(current.Funds));
-    if (last.Funds < 0) {
-      // however, if we sold on the last action, that vol shouldn't add to our growth target
+    if (last.Funds < 0 && last.Method === 'cron') {
+      // however, if we sold on the last cron action,
+      // that vol shouldn't add to our growth target
       all[i].Target = add(current.Target, last.Funds);
     }
     all[i].Diff = subtract(current.Value, current.Target);
@@ -87,6 +91,8 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
     if (isRebuy) {
       all[i].Realized = subtract(last.Realized, current.Funds);
       all[i].TotalInput = last.TotalInput || 0;
+    } else if (isResell) {
+      all[i].TotalInput = add(last.TotalInput, all[i].Funds);
     } else {
       all[i].Realized = add(
         last.Realized,
@@ -105,6 +111,10 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
       multiply(divide(current.Liquid, current.TotalInput), 100).toFixed(2) +
       '%';
     if (i === 1) log.debug(current);
+  }
+
+  if (!history.headerRow.includes('	Type	Method')) {
+    history.headerRow += '	Type	Method';
   }
 
   const data = [

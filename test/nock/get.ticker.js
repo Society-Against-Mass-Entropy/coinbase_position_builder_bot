@@ -9,7 +9,7 @@ module.exports = nock(config.api)
   .reply(200, () => {
     const price = testMemory.price;
     // console.log(price);
-    const payload = {
+    return {
       trade_id: 4729088,
       price,
       size: '0.193',
@@ -18,5 +18,4 @@ module.exports = nock(config.api)
       volume: '5957.11914015',
       time: new Date().toISOString(),
     };
-    return payload;
   });
