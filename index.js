@@ -112,29 +112,28 @@ const startEngine = async () => {
   const currentHolding = add(memory.lastLog.Holding, memory.lastLog.Shares);
   const holdingValue = multiply(ticker.price, currentHolding);
   const liquidValue = add(holdingValue, memory.lastLog.Realized);
+  const totalCost = add(
+    memory.lastLog.TotalInput,
+    memory.lastLog.Funds > 0 ? memory.lastLog.Funds : 0
+  );
   log.now(
     `🕟 next run ${nextDate.fromNow()}, on ${nextDate
       .local()
       .format()}, holding ${currentHolding} @${
       ticker.price
-    } (market) = $${holdingValue}, paid ${memory.lastLog.TotalInput.toFixed(
-      2
-    )},` +
+    } (market) = $${holdingValue}, paid ${totalCost.toFixed(2)},` +
       // ` target APY calculation ${multiply(
       //   getAPY({
-      //     totalInput: memory.lastLog.TotalInput,
+      //     totalInput: totalCost,
       //     endValue: holdingValue,
       //     dateNow: new Date(),
       //   }),
       //   100
       // ).toFixed(2)}%`+
       ` liquid gain ${
-        memory.lastLog.TotalInput
+        totalCost
           ? multiply(
-              divide(
-                subtract(liquidValue, memory.lastLog.TotalInput),
-                memory.lastLog.TotalInput
-              ),
+              divide(subtract(liquidValue, totalCost), totalCost),
               100
             ).toFixed(2)
           : 0

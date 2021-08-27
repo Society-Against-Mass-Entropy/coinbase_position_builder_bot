@@ -1,3 +1,7 @@
+# 4.0.1
+
+- corrected total paid calculation on startup log (UI only change)
+
 # 4.0.0
 
 - breaking change in configs: removing support for old `CPBB_REBUY_AT` and `CPBB_REBUY_SIZE` split env configs. Use new `CPBB_REBUY` (single config)
