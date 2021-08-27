@@ -20,6 +20,9 @@ const baseConfigEnv = {
   CPBB_REBUY_MAX: 10,
   // rebuy up to 1000 units of asset @ -10% dump
   CPBB_REBUY: '1000@10',
+  // randomly shift the cron timer by up to 5 minutes
+  // to prevent bot detection/manipulation
+  CPBB_RANDOM_DELAY: 5,
 };
 module.exports = {
   apps: [
@@ -138,18 +141,6 @@ module.exports = {
         ...{
           CPBB_FREQ: '23 6 * * *',
           CPBB_TICKER: 'MATIC',
-        },
-      },
-    },
-    {
-      name: 'poly',
-      script,
-      watch: watch,
-      env: {
-        ...baseConfigEnv,
-        ...{
-          CPBB_FREQ: '33 6 * * *',
-          CPBB_TICKER: 'POLY',
         },
       },
     },
