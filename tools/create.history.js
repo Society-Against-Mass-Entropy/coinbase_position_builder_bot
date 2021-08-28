@@ -52,21 +52,22 @@ log.ok(`backed up history file in ${backup}`);
     //   log.debug('no volume?', f);
     // }
     const funds = multiply(f.price, f.size);
+    const Funds = f.side === 'sell' ? multiply(funds, -1) : funds;
     return {
       Time: f.created_at,
       Price: f.price,
       Holding: 0,
       Value: 0,
-      Funds: f.side === 'sell' ? multiply(funds, -1) : funds,
+      Funds,
       Shares: f.side === 'sell' ? multiply(f.size, -1) : f.size,
       PeriodRate: 0,
       ExpectedGain: 0,
-      TotalInput: 0,
-      Target: 0,
-      Diff: 0,
-      EndValue: 0,
+      TotalInput: Funds,
+      Target: Funds,
+      Diff: -Funds,
+      EndValue: Funds,
       Realized: 0,
-      TotalValue: 0,
+      TotalValue: Funds,
       Liquid: 0,
       Profit: 0,
       ID: f.order_id,

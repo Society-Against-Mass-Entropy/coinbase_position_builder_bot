@@ -1,6 +1,7 @@
 # 4.1.0
 
 - `CPBB_RANDOM_DELAY` environmental config option can be set to a maximum number of minutes to randomly delay the cron event. For example, setting `CPBB_RANDOM_DELAY: 5` will make each cron action wait a random number of milliseconds between 0 and 5 minutes from the triggered cron event time before running the action. This helps to avoid being detected and manipulated by bots as an agent that always does a buy action of a certain dollar amount every day at 10am UTC. This regularity is something manipulators can notice in the stream of event data coming from the trading API and use to time high volume trading manipulation, knowing that you will eat into their limit orders at whatever point they can manipulate the order books into being at the time your regular cron action triggers. In short, it is `recommended` to set this value to something though the default value is 0 to keep the [principle of least astonishment](https://en.wikipedia.org/wiki/Principle_of_least_astonishment). Note that you should provide enough buffer between multiple engines so they don't occasonally run queries at the same time, as that could trigger rate limiting and cause one of your processes to fail to trade.
+- Fix issue with `tools/create.history.js` that caused the first row of data to not be counted in the totals
 
 # 4.0.1
 

@@ -16,9 +16,9 @@ const job = new CronJob(config.freq, action);
 
 const startEngine = async () => {
   const product = await getProduct(config.productID);
-  product.precision = product.base_increment
-    .replace('0.', '')
-    .replace(/1[0]+/, '1').length;
+  product.precision = product.base_increment.includes('0.')
+    ? product.base_increment.replace('0.', '').replace(/1[0]+/, '1').length
+    : 0;
   memory.product = product;
   // log.now({product})
   log.now(

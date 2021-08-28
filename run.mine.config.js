@@ -144,5 +144,17 @@ module.exports = {
         },
       },
     },
+    {
+      name: 'dot',
+      script,
+      watch: watch,
+      env: {
+        ...baseConfigEnv,
+        ...{
+          CPBB_FREQ: '33 6 * * *',
+          CPBB_TICKER: 'DOT',
+        },
+      },
+    },
   ],
 };
