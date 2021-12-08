@@ -13,7 +13,7 @@ const baseConfigEnv = {
   CPBB_TICKER: 'TEST',
   CPBB_CURRENCY: 'USD',
   CPBB_VOL: 10,
-  CPBB_APY: 20,
+  CPBB_APY: 15,
   CPBB_RESELL_MAX: 10,
   // resell up to 1000 units of asset @ +5% pump
   CPBB_RESELL: '1000@5',
@@ -34,14 +34,15 @@ module.exports = {
         ...baseConfigEnv,
         ...{
           VERBOSE: false,
+          // CPBB_FREQ: '8 9 * * *',
           CPBB_FREQ: '02 5 * * *',
           CPBB_TICKER: 'BTC',
           CPBB_VOL: 400,
           CPBB_APY: 100,
           CPBB_RESELL_MAX: 400,
-          CPBB_RESELL: '1@10',
+          CPBB_RESELL: '1@6',
           CPBB_REBUY_MAX: 400,
-          CPBB_REBUY: '1@10',
+          CPBB_REBUY: '1@12',
         },
       },
     },
@@ -52,11 +53,12 @@ module.exports = {
       env: {
         ...baseConfigEnv,
         ...{
+          // CPBB_FREQ: '10 9 * * *',
           CPBB_FREQ: '12 5 * * *',
           CPBB_TICKER: 'ETH',
-          CPBB_VOL: 100,
-          CPBB_RESELL_MAX: 100,
-          CPBB_REBUY_MAX: 100,
+          CPBB_VOL: 50,
+          CPBB_RESELL_MAX: 50,
+          CPBB_REBUY_MAX: 50,
         },
       },
     },
@@ -67,6 +69,7 @@ module.exports = {
       env: {
         ...baseConfigEnv,
         ...{
+          // CPBB_FREQ: '12 9 * * *',
           CPBB_FREQ: '22 5 * * *',
           CPBB_TICKER: 'LTC',
         },
@@ -79,7 +82,9 @@ module.exports = {
       env: {
         ...baseConfigEnv,
         ...{
+          // CPBB_FREQ: '15 9 * * *',
           CPBB_FREQ: '32 5 * * *',
+          CPBB_APY: 5,
           CPBB_TICKER: 'DASH',
         },
       },
@@ -91,6 +96,7 @@ module.exports = {
       env: {
         ...baseConfigEnv,
         ...{
+          // CPBB_FREQ: '18 9 * * *',
           CPBB_FREQ: '42 5 * * *',
           CPBB_TICKER: 'XTZ',
         },
@@ -103,7 +109,9 @@ module.exports = {
       env: {
         ...baseConfigEnv,
         ...{
+          // CPBB_FREQ: '21 9 * * *',
           CPBB_FREQ: '52 5 * * *',
+          CPBB_APY: 10,
           CPBB_TICKER: 'DOGE',
         },
       },
@@ -115,7 +123,9 @@ module.exports = {
       env: {
         ...baseConfigEnv,
         ...{
+          // CPBB_FREQ: '24 9 * * *',
           CPBB_FREQ: '3 6 * * *',
+          CPBB_APY: 5,
           CPBB_TICKER: 'ADA',
         },
       },
@@ -128,6 +138,8 @@ module.exports = {
         ...baseConfigEnv,
         ...{
           CPBB_FREQ: '13 6 * * *',
+          // CPBB_FREQ: '27 9 * * *',
+          CPBB_APY: 5,
           CPBB_TICKER: 'ALGO',
         },
       },
@@ -139,7 +151,9 @@ module.exports = {
       env: {
         ...baseConfigEnv,
         ...{
+          // CPBB_FREQ: '30 9 * * *',
           CPBB_FREQ: '23 6 * * *',
+          CPBB_APY: 5,
           CPBB_TICKER: 'MATIC',
         },
       },
@@ -151,7 +165,9 @@ module.exports = {
       env: {
         ...baseConfigEnv,
         ...{
+          // CPBB_FREQ: '33 9 * * *',
           CPBB_FREQ: '33 6 * * *',
+          CPBB_APY: 5,
           CPBB_TICKER: 'DOT',
         },
       },
