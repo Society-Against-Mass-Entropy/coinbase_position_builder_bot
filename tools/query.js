@@ -46,7 +46,6 @@ const alts = [
   'REP',
   'SNX',
   'UMA',
-  'WBTC',
   'XLM',
   'XTZ',
   'YFI',
