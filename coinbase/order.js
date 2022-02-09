@@ -4,7 +4,6 @@ const { divide, multiply } = require('../lib/math');
 const config = require('../config');
 const memory = require('../lib/memory');
 const log = require('../lib/log');
-const numFix = require('../lib/number.fix');
 const request = require('./cb.request');
 const sleep = require('../lib/sleep');
 
@@ -14,7 +13,7 @@ module.exports = async (opts, retries = 0) => {
     const converted = multiply(opts.funds, 0.995);
     return {
       executed_value: Number(opts.funds),
-      filled_size: numFix(divide(converted, memory.price), 8),
+      filled_size: divide(converted, memory.price, 8),
       fill_fees: multiply(opts.funds, 0.005),
       settled: true,
     };

@@ -128,7 +128,10 @@ config.history_file = `${__dirname}/data/history.${historyName}${historySubName}
 log.debug(config.history_file);
 if (!fs.existsSync(config.history_file)) {
   // copy the template
-  log.zap('creating log file from template', config.history_file);
+  log.zap(
+    'creating log file from template',
+    config.history_file.replace(__dirname, '.')
+  );
   fs.copyFileSync(
     `${__dirname}/data/template.history.tsv`,
     config.history_file
@@ -138,7 +141,10 @@ config.maker_file = `${__dirname}/data/maker.orders.${historyName}${historySubNa
 log.debug(config.maker_file);
 if (!fs.existsSync(config.maker_file)) {
   // copy the template
-  log.zap('creating maker file from template', config.maker_file);
+  log.zap(
+    'creating maker file from template',
+    config.maker_file.replace(__dirname, '.')
+  );
   fs.copyFileSync(
     `${__dirname}/data/template.maker.orders.json`,
     config.maker_file

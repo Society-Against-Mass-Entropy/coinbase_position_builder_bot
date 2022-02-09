@@ -34,9 +34,11 @@ const startEngine = async () => {
       config.dry ? 'DRY RUN' : 'LIVE'
     } mode, ${config.vol} $${config.currency} ➡️  $${config.ticker} @cron(${
       config.freq
-    }), ${multiply(config.apy, 100)}% APY${
-      process.env.VERBOSE === 'true' ? `, verbose logging` : ''
-    }`
+    }), ${
+      process.env.CPBB_APY_DYNAMIC
+        ? `dynamic APY: ${process.env.CPBB_APY_DYNAMIC}`
+        : `${multiply(config.apy, 100)}% APY`
+    }${process.env.VERBOSE === 'true' ? `, verbose logging` : ''}`
   );
   if (config.rebuy.drops.length) {
     const sizes = config.rebuy.sizes;
