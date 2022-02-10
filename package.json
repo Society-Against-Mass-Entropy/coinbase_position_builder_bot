@@ -42,7 +42,7 @@
     "start:2": "CPBB_FREQ='5 */2 * * *' node .",
     "start:3": "CPBB_FREQ='5 */3 * * *' node .",
     "start:4": "CPBB_FREQ='5 */4 * * *' node .",
-    "test": "./node_modules/eslint/bin/eslint.js . && echo '✅ No Lint' && ./node_modules/jest/bin/jest.js --verbose --coverage && echo '✅ Tests'",
+    "test": "./node_modules/eslint/bin/eslint.js . --fix && echo '✅ No Lint' && ./node_modules/jest/bin/jest.js --verbose --coverage && echo '✅ Tests'",
     "test:debug": "VERBOSE_TEST=true ./node_modules/jest/bin/jest.js --verbose",
     "test:watch": "./node_modules/jest/bin/jest.js --watch",
     "coverage": "./node_modules/jest/bin/jest.js --coverage"
@@ -64,12 +64,12 @@
     "moment": "^2.29.1"
   },
   "devDependencies": {
-    "eslint": "^7.21.0",
+    "eslint": "8.8.0",
     "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-prettier": "4.0.0",
     "husky": "^5.1.1",
     "jest": "^26.6.3",
-    "nock": "13.0.9",
+    "nock": "^13.0.9",
     "prettier": "^2.2.1",
     "uuid": "^8.3.2"
   }

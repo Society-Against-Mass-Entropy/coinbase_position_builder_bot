@@ -38,7 +38,12 @@ module.exports = {
           CPBB_FREQ: '2 5 * * *',
           CPBB_TICKER: 'BTC',
           CPBB_VOL: 400,
-          CPBB_APY: 75,
+          // calculate Target APY rate based on market price
+          // where rate is 100% APY target when price <= $10K
+          // and rate approaches 10% APY and stabilizes there when price passes $1M
+          // calculates as a parabolic decay to mimic adoption S curve
+          // note: CPBB_APY_DYNAMIC overrides CPBB_APY
+          CPBB_APY_DYNAMIC: '100@5000-10@1000000',
           CPBB_RESELL_MAX: 400,
           CPBB_RESELL: '1@8',
           CPBB_REBUY_MAX: 400,
