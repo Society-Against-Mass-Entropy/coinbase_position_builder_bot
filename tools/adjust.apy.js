@@ -1,12 +1,17 @@
 /**
- * recaculates the PeriodRate, ExpectedGain, Target, Diff using new APY
+ * recaculates the PeriodRate, ExpectedGain, Target, Diff, etc using new APY config
  *
  * example: (setting your target APY to 100% through history)
  *
  * CPBB_TICKER=BTC CPBB_APY=100 node adjust.apy.js
+ *
+ * or for a dynamic APY setting (bigger market cap = less volatility)
+ * below sets dyanmic APY starting at 200% at or below $5K price and approaches 10% as prices reaches $1M
+ * CPBB_TICKER=BTC CPBB_APY_DYNAMIC=200@5000-10@1000000 node adjust.apy.js
  */
 const MS_PER_YEAR = 31556952000;
 const config = require('../config');
+const dynamicAPY = require('../lib/dynamic.apy');
 const fs = require('fs');
 const history = require('../lib/history');
 const { divide, multiply, subtract, add } = require('../lib/math');
@@ -14,10 +19,9 @@ const log = require('../lib/log');
 const getFills = require('../coinbase/get.fills');
 const map = require('lodash.map');
 log.bot(
-  `Position Builder Engine Updater: Recalculating with ${multiply(
-    config.apy,
-    100
-  )}% APY`
+  `Position Builder Engine Updater: Recalculating with ${
+    process.env.CPBB_APY_DYNAMIC ? 'dynamic' : multiply(config.apy, 100)
+  }% APY`
 );
 const backup = config.history_file.replace(
   '.tsv',
@@ -32,7 +36,6 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
 
 (async () => {
   const fills = await getFills({ since: all[0].Time });
-
   for (let i = 1; i < all.length; i++) {
     let last = all[i - 1];
     let current = all[i];
@@ -53,7 +56,12 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
     let isResell = fill ? current.Funds < 0 && fill.liquidity === 'M' : false;
     all[i].Method = isRebuy ? 'rebuy' : isResell ? 'resell' : 'cron';
 
-    if (i === 1) log.debug(current);
+    all[i].TargetAPY = dynamicAPY(Number(current.Price));
+
+    if (i === 1) {
+      log.debug(current);
+      all[0].TargetAPY = all[i].TargetAPY;
+    }
     let dateNow = new Date(current.Time);
     let dateLast = new Date(last.Time);
     // shouldn't have to do this with all.sort above
@@ -70,7 +78,7 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
     //   pow(1 + config.apy, divide(1, divide(MS_PER_YEAR, msPassed))),
     //   1
     // );
-    all[i].PeriodRate = divide(config.apy, divide(MS_PER_YEAR, msPassed));
+    all[i].PeriodRate = divide(all[i].TargetAPY, divide(MS_PER_YEAR, msPassed));
 
     all[i].ExpectedGain = multiply(last.Target, current.PeriodRate);
 
@@ -113,8 +121,14 @@ all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
     if (i === 1) log.debug(current);
   }
 
-  if (!history.headerRow.includes('	Type	Method')) {
-    history.headerRow += '	Type	Method';
+  if (!history.headerRow.includes('	Type')) {
+    history.headerRow += '	Type';
+  }
+  if (!history.headerRow.includes('	Method')) {
+    history.headerRow += '	Method';
+  }
+  if (!history.headerRow.includes('	TargetAPY')) {
+    history.headerRow += '	TargetAPY';
   }
 
   const data = [

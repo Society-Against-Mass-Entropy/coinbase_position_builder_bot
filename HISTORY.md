@@ -1,3 +1,16 @@
+# 4.2.0
+
+- `CPBB_APY_DYNAMIC` to set a dynamic range for APY targeting which will change as the price changes. Added because the most frequent manual update to the script that users still have to toy with is to adjust the APY setting as the market cap of Bitcoin increases and volitility declines. Smaller market cap assets are easier to shift by 10-50% rapidly by adding or removing a smaller amount of money to the system. As Bitcoin approaches and passes the market value of gold and other assets, it will stabilize in price so while a 100% APY might be a reasonable rate this year, a 50% APY might be a reasonable rate next year. This config takes the guess work out by setting a starting and final APY and mapping the current APY target to the current price. See `run.dynamic.btcusd.config.js` for an example.
+
+> NOTE: if switching to this model from the static APY method, you can retroactively adjust your rates first and add the TAPY column to your spreadsheet by first running something like:
+
+```
+cd tools;
+CPBB_TICKER=BTC CPBB_APY_DYNAMIC=100@10000-10@1000000 node adjust.apy.js
+```
+
+The template spreadsheet has been updated as well with Type, Method, and TargetAPY columns: https://docs.google.com/spreadsheets/d/1DPo9amEx6RAr33Nnaq27J59AA7XiO90Q2bBP9rq2Tiw/edit?usp=sharing
+
 # 4.1.0
 
 - `CPBB_RANDOM_DELAY` environmental config option can be set to a maximum number of minutes to randomly delay the cron event. For example, setting `CPBB_RANDOM_DELAY: 5` will make each cron action wait a random number of milliseconds between 0 and 5 minutes from the triggered cron event time before running the action. This helps to avoid being detected and manipulated by bots as an agent that always does a buy action of a certain dollar amount every day at 10am UTC. This regularity is something manipulators can notice in the stream of event data coming from the trading API and use to time high volume trading manipulation, knowing that you will eat into their limit orders at whatever point they can manipulate the order books into being at the time your regular cron action triggers. In short, it is `recommended` to set this value to something though the default value is 0 to keep the [principle of least astonishment](https://en.wikipedia.org/wiki/Principle_of_least_astonishment). Note that you should provide enough buffer between multiple engines so they don't occasonally run queries at the same time, as that could trigger rate limiting and cause one of your processes to fail to trade.

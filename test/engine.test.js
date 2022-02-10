@@ -3,16 +3,17 @@ process.env.CPBB_TICKER = 'TEST';
 process.env.CPBB_CURRENCY = 'USD';
 process.env.CPBB_VOL = 100;
 process.env.CPBB_FREQ = '1 1 1 1 1';
-process.env.CPBB_APY = 25;
+// process.env.CPBB_APY = 25;
+process.env.CPBB_APY_DYNAMIC = '50@1000-10@1000000';
 process.env.FIRST_LOG_DATE = '2021-01-01T00:00:00.000Z';
 process.env.CPBB_TEST = true;
-process.env.CPBB_REBUY_MAX = 50;
+process.env.CPBB_REBUY_MAX = 100;
 process.env.CPBB_REBUY = '.0001@2,.0002@4,.0003@6,.0004@8,.0005@10';
 // process.env.CPBB_REBUY_SIZE = '.0001,.0002,.0003,.0004,.0005';
 // process.env.CPBB_REBUY_AT = '-2,-4,-6,-8,-10';
 process.env.CPBB_REBUY_CANCEL = 60 * 24 * 1;
 process.env.CPBB_REBUY_REBUILD = 6;
-process.env.CPBB_RESELL_MAX = 50;
+process.env.CPBB_RESELL_MAX = 100;
 process.env.CPBB_RESELL = '.0001@2,.0005@3';
 // cancel any limit sells that have not filled before taking the next action
 process.env.CPBB_RESELL_CANCEL = 0;
@@ -48,19 +49,19 @@ const priceChanges = [
   // buy and one resell triggers (other canceled)
   // sets new resell orders
   '51010',
-  // buy, canceles resell, sets new targets
+  // buy, cancels resell, sets new targets
   '50050',
-  // buy, canceles resell, sets new targets
+  // buy, cancels resell, sets new targets
   '51050',
-  // buy, canceles resell, sets new targets
+  // buy, cancels resell, sets new targets
   '51100',
-  // buy, canceles resell, sets new targets
+  // buy, cancels resell, sets new targets
   '51000',
-  // buy, canceles resell, sets new targets
+  // buy, cancels resell, sets new targets
   '51050',
-  // buy, canceles resell, sets new targets
+  // buy, cancels resell, sets new targets
   '51020',
-  // buy, canceles resell, sets new targets
+  // buy, cancels resell, sets new targets
   '51120',
   // resells trigger, buy, set new sell
   '61000',
@@ -76,6 +77,21 @@ const priceChanges = [
   '92000',
   // trigger rebuy limits
   '50000',
+  '60000',
+  '70000',
+  '80000',
+  '90000',
+  '100000',
+  '200000',
+  '300000',
+  '400000',
+  '500000',
+  '600000',
+  '700000',
+  '800000',
+  '900000',
+  '1000000',
+  '1100000',
 ];
 
 // a list of filenames in ./data/output.${name}.log that group

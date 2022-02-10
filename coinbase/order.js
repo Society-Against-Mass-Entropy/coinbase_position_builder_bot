@@ -4,7 +4,6 @@ const { divide, multiply } = require('../lib/math');
 const config = require('../config');
 const memory = require('../lib/memory');
 const log = require('../lib/log');
-const numFix = require('../lib/number.fix');
 const request = require('./cb.request');
 const sleep = require('../lib/sleep');
 
@@ -14,7 +13,7 @@ module.exports = async (opts, retries = 0) => {
     const converted = multiply(opts.funds, 0.995);
     return {
       executed_value: Number(opts.funds),
-      filled_size: numFix(divide(converted, memory.price), 8),
+      filled_size: divide(converted, memory.price, 8),
       fill_fees: multiply(opts.funds, 0.005),
       settled: true,
     };
@@ -36,13 +35,16 @@ module.exports = async (opts, retries = 0) => {
     if (retryCount === 2) {
       log.now(`retry #${retryCount}`, opts);
     }
-    const result = await request({
+    const { reason, json } = await request({
       requestPath: '/orders',
       method: 'POST',
       body: opts,
     });
-    const json = result ? result.json : result;
-    log.debug(json);
+    if (reason === 400 && json && json.message === 'Insufficient funds') {
+      log.error('Check account balance! Out of funds!');
+      return;
+    }
+    log.debug(reason, json);
     // if retries are enabled for this type of order, allow retry
     if (retries && !json) {
       retryCount++;

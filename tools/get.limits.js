@@ -7,7 +7,6 @@
 // usage:
 // cd tools; CPBB_TICKER=BTC node get.limits.js
 // then check up on the file to make sure it looks right and restart your service
-
 const config = require('../config');
 const getOrders = require('../coinbase/get.orders');
 const fs = require('fs');

@@ -71,6 +71,9 @@ log.ok(`backed up history file in ${backup}`);
       Liquid: 0,
       Profit: 0,
       ID: f.order_id,
+      Type: 'market',
+      Method: 'cron',
+      TargetAPY: config.apy,
     };
   });
 

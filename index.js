@@ -1,7 +1,6 @@
 const { CronJob } = require('cron');
 
 const config = require('./config');
-const apiKeys = require('./api.keys.js');
 const action = require('./lib/action');
 const getAccounts = require('./coinbase/accounts');
 const getProduct = require('./coinbase/get.product');
@@ -30,27 +29,16 @@ const startEngine = async () => {
       product.status_message
     }`
   );
-  if (
-    !apiKeys.CPBB_APIKEY ||
-    !apiKeys.CPBB_APISEC ||
-    !apiKeys.CPBB_APIPASS ||
-    apiKeys.CPBB_APIKEY.includes('load your keys') ||
-    apiKeys.CPBB_APISEC.includes('load your keys') ||
-    apiKeys.CPBB_APIPASS.includes('load your keys')
-  ) {
-    log.error(
-      'API Keys are not correctly configured.\nPlease check the setup instructions and load your API keys into the environment before starting.\nHalting the app now.'
-    );
-    return;
-  }
   log.bot(
     `Position Builder Bot ${config.pjson.version}, ${config.api} in ${
       config.dry ? 'DRY RUN' : 'LIVE'
     } mode, ${config.vol} $${config.currency} ➡️  $${config.ticker} @cron(${
       config.freq
-    }), ${multiply(config.apy, 100)}% APY${
-      process.env.VERBOSE === 'true' ? `, verbose logging` : ''
-    }`
+    }), ${
+      process.env.CPBB_APY_DYNAMIC
+        ? `dynamic APY: ${process.env.CPBB_APY_DYNAMIC}`
+        : `${multiply(config.apy, 100)}% APY`
+    }${process.env.VERBOSE === 'true' ? `, verbose logging` : ''}`
   );
   if (config.rebuy.drops.length) {
     const sizes = config.rebuy.sizes;

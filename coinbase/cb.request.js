@@ -20,14 +20,14 @@ module.exports = async opts => {
     method: opts.method,
     headers: {
       'Content-Length': body.length,
-      'CB-ACCESS-KEY': process.env.CPBB_APIKEY,
+      'CB-ACCESS-KEY': config.CPBB_APIKEY,
       'CB-ACCESS-SIGN': requestSign({
         timestamp,
         requestPath: opts.requestPath,
         body: body,
         method: opts.method,
       }),
-      'CB-ACCESS-PASSPHRASE': process.env.CPBB_APIPASS,
+      'CB-ACCESS-PASSPHRASE': config.CPBB_APIPASS,
       'CB-ACCESS-TIMESTAMP': timestamp,
       'User-Agent': 'CBPP',
     },

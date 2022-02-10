@@ -23,3 +23,7 @@ test('pow number and string: no rounding error', () => {
   // if rounding error, would see Math.pow(3.1, 2) => 9.610000000000001
   expect(pow(3.1, '2')).toBe(9.61);
 });
+test('precision subtraction to 4 digits: no rounding error', () => {
+  // if rounding error, would see 0.12460097 - 0.12035164 => 0.0042493300000000095
+  expect(subtract(0.12460097, '0.12035164', 4)).toBe(0.0042);
+});
