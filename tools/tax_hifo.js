@@ -1,19 +1,18 @@
 /**
- * parses a history file to get the FIFO-based profit/loss report for a given year
+ * parses a history file to get the HIFO-based profit/loss report for a given year
  * run with:
  *
  * cd tools;
- * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_YEAR=2020 node tax_fifo.js
+ * CPBB_TICKER=BTC CPBB_CURRENCY=USD CPBB_YEAR=2021 node tax_hifo.js
  */
 
 const history = require('../lib/history');
 const log = require('../lib/log');
 const { add, divide, multiply, subtract } = require('../lib/math');
 const year = Number(process.env.CPBB_YEAR);
-log.bot(`Position Builder Bot FIFO Calculator ${year}`);
+log.bot(`Position Builder Bot HIFO Calculator ${year}`);
 
 const dollarize = val => `$${val.toFixed(2)}`;
-console.log(history.all()[0]);
 const all = history
   .all()
   // only need to examine up to the end of the year we are calculating
@@ -26,14 +25,21 @@ const all = history
     shares: txn.Shares,
   }));
 
-const buys = all.filter(txn => txn.funds > 0);
-const sells = all.filter(
-  txn => txn.funds < 0 && new Date(txn.time).getFullYear() === year
-);
+const buys = all
+  .filter(txn => txn.funds > 0)
+  .sort((a, b) => (a.basis > b.basis ? -1 : 1));
+const sells = all
+  .filter(txn => txn.funds < 0 && txn.time.getFullYear() === year)
+  .sort((a, b) => (a.time > b.time ? -1 : 1));
 
 log.ok(
   `found ${all.length} transactions (${buys.length} buys, and ${sells.length} sells) leading up to the end of ${year}`
 );
+
+// log.ok(`largest basis`, buys[0]);
+// log.ok(`smallest basis`, buys[buys.length - 1]);
+// log.ok(`latest sell`, sells[0]);
+// log.ok(`earliest sell`, sells[sells.length - 1]);
 
 let shortTermBasis = 0;
 let shortTermProceeds = 0;
@@ -48,15 +54,20 @@ let longTermGain = 0;
 let buyIndex = 0;
 
 sells.forEach(sell => {
-  log.zap(
+  log.debug(
     `finding match for sell on ${sell.time} ${sell.funds} ${sell.shares}`
   );
   // if (idx === 5) process.exit();
   const sellYear = sell.time.getFullYear();
   for (let i = buyIndex, len = buys.length; i < len; i++) {
     let buy = buys[i];
+    if (buy.time > sell.time) {
+      log.debug(`buy at ${buy.time} is after selling point ${sell.time}`);
+      buyIndex = i + 1; // this buy is not going to work for any other sale (earlier)
+      continue;
+    }
     if (!buy.shares) {
-      log.ok(`buy at ${i} used up`, { buy });
+      log.debug(`buy at ${i} used up`, { buy });
       buyIndex = i + 1; // prevent the next sell from looking earlier than this
       continue; // already sold this set
     }
@@ -76,9 +87,13 @@ sells.forEach(sell => {
     let closedBuyValue = multiply(closedShares, buy.basis);
     let profit = subtract(closedSellValue, closedBuyValue);
     log.ok(
-      `sold ${closedShares} shares @ ${dollarize(sell.basis)} for ${dollarize(
+      `sold ${closedShares} shares @ ${dollarize(
+        sell.basis
+      )} on ${sell.time.toISOString()} for ${dollarize(
         closedSellValue
-      )}, bought @ ${dollarize(buy.basis)} for ${dollarize(
+      )}, bought @ ${dollarize(
+        buy.basis
+      )} on ${buy.time.toISOString()} for ${dollarize(
         closedBuyValue
       )} | net ${dollarize(profit)} in ${
         isLongTerm ? 'long' : 'short'
@@ -104,15 +119,6 @@ sells.forEach(sell => {
   }
 });
 
-// log.ok(`\nshort-term basis: ${dollarize(shortTermBasis)}`);
-// log.ok(`short-term proceeds: ${dollarize(shortTermProceeds)}`);
-// log.ok(`short-term gains: ${dollarize(shortTermGain)}`);
-// log.ok(`short-term fees: ${dollarize(shortTermFees)}`);
-// log.ok(`\nlong-term basis: ${dollarize(longTermBasis)}`);
-// log.ok(`long-term proceeds: ${dollarize(longTermProceeds)}`);
-// log.ok(`long-term gains: ${dollarize(longTermGain)}`);
-// log.ok(`long-term fees: ${dollarize(longTermFees)}`);
-
 log.now('\tShort Term\t\tLong Term');
 log.now('\tProceeds\tBasis\tGain\tProceeds\tBasis\tGain');
 log.now(
@@ -122,3 +128,6 @@ log.now(
     longTermBasis
   )}\t${dollarize(longTermGain)}`
 );
+
+// log.ok(`short-term fees: ${dollarize(shortTermFees)}`);
+// log.ok(`long-term fees: ${dollarize(longTermFees)}`);
