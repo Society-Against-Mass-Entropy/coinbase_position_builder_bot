@@ -33,7 +33,7 @@ module.exports = params => {
         if (res.statusCode < 200 || res.statusCode >= 300) {
           if (json && json.message === 'invalid signature') {
             log.error(
-              'invalid signature. Check your CPBB_APIKEY, CPBB_APISEC, CPBB_APIPASS settings!'
+              'invalid signature. Check your CPBB_APIKEY, CPBB_APISEC settings!'
             );
             process.exit();
           }

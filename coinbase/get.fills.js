@@ -21,7 +21,7 @@ module.exports = async ({ since }) => {
   let nextPage = 0;
   for (let i = 0; i < 1000; i++) {
     let { json, res } = await request({
-      requestPath: `/fills?product_id=${config.productID}${
+      requestPath: `/orders/historical/fills?product_id=${config.productID}${
         nextPage ? `&after=${nextPage}` : ''
       }`,
       method: 'GET',

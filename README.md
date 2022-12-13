@@ -33,7 +33,7 @@ This is all much easier on a Linux/Mac environment with a shell. I have not trie
 3. git clone this project (via terminal) -- or download zip file and unzip
 
 ```
-git clone https://github.com/jasonedison/coinbase_position_builder_bot.git
+git clone https://github.com/Society-Against-Mass-Entropy/coinbase_position_builder_bot.git
 cd coinbase_position_builder_bot
 ```
 
@@ -43,9 +43,9 @@ cd coinbase_position_builder_bot
 npm run setup
 ```
 
-5. Create a Coinbase Pro account (if you don't already have one)
+5. Create a Coinbase account (if you don't already have one)
 6. Connect a bank account and transfer in some money (you will need to make sure you keep your USD balance fed with enough runway to keep buying during a bear market)
-7. Create API Key, pass, and secret on Coinbase Pro: https://pro.coinbase.com/profile/api
+7. Create API Key, and secret on Coinbase: https://www.coinbase.com/settings/api
 
 - must have `view`+`trade` permissions
 - there is no need to allow `transfers` (this script does not move money to/from your bank account)
@@ -272,7 +272,6 @@ The sandbox API network isn't a great testing environment as it does not support
 Then run the app against the Sandbox API
 
 ```
-export CPBB_APIPASS="API Password"
 export CPBB_APIKEY="SANDBOX API KEY"
 export CPBB_APISEC="SANDBOX API SECRET"
 CPBB_TEST=true node .
@@ -282,7 +281,7 @@ CPBB_TEST=true node .
 
 The real coinbase API can also be run in a "dry run" mode, which will calculate and record transactions into a special dry run history log as if actions were taken, even though no buy/sell orders are made against the API.
 
-1. Edit the `./api.keys.js` file to have your APIPASS, APIKEY, and APISEC (or add them as environmental variables)
+1. Edit the `./api.keys.js` file to have your APIKEY, and APISEC (or add them as environmental variables)
 2. start pm2
 
 ```

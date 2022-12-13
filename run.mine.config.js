@@ -6,7 +6,6 @@ const watch = ['./index.js', './config.js', 'coinbase/*.js', 'lib/*.js'];
 // these operate at a low APY threshold and volume to feed BTC
 const baseConfigEnv = {
   NODE_ENV: 'production',
-  CPBB_APIPASS: apiKeys.CPBB_APIPASS,
   CPBB_APIKEY: apiKeys.CPBB_APIKEY,
   CPBB_APISEC: apiKeys.CPBB_APISEC,
   CPBB_FREQ: '0 6 * * *',
