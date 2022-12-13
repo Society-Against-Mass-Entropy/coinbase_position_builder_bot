@@ -13,7 +13,7 @@ module.exports = params => {
       res.on('end', function () {
         if (res.statusCode === 429) {
           log.error(
-            'Error 429: rate limited. Please file an issue here: https://github.com/jasonedison/coinbase_position_builder_bot/issues'
+            'Error 429: rate limited. Please file an issue here: https://github.com/Society-Against-Mass-Entropy/coinbase_position_builder_bot/issues'
           );
           return params.reject({ reason: res.statusCode, res });
         }

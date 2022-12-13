@@ -153,7 +153,7 @@ In this case, there was a remainder of `0.00071722` ETH which is too small for t
 - Resuming checking each limit order to be sure they haven't been manually deleted
 - Removing 404 limit orders from tracking (limit orders can be manually deleted or deleted by Coinbase system maintenance)
 - Correcting rate limiting issues by sleeping between rebuy checks and posts
-- New Tool: `tools/create.history.js` - goes through entire coinbase pro fill history for a trading pair and generates a history file from that data. NOTE: if you bought/sold crypto via Coinbase and moved in in and out of Coinbase Pro, you can end up with negative holdings at points in the history file because it only has access to the Coinbase Pro side.
+- New Tool: `tools/create.history.js` - goes through entire coinbase fill history for a trading pair and generates a history file from that data. NOTE: if you bought/sold crypto via Coinbase and moved in in and out of Coinbase, you can end up with negative holdings at points in the history file because it only has access to the Coinbase side.
 
 # 2.4.0
 
@@ -172,7 +172,7 @@ In this case, there was a remainder of `0.00071722` ETH which is too small for t
 
 # 2.2.0
 
-- now using response data to correct the funding used to include fees (and to use the actual executed_value) -- Coinbase Pro will not execute $100 when you market buy for $100, it might be 99.996. The fee also takes away from the total reclaimed now
+- now using response data to correct the funding used to include fees (and to use the actual executed_value) -- Coinbase will not execute $100 when you market buy for $100, it might be 99.996. The fee also takes away from the total reclaimed now
 - moving sample configs to `sample.` naming convention
 - moving tool scripts to `tools/` folder for organization
 - Adding `ID` column in history file (at the end)

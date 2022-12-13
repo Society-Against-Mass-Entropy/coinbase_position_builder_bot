@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const config = require('../config');
 // const log = require("../lib/log");
-// https://docs.pro.coinbase.com/?javascript#signing-a-message
+// https://docs.cloud.coinbase.com/advanced-trade-api/docs/rest-api-auth
 module.exports = opts => {
   // create the prehash string by concatenating required parts
   const what = opts.timestamp + opts.method + opts.requestPath + opts.body;

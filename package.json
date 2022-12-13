@@ -1,7 +1,7 @@
 {
   "name": "coinbase_position_builder_bot",
-  "version": "4.2.0",
-  "description": "Position Building Bot for Accumulating Bitcoin (or other assets) via Coinbase Pro, while taking advantage of pumps",
+  "version": "5.0.0",
+  "description": "Position Building Bot for Accumulating Bitcoin (or other assets) via Coinbase, while taking advantage of pumps",
   "jest": {
     "collectCoverageFrom": [
       "*.js"
@@ -49,14 +49,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jasonedison/coinbase_position_builder_bot.git"
+    "url": "git+https://github.com/Society-Against-Mass-Entropy/coinbase_position_builder_bot.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jasonedison/coinbase_position_builder_bot/issues"
+    "url": "https://github.com/Society-Against-Mass-Entropy/coinbase_position_builder_bot/issues"
   },
-  "homepage": "https://github.com/jasonedison/coinbase_position_builder_bot#readme",
+  "homepage": "https://github.com/Society-Against-Mass-Entropy/coinbase_position_builder_bot#readme",
   "dependencies": {
     "cron": "^1.8.2",
     "lodash.map": "^4.6.0",

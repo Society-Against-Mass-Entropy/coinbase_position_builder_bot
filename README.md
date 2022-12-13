@@ -1,6 +1,6 @@
 # Coinbase Position Builder Bot
 
-> Position Building Bot for Accumulating Bitcoin (or other currencies) via Coinbase Pro, while taking advantage of pumps.
+> Position Building Bot for Accumulating Bitcoin (or other currencies) via Coinbase, while taking advantage of pumps.
 
 We don't need to look at charts. The trendlines and price predictions don't matter. All that matters is your current cost-basis and investment. Are you in profit? Is the price a dip relative to your current holdings? These questions are easy to answer without having to be an oracle. You just have to keep track of your investments, calculate where you fall at the current moment, and automate an action. That's what this project does!
 
@@ -47,11 +47,12 @@ npm run setup
 6. Connect a bank account and transfer in some money (you will need to make sure you keep your USD balance fed with enough runway to keep buying during a bear market)
 7. Create API Key, and secret on Coinbase: https://www.coinbase.com/settings/api
 
+- note: api key will not work for 48 hours
 - must have `view`+`trade` permissions
 - there is no need to allow `transfers` (this script does not move money to/from your bank account)
-- recommended to limit the API keys to IP address whitelists
+- recommended to limit the API keys to IP address restriction list
 
-8. Add the key, pass, and secret to your environment via environmental variables, or add them to the `./api.key.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
+8. Add the key and secret to your environment via environmental variables, or add them to the `./api.key.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
 9. Test all the configs in dry run mode at 1 minute intervals:
 
 ```
@@ -101,7 +102,7 @@ If you have code that you want to modify or pull-request into this project throu
 ```
 git clone [YOUR_FORK_PATH];
 cd coinbase_position_builder_bot;
-git remote add upstream git@github.com:jasonedison/coinbase_position_builder_bot.git;
+git remote add upstream git@github.com:Society-Against-Mass-Entropy/coinbase_position_builder_bot.git;
 git fetch upstream;
 git checkout develop;
 git merge upstream/develop;
@@ -122,7 +123,7 @@ npm run format
 
 If you downloaded the project via a zip file, it's a bit more complicated.
 
-1. Download the latest release zip file: https://github.com/jasonedison/coinbase_position_builder_bot/releases
+1. Download the latest release zip file: https://github.com/Society-Against-Mass-Entropy/coinbase_position_builder_bot/releases
 2. unzip
 3. run `npm i` in the folder
 4. copy your `./data/history*` files from your old project directory
@@ -218,7 +219,7 @@ The `REBUY` option undoes what seems like an erroneous short term sell (given hi
 
 ### Volume and Frequency
 
-The Coinbase Pro API will only allow market taker orders of `$5` or more. So my original idea of buying $1 or $2 worth every hour (or even more frequently) went bust. Keep in mind when setting your VOL config that you should be able to feed the engine through a year-long bear market.
+The Coinbase API will only allow market taker orders of `$5` or more. So my original idea of buying $1 or $2 worth every hour (or even more frequently) went bust. Keep in mind when setting your VOL config that you should be able to feed the engine through a year-long bear market.
 
 - $10/hour = $240/day = $1680/week = $87,600/year max buy.
 - $10/(2 hours) = $120/day = $840/week = $43,800/year
@@ -353,9 +354,9 @@ To correct this, I've added a manual log entry tool. In order to use this, you w
 node addLog.js BTC USD 50 20 2020-11-26T16:35:00.706Z 16915.52 0.00295586
 ```
 
-## Build Complete History from Coinbase Pro Fills
+## Build Complete History from Coinbase Fills
 
-If you want to add all manual activity to the history file, you can generate a new history file using all of the Coinbase Pro data. This only looks at Coinbase Pro so if you moved funds in and out of that service (even to Coinbase), there can be negative balances appearing in the Holdings section of the history. If you bought coins elsewhere and moved them into Coinbase Pro, you will have possible sells that have no buy history associated with them.
+If you want to add all manual activity to the history file, you can generate a new history file using all of the Coinbase data. This only looks at Coinbase so if you moved funds in and out of that service (even to Coinbase), there can be negative balances appearing in the Holdings section of the history. If you bought coins elsewhere and moved them into Coinbase, you will have possible sells that have no buy history associated with them.
 
 ```
 cd tools;
