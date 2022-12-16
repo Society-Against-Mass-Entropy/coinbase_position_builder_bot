@@ -25,7 +25,6 @@ const log = require('./lib/log');
 const deleteOutputFiles = require('./lib/delete.output.files');
 deleteOutputFiles();
 require('./nock/cancel.orders');
-require('./nock/delete.order');
 require('./nock/get.accounts');
 require('./nock/get.order');
 require('./nock/get.order.netfail');

@@ -9,7 +9,7 @@ const { divide, multiply, subtract } = require('../../lib/math');
 
 module.exports = nock(config.api)
   .persist()
-  .post('/orders')
+  .post('/api/v3/brokerage/orders')
   .reply(200, (uri, order) => {
     // console.log(`post.orders order`, JSON.stringify(order));
     const id = uuid.v4();

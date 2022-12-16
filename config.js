@@ -22,7 +22,7 @@ const config = {
   ...apiKeys,
   api: testMode
     ? 'https://api-public.sandbox.pro.coinbase.com'
-    : 'https://api.coinbase.com/api/v3/brokerage',
+    : 'https://api.coinbase.com',
   dry: process.env.CPBB_DRY_RUN === 'true',
   // default run once per 12 hours at the 5th minute (crontab syntax)
   freq: process.env.CPBB_FREQ || '5 */12 * * *',

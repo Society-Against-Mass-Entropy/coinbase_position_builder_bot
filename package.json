@@ -59,6 +59,7 @@
   "homepage": "https://github.com/Society-Against-Mass-Entropy/coinbase_position_builder_bot#readme",
   "dependencies": {
     "cron": "^1.8.2",
+    "crypto-js": "^4.1.1",
     "lodash.map": "^4.6.0",
     "mathjs": "^9.2.0",
     "moment": "^2.29.1"

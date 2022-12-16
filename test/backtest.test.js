@@ -24,7 +24,6 @@ const testHistory = priceHistory.filter(
 
 process.env.FIRST_LOG_DATE = new Date(testHistory[0][0] * 1000).toISOString();
 require('./nock/cancel.orders');
-require('./nock/delete.order');
 require('./nock/get.accounts');
 require('./nock/get.order');
 require('./nock/get.order.netfail');

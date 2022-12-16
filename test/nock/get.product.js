@@ -2,7 +2,7 @@ const config = require('../../config');
 const nock = require('nock');
 
 module.exports = nock(config.api)
-  .get(`/products/${config.productID}`)
+  .get(`/api/v3/brokerage/products/${config.productID}`)
   .reply(200, {
     id: config.productID,
     display_name: `${config.ticker}/${config.currency}`,

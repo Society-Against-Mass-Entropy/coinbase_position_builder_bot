@@ -7,7 +7,7 @@ module.exports = async ({ status }) => {
   for (let i = 0; i < 1000; i++) {
     let { json, res } = await request({
       requestPath:
-        `/orders?product_id=${config.productID}` +
+        `/api/v3/brokerage/orders?product_id=${config.productID}` +
         (status ? `&status=${status}` : '') +
         (nextPage ? `&after=${nextPage}` : ''),
       method: 'GET',

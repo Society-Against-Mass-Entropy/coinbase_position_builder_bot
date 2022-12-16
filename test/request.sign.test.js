@@ -9,5 +9,7 @@ test('sign a request', () => {
     body: '',
     method: 'GET',
   });
-  expect(signature).toEqual('L337iiKjz8IEcFlHG3lu/CtcKXlXm2bsV3d5c0ZGFeg=');
+  expect(signature).toEqual(
+    'cc4eb654e3c10670015028089ad36c93d8afb3135a18f36948c0add19c5b5362'
+  );
 });

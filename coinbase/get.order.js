@@ -20,7 +20,7 @@ module.exports = async order => {
       log.debug(`retry #${retryCount} on order #${order.id}`);
     }
     const opts = {
-      requestPath: `/orders/${order.id}`,
+      requestPath: `/api/v3/brokerage/orders/${order.id}`,
       method: 'GET',
     };
     log.debug(opts);

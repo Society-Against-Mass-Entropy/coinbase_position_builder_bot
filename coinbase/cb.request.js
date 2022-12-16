@@ -9,7 +9,7 @@ const { hostname } = new URL(config.api);
  * wrapper for http request specific to api header requirements
  */
 module.exports = async opts => {
-  const timestamp = Date.now() / 1000;
+  const timestamp = Math.floor(Date.now() / 1000).toString();
 
   const body = opts.body ? JSON.stringify(opts.body) : '';
 
@@ -19,7 +19,6 @@ module.exports = async opts => {
     path: opts.requestPath,
     method: opts.method,
     headers: {
-      'Content-Length': body.length,
       'CB-ACCESS-KEY': config.CPBB_APIKEY,
       'CB-ACCESS-SIGN': requestSign({
         timestamp,
@@ -28,13 +27,14 @@ module.exports = async opts => {
         method: opts.method,
       }),
       'CB-ACCESS-TIMESTAMP': timestamp,
-      'User-Agent': 'CBPP',
     },
   };
   if (body) {
     requestConfig.body = body;
+    requestConfig.headers['Content-Length'] = body.length;
     requestConfig.headers['Content-Type'] = 'application/json';
   }
+
   return request(requestConfig).catch(({ reason, json, res }) => {
     if (res && res.statusCode !== 404)
       log.error(opts.method, opts.requestPath, reason, json || '');

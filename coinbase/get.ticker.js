@@ -3,7 +3,7 @@ const config = require('../config');
 
 module.exports = async () => {
   const result = await request({
-    requestPath: `/products/${config.productID}/ticker`,
+    requestPath: `/api/v3/brokerage/products/${config.productID}/ticker`,
     method: 'GET',
   }).catch(e => {
     console.error(

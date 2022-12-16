@@ -3,5 +3,5 @@ const nock = require('nock');
 
 module.exports = nock(config.api)
   .persist()
-  .get(/\/orders\/fail/)
+  .get('/api/v3/brokerage/orders/fail')
   .replyWithError('ENOTFOUND');

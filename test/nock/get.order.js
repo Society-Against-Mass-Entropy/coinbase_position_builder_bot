@@ -4,9 +4,9 @@ const testMemory = require('../lib/test.memory');
 
 module.exports = nock(config.api)
   .persist()
-  .get(/\/orders\/(?!404)(?!fail).+/)
+  .get(/\/api\/v3\/brokerage\/orders\/(?!404)(?!fail).+/)
   .reply(200, uri => {
-    const id = uri.replace('/orders/', '');
+    const id = uri.replace('/api/v3/brokerage/orders/', '');
     // console.log(JSON.stringify(testMemory.orders));
     const order = testMemory.orders[id];
     if (!order) {

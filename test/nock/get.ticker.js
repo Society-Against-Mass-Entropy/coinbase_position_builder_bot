@@ -5,7 +5,7 @@ const { add, subtract } = require('../../lib/math');
 
 module.exports = nock(config.api)
   .persist()
-  .get('/products/TEST-USD/ticker')
+  .get('/api/v3/brokerage/products/TEST-USD/ticker')
   .reply(200, () => {
     const price = testMemory.price;
     // console.log(price);

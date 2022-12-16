@@ -36,7 +36,7 @@ module.exports = async (opts, retries = 0) => {
       log.now(`retry #${retryCount}`, opts);
     }
     const { reason, json } = await request({
-      requestPath: '/orders',
+      requestPath: '/api/v3/brokerage/orders',
       method: 'POST',
       body: opts,
     });
