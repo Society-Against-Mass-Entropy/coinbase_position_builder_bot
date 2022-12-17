@@ -1,4 +1,4 @@
-// https://docs.pro.coinbase.com/?javascript#place-a-new-order
+// https://docs.coinbase.com/?javascript#place-a-new-order
 
 const { divide, multiply } = require('../lib/math');
 const config = require('../config');
@@ -40,7 +40,11 @@ module.exports = async (opts, retries = 0) => {
       method: 'POST',
       body: opts,
     });
-    if (reason === 400 && json && json.message === 'Insufficient funds') {
+    if (
+      reason === 400 &&
+      json &&
+      json.failure_reason === 'INSUFFICIENT_FUNDS'
+    ) {
       log.error('Check account balance! Out of funds!');
       return;
     }

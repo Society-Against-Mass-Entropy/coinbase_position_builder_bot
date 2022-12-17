@@ -16,7 +16,7 @@ module.exports = async opts => {
   const requestConfig = {
     port: 443,
     hostname,
-    path: opts.requestPath,
+    path: `${opts.requestPath}${opts.query || ''}`,
     method: opts.method,
     headers: {
       'CB-ACCESS-KEY': config.CPBB_APIKEY,

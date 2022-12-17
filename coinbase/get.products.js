@@ -15,10 +15,10 @@ module.exports = async () => {
       requestPath: `/api/v3/brokerage/products`,
       method: 'GET',
     });
-    if (!result || !result.json) {
+    if (!result?.json?.products) {
       return getProducts();
     }
-    return result.json;
+    return result.json.products;
   };
   return getProducts();
 };

@@ -49,6 +49,6 @@ module.exports = nock(config.api)
     // cache this in memory so the get.order API can find the details of the order
     if (isLimit) testMemory.orders[id] = response;
     // console.log(`post.orders memory`, JSON.stringify(testMemory.orders));
-    // console.log(`post.orders response`,{ response });
+    // console.log(`post.orders response`, { response });
     return response;
   });

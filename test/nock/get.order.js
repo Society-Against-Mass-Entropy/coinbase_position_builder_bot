@@ -7,10 +7,10 @@ module.exports = nock(config.api)
   .get(/\/api\/v3\/brokerage\/orders\/(?!404)(?!fail).+/)
   .reply(200, uri => {
     const id = uri.replace('/api/v3/brokerage/orders/', '');
-    // console.log(JSON.stringify(testMemory.orders));
+    // console.log(Object.keys(testMemory.orders).map(id => id.replace('-', '')));
     const order = testMemory.orders[id];
     if (!order) {
-      console.error('order not found', id);
+      console.error('order not found in testMemory', id);
       return;
     }
     // console.log(`order id ${id}`, testMemory.price);

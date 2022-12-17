@@ -267,7 +267,7 @@ There are two ways to test your own configs:
 
 The sandbox API network isn't a great testing environment as it does not support many trading pairs and has fake liquidity and transactions. This path exists for legacy testing. This option also requires a different API key, and is probably more headache than it's worth for regular testing.
 
-1. Create a Sandbox API account and API Keyset here: https://public.sandbox.pro.coinbase.com/profile/api
+1. Create a Sandbox API account and API Keyset here: https://public.sandbox.coinbase.com/profile/api
 2. You will also need to fake transfer USD from Coinbase into the Sandbox
 
 Then run the app against the Sandbox API

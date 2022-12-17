@@ -33,6 +33,7 @@ module.exports = async ({ since }) => {
       process.exit();
     });
     nextPage = res.headers['cb-after'];
+    json = json.fills;
     if (!json || !json.length) break;
     fills = [...fills, ...json];
     log.ok(json[json.length - 1].created_at, `${json.length} records`);

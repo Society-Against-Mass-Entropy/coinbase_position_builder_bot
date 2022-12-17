@@ -12,5 +12,5 @@ module.exports = async () => {
     );
     process.exit();
   });
-  return result ? result.json : result;
+  return result?.json?.trades;
 };

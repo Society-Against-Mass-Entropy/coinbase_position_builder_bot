@@ -20,7 +20,7 @@ module.exports = async ({ status }) => {
     });
     nextPage = res.headers['cb-after'];
     if (!json || !json.length) break;
-    orders = [...orders, ...json];
+    orders = [...orders, ...json.orders];
     // done requesting once we have a fill at or before our since
     await sleep(1000); // avoid rate limit issues
   }

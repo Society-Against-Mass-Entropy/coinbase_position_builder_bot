@@ -11,5 +11,5 @@ module.exports = async ids => {
     body: ids, // array of strings
   });
 
-  return result ? result.json : false;
+  return result ? result.json.results : false;
 };

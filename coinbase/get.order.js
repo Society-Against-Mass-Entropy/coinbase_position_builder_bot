@@ -25,7 +25,7 @@ module.exports = async order => {
     };
     log.debug(opts);
     const result = await request(opts);
-    const json = result ? result.json : result;
+    const json = result?.json?.order;
     log.debug({ json });
     // NOTE: we allow limit orders to be unsettled and even not found (sometimes limits get purged due to maintenance or other conditions)
     if (

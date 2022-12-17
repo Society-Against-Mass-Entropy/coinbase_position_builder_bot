@@ -14,8 +14,8 @@ const log = require('../lib/log');
 const memory = require('../lib/memory');
 const { multiply } = require('../lib/math');
 
-log.zap('updating orders db file with orders from the remote books');
 (async () => {
+  log.zap('updating orders db file with orders from the remote books');
   const json = await getOrders({ status: 'open' });
   if (!json) {
     log.error('failed to fetch orders.');

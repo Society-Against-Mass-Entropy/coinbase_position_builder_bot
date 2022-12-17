@@ -79,101 +79,101 @@ module.exports = {
         },
       },
     },
-    {
-      name: 'dash',
-      script,
-      watch: watch,
-      env: {
-        ...baseConfigEnv,
-        ...{
-          // CPBB_FREQ: '11 7 * * *',
-          CPBB_FREQ: '32 5 * * *',
-          CPBB_APY: 5,
-          CPBB_TICKER: 'DASH',
-        },
-      },
-    },
-    {
-      name: 'xtz',
-      script,
-      watch: watch,
-      env: {
-        ...baseConfigEnv,
-        ...{
-          // CPBB_FREQ: '13 7 * * *',
-          CPBB_FREQ: '42 5 * * *',
-          CPBB_TICKER: 'XTZ',
-        },
-      },
-    },
-    {
-      name: 'doge',
-      script,
-      watch: watch,
-      env: {
-        ...baseConfigEnv,
-        ...{
-          // CPBB_FREQ: '15 7 * * *',
-          CPBB_FREQ: '52 5 * * *',
-          CPBB_TICKER: 'DOGE',
-        },
-      },
-    },
-    {
-      name: 'ada',
-      script,
-      watch: watch,
-      env: {
-        ...baseConfigEnv,
-        ...{
-          // CPBB_FREQ: '17 7 * * *',
-          CPBB_FREQ: '3 6 * * *',
-          CPBB_APY: 5,
-          CPBB_TICKER: 'ADA',
-        },
-      },
-    },
-    {
-      name: 'algo',
-      script,
-      watch: watch,
-      env: {
-        ...baseConfigEnv,
-        ...{
-          // CPBB_FREQ: '19 7 * * *',
-          CPBB_FREQ: '27 9 * * *',
-          CPBB_APY: 5,
-          CPBB_TICKER: 'ALGO',
-        },
-      },
-    },
-    {
-      name: 'matic',
-      script,
-      watch: watch,
-      env: {
-        ...baseConfigEnv,
-        ...{
-          // CPBB_FREQ: '21 7 * * *',
-          CPBB_FREQ: '23 6 * * *',
-          CPBB_APY: 5,
-          CPBB_TICKER: 'MATIC',
-        },
-      },
-      // },
-      // {
-      //   name: 'dot',
-      //   script,
-      //   watch: watch,
-      //   env: {
-      //     ...baseConfigEnv,
-      //     ...{
-      //       // CPBB_FREQ: '33 9 * * *',
-      //       CPBB_FREQ: '33 6 * * *',
-      //       CPBB_APY: 5,
-      //       CPBB_TICKER: 'DOT',
-      //     },
-      //   },
-    },
+    // {
+    //   name: 'dash',
+    //   script,
+    //   watch: watch,
+    //   env: {
+    //     ...baseConfigEnv,
+    //     ...{
+    //       // CPBB_FREQ: '11 7 * * *',
+    //       CPBB_FREQ: '32 5 * * *',
+    //       CPBB_APY: 5,
+    //       CPBB_TICKER: 'DASH',
+    //     },
+    //   },
+    // },
+    // {
+    //   name: 'xtz',
+    //   script,
+    //   watch: watch,
+    //   env: {
+    //     ...baseConfigEnv,
+    //     ...{
+    //       // CPBB_FREQ: '13 7 * * *',
+    //       CPBB_FREQ: '42 5 * * *',
+    //       CPBB_TICKER: 'XTZ',
+    //     },
+    //   },
+    // },
+    // {
+    //   name: 'doge',
+    //   script,
+    //   watch: watch,
+    //   env: {
+    //     ...baseConfigEnv,
+    //     ...{
+    //       // CPBB_FREQ: '15 7 * * *',
+    //       CPBB_FREQ: '52 5 * * *',
+    //       CPBB_TICKER: 'DOGE',
+    //     },
+    //   },
+    // },
+    // {
+    //   name: 'ada',
+    //   script,
+    //   watch: watch,
+    //   env: {
+    //     ...baseConfigEnv,
+    //     ...{
+    //       // CPBB_FREQ: '17 7 * * *',
+    //       CPBB_FREQ: '3 6 * * *',
+    //       CPBB_APY: 5,
+    //       CPBB_TICKER: 'ADA',
+    //     },
+    //   },
+    // },
+    // {
+    //   name: 'algo',
+    //   script,
+    //   watch: watch,
+    //   env: {
+    //     ...baseConfigEnv,
+    //     ...{
+    //       // CPBB_FREQ: '19 7 * * *',
+    //       CPBB_FREQ: '27 9 * * *',
+    //       CPBB_APY: 5,
+    //       CPBB_TICKER: 'ALGO',
+    //     },
+    //   },
+    // },
+    // {
+    //   name: 'matic',
+    //   script,
+    //   watch: watch,
+    //   env: {
+    //     ...baseConfigEnv,
+    //     ...{
+    //       // CPBB_FREQ: '21 7 * * *',
+    //       CPBB_FREQ: '23 6 * * *',
+    //       CPBB_APY: 5,
+    //       CPBB_TICKER: 'MATIC',
+    //     },
+    //   },
+    // },
+    // {
+    //   name: 'dot',
+    //   script,
+    //   watch: watch,
+    //   env: {
+    //     ...baseConfigEnv,
+    //     ...{
+    //       // CPBB_FREQ: '33 9 * * *',
+    //       CPBB_FREQ: '33 6 * * *',
+    //       CPBB_APY: 5,
+    //       CPBB_TICKER: 'DOT',
+    //     },
+    //   },
+    // },
   ],
 };

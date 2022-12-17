@@ -77,10 +77,16 @@ const startEngine = async () => {
   }
   // find the trading account we care about
   memory.account = accounts.find(a => a.currency === config.currency);
+
   log.now(
-    `🏦 $${config.currency} account loaded with ${memory.account.available}/${
-      memory.account.balance
-    } (${Math.floor(divide(memory.account.available, config.vol))} buy actions)`
+    `🏦 $${config.currency} account loaded with ${
+      memory.account.available_balance.value
+    }/${add(
+      memory.account.available_balance.value,
+      memory.account.hold.value
+    )} (${Math.floor(
+      divide(memory.account.available_balance.value, config.vol)
+    )} buy actions)`
   );
 
   // immediate kick off (testing mode)

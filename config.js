@@ -21,7 +21,7 @@ const testMode = process.env.CPBB_TEST;
 const config = {
   ...apiKeys,
   api: testMode
-    ? 'https://api-public.sandbox.pro.coinbase.com'
+    ? 'https://api-public.sandbox.coinbase.com'
     : 'https://api.coinbase.com',
   dry: process.env.CPBB_DRY_RUN === 'true',
   // default run once per 12 hours at the 5th minute (crontab syntax)

@@ -3,7 +3,8 @@ const request = require('./cb.request');
 module.exports = async () => {
   const result = await request({
     requestPath: '/api/v3/brokerage/accounts',
+    query: '?limit=250',
     method: 'GET',
   });
-  return result ? result.json : result;
+  return result?.json?.accounts;
 };
