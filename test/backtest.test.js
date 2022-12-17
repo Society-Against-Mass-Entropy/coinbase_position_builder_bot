@@ -29,7 +29,6 @@ require('./nock/get.order');
 require('./nock/get.order.netfail');
 require('./nock/get.order.404');
 require('./nock/get.product');
-require('./nock/get.ticker');
 require('./nock/post.orders');
 // const config = require('../config');
 const action = require('../lib/action');

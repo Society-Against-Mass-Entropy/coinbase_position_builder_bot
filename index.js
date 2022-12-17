@@ -5,28 +5,31 @@ const action = require('./lib/action');
 const getAccounts = require('./coinbase/accounts');
 const getProduct = require('./coinbase/get.product');
 // const getAPY = require('./lib/getAPY');
-const getTicker = require('./coinbase/get.ticker');
 const log = require('./lib/log');
 const logOutput = require('./lib/log.output');
 const memory = require('./lib/memory');
-const { add, divide, multiply, subtract } = require('./lib/math');
-
+const { add, divide, multiply, subtract, random } = require('./lib/math');
+const sleep = require('./lib/sleep');
 const job = new CronJob(config.freq, action);
 
 const startEngine = async () => {
-  const product = await getProduct(config.productID);
+  // randomly delay startup 1-10 seconds to prevent rate limiting with multiple processes
+  await sleep(random(0, 10000));
+  const product = await getProduct();
   product.precision = product.base_increment.includes('0.')
     ? product.base_increment.replace('0.', '').replace(/1[0]+/, '1').length
     : 0;
   memory.product = product;
-  // log.now({product})
+  // log.now({ product });
   log.now(
     `${product.status === 'online' ? '🆗' : '🚨'} ${config.productID} ${
       product.status
     }, min size ${product.base_min_size}, precision: ${
       product.base_increment
-    } (${product.precision}), min funds ${product.min_market_funds} ${
-      product.status_message
+    } (${product.precision}), min funds ${
+      // note: it appears min_market_funds is no longer in the product payload
+      // using quote_min_size, though this might be erroneous (just for logging though)
+      product.min_market_funds || product.quote_min_size
     }`
   );
   log.bot(
@@ -100,11 +103,9 @@ const startEngine = async () => {
 
   log.ok(`last transaction for ${config.productID}:`);
   logOutput(memory.lastLog);
-  const ticker = await getTicker();
-
   const nextDate = job.nextDates();
   const currentHolding = add(memory.lastLog.Holding, memory.lastLog.Shares);
-  const holdingValue = multiply(ticker.price, currentHolding);
+  const holdingValue = multiply(product.price, currentHolding);
   const liquidValue = add(holdingValue, memory.lastLog.Realized);
   const totalCost = add(
     memory.lastLog.TotalInput,
@@ -114,7 +115,7 @@ const startEngine = async () => {
     `🕟 next run ${nextDate.fromNow()}, on ${nextDate
       .local()
       .format()}, holding ${currentHolding} @${
-      ticker.price
+      product.price
     } (market) = $${holdingValue}, paid ${totalCost.toFixed(2)},` +
       // ` target APY calculation ${multiply(
       //   getAPY({

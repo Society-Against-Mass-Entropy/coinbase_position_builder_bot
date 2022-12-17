@@ -2,8 +2,9 @@ const config = require('../config');
 const request = require('./cb.request');
 const sleep = require('../lib/sleep');
 const log = require('../lib/log');
+const { productID } = require('../config');
 
-module.exports = async productID => {
+module.exports = async () => {
   let retryCount = 0;
   const getProduct = async () => {
     // prevent rate limiting at startup and retries
