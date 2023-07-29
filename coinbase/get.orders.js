@@ -7,7 +7,7 @@ module.exports = async ({ status }) => {
   for (let i = 0; i < 1000; i++) {
     let { json, res } = await request({
       requestPath:
-        `/orders?product_id=${config.productID}` +
+        `/api/v3/brokerage/orders?product_id=${config.productID}` +
         (status ? `&status=${status}` : '') +
         (nextPage ? `&after=${nextPage}` : ''),
       method: 'GET',
@@ -20,7 +20,7 @@ module.exports = async ({ status }) => {
     });
     nextPage = res.headers['cb-after'];
     if (!json || !json.length) break;
-    orders = [...orders, ...json];
+    orders = [...orders, ...json.orders];
     // done requesting once we have a fill at or before our since
     await sleep(1000); // avoid rate limit issues
   }

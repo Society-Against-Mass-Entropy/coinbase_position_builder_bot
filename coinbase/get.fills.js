@@ -21,9 +21,9 @@ module.exports = async ({ since }) => {
   let nextPage = 0;
   for (let i = 0; i < 1000; i++) {
     let { json, res } = await request({
-      requestPath: `/fills?product_id=${config.productID}${
-        nextPage ? `&after=${nextPage}` : ''
-      }`,
+      requestPath: `/api/v3/brokerage/orders/historical/fills?product_id=${
+        config.productID
+      }${nextPage ? `&after=${nextPage}` : ''}`,
       method: 'GET',
     }).catch(e => {
       console.error(
@@ -33,6 +33,7 @@ module.exports = async ({ since }) => {
       process.exit();
     });
     nextPage = res.headers['cb-after'];
+    json = json.fills;
     if (!json || !json.length) break;
     fills = [...fills, ...json];
     log.ok(json[json.length - 1].created_at, `${json.length} records`);

@@ -78,7 +78,7 @@ const backup = config.history_file.replace(
     // add the ID column (new in 2.2.0)
     h.ID = matches[0].order_id;
 
-    const sold = matches[0].side === 'sell';
+    const sold = matches[0].side === 'SELL';
 
     let fee = 0;
     let shares = 0;

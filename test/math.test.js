@@ -1,7 +1,7 @@
 /**
  * ensure math interface is without JS float precision errors
  */
-const { add, subtract, divide, multiply, pow } = require('../lib/math');
+const { add, subtract, divide, multiply, pow, random } = require('../lib/math');
 
 test('add number and string: no rounding error', () => {
   // rounding error would produce 0.24495261000000002
@@ -26,4 +26,7 @@ test('pow number and string: no rounding error', () => {
 test('precision subtraction to 4 digits: no rounding error', () => {
   // if rounding error, would see 0.12460097 - 0.12035164 => 0.0042493300000000095
   expect(subtract(0.12460097, '0.12035164', 4)).toBe(0.0042);
+});
+test('random gives random number between range', () => {
+  expect(random(0, 10000)).toBeLessThan(11000);
 });

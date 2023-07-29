@@ -1,0 +1,9 @@
+⚡ creating log file from template ./data/history.TEST-USD.sandbox.tsv
+⚡ creating maker file from template ./data/maker.orders.TEST-USD.sandbox.json
+🆗 TEST-USD online, min size 0.00100000, min funds 5
+🤖 Position Builder Bot [VERSION], https://api-public.sandbox.coinbase.com in LIVE mode, 100 $USD ➡️  $TEST @ cron(1 1 1 1 1), 25% APY
+💵 REBUY up to $50 of TEST: .0001@-2%, .0002@-4%, .0003@-6%, .0004@-8%, .0005@-10%
+🏦 $USD account loaded with 9900.2266348066930000 (99 buy actions)
+✅ last transaction for TEST-USD:
+🤑 [DATE] 0.00000000 TEST ➡️  0 USD @ 0 ✊ 0.00000000 @ 0.00 💧 gain 0.00 💧 basis 0.00 💵 0.00 💹 0 💸 <Infinity
+🕟 next run in [RUNTIME], on [DATE] holding 0 @50000.00 (market) = $0, paid 0.00, liquid gain 0%

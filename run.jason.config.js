@@ -6,7 +6,6 @@ const watch = ['./index.js', './config.js', 'coinbase/*.js', 'lib/*.js'];
 // these operate at a low APY threshold and volume to feed BTC
 const baseConfigEnv = {
   NODE_ENV: 'production',
-  CPBB_APIPASS: apiKeys.CPBB_APIPASS,
   CPBB_APIKEY: apiKeys.CPBB_APIKEY,
   CPBB_APISEC: apiKeys.CPBB_APISEC,
   CPBB_FREQ: '0 6 * * *',
@@ -161,20 +160,20 @@ module.exports = {
           CPBB_TICKER: 'MATIC',
         },
       },
-      // },
-      // {
-      //   name: 'dot',
-      //   script,
-      //   watch: watch,
-      //   env: {
-      //     ...baseConfigEnv,
-      //     ...{
-      //       // CPBB_FREQ: '33 9 * * *',
-      //       CPBB_FREQ: '33 6 * * *',
-      //       CPBB_APY: 5,
-      //       CPBB_TICKER: 'DOT',
-      //     },
-      //   },
+    },
+    {
+      name: 'dot',
+      script,
+      watch: watch,
+      env: {
+        ...baseConfigEnv,
+        ...{
+          // CPBB_FREQ: '33 9 * * *',
+          CPBB_FREQ: '33 6 * * *',
+          CPBB_APY: 5,
+          CPBB_TICKER: 'DOT',
+        },
+      },
     },
   ],
 };

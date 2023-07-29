@@ -2,7 +2,7 @@ const http = require('https');
 const log = require('../lib/log');
 module.exports = params => {
   const makeRequest = function (resolve, reject) {
-    log.debug({ params });
+    // log.debug({ params });
     params.resolve = resolve;
     params.reject = reject;
     const req = http.request(params, function (res) {
@@ -13,7 +13,7 @@ module.exports = params => {
       res.on('end', function () {
         if (res.statusCode === 429) {
           log.error(
-            'Error 429: rate limited. Please file an issue here: https://github.com/jasonedison/coinbase_position_builder_bot/issues'
+            'Error 429: rate limited. Please file an issue here: https://github.com/Society-Against-Mass-Entropy/coinbase_position_builder_bot/issues'
           );
           return params.reject({ reason: res.statusCode, res });
         }
@@ -33,7 +33,7 @@ module.exports = params => {
         if (res.statusCode < 200 || res.statusCode >= 300) {
           if (json && json.message === 'invalid signature') {
             log.error(
-              'invalid signature. Check your CPBB_APIKEY, CPBB_APISEC, CPBB_APIPASS settings!'
+              'invalid signature. Check your CPBB_APIKEY, CPBB_APISEC settings!'
             );
             process.exit();
           }

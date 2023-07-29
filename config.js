@@ -4,10 +4,8 @@ const apiKeys = require('./api.keys.js');
 if (
   !apiKeys.CPBB_APIKEY ||
   !apiKeys.CPBB_APISEC ||
-  !apiKeys.CPBB_APIPASS ||
   apiKeys.CPBB_APIKEY.includes('load your keys') ||
-  apiKeys.CPBB_APISEC.includes('load your keys') ||
-  apiKeys.CPBB_APIPASS.includes('load your keys')
+  apiKeys.CPBB_APISEC.includes('load your keys')
 ) {
   log.error(
     'API Keys are not correctly configured.\nPlease check the setup instructions and load your API keys into the environment before starting.\nHalting the app now.'
@@ -23,8 +21,8 @@ const testMode = process.env.CPBB_TEST;
 const config = {
   ...apiKeys,
   api: testMode
-    ? 'https://api-public.sandbox.pro.coinbase.com'
-    : 'https://api.pro.coinbase.com',
+    ? 'https://api-public.sandbox.coinbase.com'
+    : 'https://api.coinbase.com',
   dry: process.env.CPBB_DRY_RUN === 'true',
   // default run once per 12 hours at the 5th minute (crontab syntax)
   freq: process.env.CPBB_FREQ || '5 */12 * * *',

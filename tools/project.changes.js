@@ -92,16 +92,16 @@ log.debug(memory.lastLog);
         dateOverride,
       });
       action.dateNow = dateOverride;
-      const fill_fees = multiply(config.vol, 0.005);
+      const total_fees = multiply(config.vol, 0.005);
       // log.debug(action);
       logSave({
         action,
         order: {
           filled_size: divide(config.vol, price),
-          fill_fees,
-          executed_value: subtract(config.vol, fill_fees),
-          side: action.funds < 0 ? 'sell' : 'buy',
-          id: 'mock',
+          total_fees,
+          filled_value: subtract(config.vol, total_fees),
+          side: action.funds < 0 ? 'SELL' : 'BUY',
+          order_id: 'mock',
         },
       });
     }

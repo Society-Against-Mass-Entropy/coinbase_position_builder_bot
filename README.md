@@ -1,6 +1,6 @@
 # Coinbase Position Builder Bot
 
-> Position Building Bot for Accumulating Bitcoin (or other currencies) via Coinbase Pro, while taking advantage of pumps.
+> Position Building Bot for Accumulating Bitcoin (or other currencies) via Coinbase, while taking advantage of pumps.
 
 We don't need to look at charts. The trendlines and price predictions don't matter. All that matters is your current cost-basis and investment. Are you in profit? Is the price a dip relative to your current holdings? These questions are easy to answer without having to be an oracle. You just have to keep track of your investments, calculate where you fall at the current moment, and automate an action. That's what this project does!
 
@@ -33,7 +33,7 @@ This is all much easier on a Linux/Mac environment with a shell. I have not trie
 3. git clone this project (via terminal) -- or download zip file and unzip
 
 ```
-git clone https://github.com/jasonedison/coinbase_position_builder_bot.git
+git clone https://github.com/Society-Against-Mass-Entropy/coinbase_position_builder_bot.git
 cd coinbase_position_builder_bot
 ```
 
@@ -43,15 +43,16 @@ cd coinbase_position_builder_bot
 npm run setup
 ```
 
-5. Create a Coinbase Pro account (if you don't already have one)
+5. Create a Coinbase account (if you don't already have one)
 6. Connect a bank account and transfer in some money (you will need to make sure you keep your USD balance fed with enough runway to keep buying during a bear market)
-7. Create API Key, pass, and secret on Coinbase Pro: https://pro.coinbase.com/profile/api
+7. Create API Key, and secret on Coinbase: https://www.coinbase.com/settings/api
 
+- note: api key will not work for 48 hours
 - must have `view`+`trade` permissions
 - there is no need to allow `transfers` (this script does not move money to/from your bank account)
-- recommended to limit the API keys to IP address whitelists
+- recommended to limit the API keys to IP address restriction list
 
-8. Add the key, pass, and secret to your environment via environmental variables, or add them to the `./api.key.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
+8. Add the key and secret to your environment via environmental variables, or add them to the `./api.key.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
 9. Test all the configs in dry run mode at 1 minute intervals:
 
 ```
@@ -101,7 +102,7 @@ If you have code that you want to modify or pull-request into this project throu
 ```
 git clone [YOUR_FORK_PATH];
 cd coinbase_position_builder_bot;
-git remote add upstream git@github.com:jasonedison/coinbase_position_builder_bot.git;
+git remote add upstream git@github.com:Society-Against-Mass-Entropy/coinbase_position_builder_bot.git;
 git fetch upstream;
 git checkout develop;
 git merge upstream/develop;
@@ -122,7 +123,7 @@ npm run format
 
 If you downloaded the project via a zip file, it's a bit more complicated.
 
-1. Download the latest release zip file: https://github.com/jasonedison/coinbase_position_builder_bot/releases
+1. Download the latest release zip file: https://github.com/Society-Against-Mass-Entropy/coinbase_position_builder_bot/releases
 2. unzip
 3. run `npm i` in the folder
 4. copy your `./data/history*` files from your old project directory
@@ -162,7 +163,7 @@ If you start the app with a config of CPBB_REBUY_MAX greater than 0, it will inv
 
 1. Check status of existing limit orders, add any filled ones to the history, and cancel any unfilled ones
 2. Perform normal action (using latest history, which may have been modified by limit orders)
-3. If the action was a `sell`, set new limit orders
+3. If the action was a `SELL`, set new limit orders
 
 There are two sample configs that illustrate how this can be configured:
 
@@ -206,7 +207,7 @@ CPBB_REBUY_CANCEL: 60 * 24 * 3,
 CPBB_REBUY_REBUILD: 12
 ```
 
-The above config will cause the engine to attempt to set $50 worth of limit orders for the asset after each `sell` action. The orders will be placed as .0001 @ -2% drop, .0001 @ -4% drop, etc until the $50 spending threshold is met. If the remaining funds in the last order is too little to create an order (would create a size too low for the API to accept), those funds are added to the last valid order.
+The above config will cause the engine to attempt to set $50 worth of limit orders for the asset after each `SELL` action. The orders will be placed as .0001 @ -2% drop, .0001 @ -4% drop, etc until the $50 spending threshold is met. If the remaining funds in the last order is too little to create an order (would create a size too low for the API to accept), those funds are added to the last valid order.
 
 ### Resell Configuration
 
@@ -218,7 +219,7 @@ The `REBUY` option undoes what seems like an erroneous short term sell (given hi
 
 ### Volume and Frequency
 
-The Coinbase Pro API will only allow market taker orders of `$5` or more. So my original idea of buying $1 or $2 worth every hour (or even more frequently) went bust. Keep in mind when setting your VOL config that you should be able to feed the engine through a year-long bear market.
+The Coinbase API will only allow market taker orders of `$5` or more. So my original idea of buying $1 or $2 worth every hour (or even more frequently) went bust. Keep in mind when setting your VOL config that you should be able to feed the engine through a year-long bear market.
 
 - $10/hour = $240/day = $1680/week = $87,600/year max buy.
 - $10/(2 hours) = $120/day = $840/week = $43,800/year
@@ -266,13 +267,12 @@ There are two ways to test your own configs:
 
 The sandbox API network isn't a great testing environment as it does not support many trading pairs and has fake liquidity and transactions. This path exists for legacy testing. This option also requires a different API key, and is probably more headache than it's worth for regular testing.
 
-1. Create a Sandbox API account and API Keyset here: https://public.sandbox.pro.coinbase.com/profile/api
+1. Create a Sandbox API account and API Keyset here: https://public.sandbox.coinbase.com/profile/api
 2. You will also need to fake transfer USD from Coinbase into the Sandbox
 
 Then run the app against the Sandbox API
 
 ```
-export CPBB_APIPASS="API Password"
 export CPBB_APIKEY="SANDBOX API KEY"
 export CPBB_APISEC="SANDBOX API SECRET"
 CPBB_TEST=true node .
@@ -282,7 +282,7 @@ CPBB_TEST=true node .
 
 The real coinbase API can also be run in a "dry run" mode, which will calculate and record transactions into a special dry run history log as if actions were taken, even though no buy/sell orders are made against the API.
 
-1. Edit the `./api.keys.js` file to have your APIPASS, APIKEY, and APISEC (or add them as environmental variables)
+1. Edit the `./api.keys.js` file to have your APIKEY, and APISEC (or add them as environmental variables)
 2. start pm2
 
 ```
@@ -354,9 +354,9 @@ To correct this, I've added a manual log entry tool. In order to use this, you w
 node addLog.js BTC USD 50 20 2020-11-26T16:35:00.706Z 16915.52 0.00295586
 ```
 
-## Build Complete History from Coinbase Pro Fills
+## Build Complete History from Coinbase Fills
 
-If you want to add all manual activity to the history file, you can generate a new history file using all of the Coinbase Pro data. This only looks at Coinbase Pro so if you moved funds in and out of that service (even to Coinbase), there can be negative balances appearing in the Holdings section of the history. If you bought coins elsewhere and moved them into Coinbase Pro, you will have possible sells that have no buy history associated with them.
+If you want to add all manual activity to the history file, you can generate a new history file using all of the Coinbase data. This only looks at Coinbase so if you moved funds in and out of that service (even to Coinbase), there can be negative balances appearing in the Holdings section of the history. If you bought coins elsewhere and moved them into Coinbase, you will have possible sells that have no buy history associated with them.
 
 ```
 cd tools;

@@ -1,4 +1,4 @@
-// https://docs.pro.coinbase.com/?javascript#place-a-new-order
+// https://docs.coinbase.com/?javascript#place-a-new-order
 
 const { divide, multiply } = require('../lib/math');
 const config = require('../config');
@@ -12,9 +12,9 @@ module.exports = async (opts, retries = 0) => {
     // fake out a .5% fee subtraction (worst case tier)
     const converted = multiply(opts.funds, 0.995);
     return {
-      executed_value: Number(opts.funds),
+      filled_value: Number(opts.funds),
       filled_size: divide(converted, memory.price, 8),
-      fill_fees: multiply(opts.funds, 0.005),
+      total_fees: multiply(opts.funds, 0.005),
       settled: true,
     };
   }
@@ -36,11 +36,15 @@ module.exports = async (opts, retries = 0) => {
       log.now(`retry #${retryCount}`, opts);
     }
     const { reason, json } = await request({
-      requestPath: '/orders',
+      requestPath: '/api/v3/brokerage/orders',
       method: 'POST',
       body: opts,
     });
-    if (reason === 400 && json && json.message === 'Insufficient funds') {
+    if (
+      reason === 400 &&
+      json &&
+      json.failure_reason === 'INSUFFICIENT_FUNDS'
+    ) {
       log.error('Check account balance! Out of funds!');
       return;
     }

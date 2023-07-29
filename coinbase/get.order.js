@@ -15,26 +15,29 @@ module.exports = async order => {
     }
     if (retryCount === 2) {
       log.zap(
-        `API is slow! Order ${order.id} is pending! 404 is normal. We will retry every 10 seconds for up to 1 hour...`
+        `API is slow! Order ${order.order_id} is pending! 404 is normal. We will retry every 10 seconds for up to 1 hour...`
       );
-      log.debug(`retry #${retryCount} on order #${order.id}`);
+      log.debug(`retry #${retryCount} on order #${order.order_id}`);
     }
     const opts = {
-      requestPath: `/orders/${order.id}`,
+      requestPath: `/api/v3/brokerage/orders/historical/${order.order_id}`,
       method: 'GET',
     };
-    log.debug(opts);
+    log.debug(order.order_id, opts);
     const result = await request(opts);
-    const json = result ? result.json : result;
-    log.debug({ json });
+    const json = result?.json?.order;
+    // log.ok(order.order_id, { json });
     // NOTE: we allow limit orders to be unsettled and even not found (sometimes limits get purged due to maintenance or other conditions)
     if (
-      order.type === 'market' &&
-      (!json || !json.settled || json.message === 'NotFound')
+      !['404', 'fail'].includes(order.order_id) &&
+      (!json ||
+        (json?.order_type === 'MARKET' && json?.status !== 'FILLED') ||
+        json.message === 'NotFound')
     ) {
       retryCount++;
+      // log.error(`retry`, json);
       if (retryCount > RETRY_TIMES) {
-        log.error(`failed to get order ${order.id}`, { order, json });
+        log.error(`failed to get order ${order.order_id}`, { order, json });
         return Promise.reject('failed to get complete order');
       }
       await sleep(time);
@@ -47,7 +50,7 @@ module.exports = async order => {
         const timeString =
           elapsed > 60 ? `${elapsed / 60} minutes` : `${elapsed} seconds`;
         log.zap(
-          `API slowdown: Order ${order.id} took ${timeString} to update status!`
+          `API slowdown: Order ${order.order_id} took ${timeString} to update status!`
         );
       }
     }

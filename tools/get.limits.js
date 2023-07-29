@@ -14,20 +14,20 @@ const log = require('../lib/log');
 const memory = require('../lib/memory');
 const { multiply } = require('../lib/math');
 
-log.zap('updating orders db file with orders from the remote books');
 (async () => {
-  const json = await getOrders({ status: 'open' });
+  log.zap('updating orders db file with orders from the remote books');
+  const { json } = await getOrders({ status: 'open' });
   if (!json) {
     log.error('failed to fetch orders.');
     return;
   }
   memory.makerOrders = json
-    .filter(o => o.side === 'buy')
+    .filter(o => o.side === 'BUY')
     .map(o => ({
       created_at: o.created_at,
       pair: o.product_id,
       funds: multiply(o.size, o.price).toFixed(4),
-      id: o.id,
+      order_id: o.order_id,
       price: o.price,
       size: Number(o.size),
     }))

@@ -25,7 +25,7 @@ The template spreadsheet has been updated as well with Type, Method, and TargetA
 - breaking change in configs: removing support for old `CPBB_REBUY_AT` and `CPBB_REBUY_SIZE` split env configs. Use new `CPBB_REBUY` (single config)
 - Resell feature: New `CPBB_RESELL` configs to match REBUY configs (opposite side)
 - NOTE: be careful with resell configuration. Having RESELL/REBUY too tight and persisting too long will ruin the point of the bot (buying the dip and accumulating a position). Use sparingly and carefully.
-- new Type (`market`, `limit`) and Method (`cron`, `rebuy`, `resell`) columns in history logs
+- new Type (`MARKET`, `LIMIT`) and Method (`cron`, `rebuy`, `resell`) columns in history logs
 
   - running the `tools/adjust.apy.js` will recalculate everything and add these new header column names
   - NOTE: delete `data/fills\_\*.json` cache files if you want updated order history to use for this recalculation (probably a good idea)
@@ -153,7 +153,7 @@ In this case, there was a remainder of `0.00071722` ETH which is too small for t
 - Resuming checking each limit order to be sure they haven't been manually deleted
 - Removing 404 limit orders from tracking (limit orders can be manually deleted or deleted by Coinbase system maintenance)
 - Correcting rate limiting issues by sleeping between rebuy checks and posts
-- New Tool: `tools/create.history.js` - goes through entire coinbase pro fill history for a trading pair and generates a history file from that data. NOTE: if you bought/sold crypto via Coinbase and moved in in and out of Coinbase Pro, you can end up with negative holdings at points in the history file because it only has access to the Coinbase Pro side.
+- New Tool: `tools/create.history.js` - goes through entire coinbase fill history for a trading pair and generates a history file from that data. NOTE: if you bought/sold crypto via Coinbase and moved in in and out of Coinbase, you can end up with negative holdings at points in the history file because it only has access to the Coinbase side.
 
 # 2.4.0
 
@@ -172,7 +172,7 @@ In this case, there was a remainder of `0.00071722` ETH which is too small for t
 
 # 2.2.0
 
-- now using response data to correct the funding used to include fees (and to use the actual executed_value) -- Coinbase Pro will not execute $100 when you market buy for $100, it might be 99.996. The fee also takes away from the total reclaimed now
+- now using response data to correct the funding used to include fees (and to use the actual executed_value) -- Coinbase will not execute $100 when you market buy for $100, it might be 99.996. The fee also takes away from the total reclaimed now
 - moving sample configs to `sample.` naming convention
 - moving tool scripts to `tools/` folder for organization
 - Adding `ID` column in history file (at the end)

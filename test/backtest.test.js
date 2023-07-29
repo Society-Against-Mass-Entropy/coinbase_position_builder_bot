@@ -23,13 +23,12 @@ const testHistory = priceHistory.filter(
 );
 
 process.env.FIRST_LOG_DATE = new Date(testHistory[0][0] * 1000).toISOString();
-require('./nock/delete.order');
+require('./nock/cancel.orders');
 require('./nock/get.accounts');
 require('./nock/get.order');
 require('./nock/get.order.netfail');
 require('./nock/get.order.404');
 require('./nock/get.product');
-require('./nock/get.ticker');
 require('./nock/post.orders');
 // const config = require('../config');
 const action = require('../lib/action');
@@ -96,7 +95,7 @@ describe('Backtest Engine', () => {
         memory.makerOrders = memory.makerOrders.filter(
           o => o.price < testMemory.high && o.price > testMemory.low
         );
-        memory.makerOrderIds = memory.makerOrders.map(o => o.id);
+        memory.makerOrderIds = memory.makerOrders.map(o => o.order_id);
         // console.log(
         //   `from ${memory.makerOrdersBackup.length} limits, found ${memory.makerOrders.length} limits between ${testMemory.low} and ${testMemory.high} that will fill`,
         //   memory.makerOrders
@@ -110,7 +109,7 @@ describe('Backtest Engine', () => {
       if (infiniteLimits) {
         memory.makerOrders = [
           ...[...memory.makerOrdersBackup, ...memory.makerOrders].filter(
-            o => !memory.makerOrderIds.includes(o.id)
+            o => !memory.makerOrderIds.includes(o.order_id)
           ),
         ];
       }
