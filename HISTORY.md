@@ -25,7 +25,7 @@ The template spreadsheet has been updated as well with Type, Method, and TargetA
 - breaking change in configs: removing support for old `CPBB_REBUY_AT` and `CPBB_REBUY_SIZE` split env configs. Use new `CPBB_REBUY` (single config)
 - Resell feature: New `CPBB_RESELL` configs to match REBUY configs (opposite side)
 - NOTE: be careful with resell configuration. Having RESELL/REBUY too tight and persisting too long will ruin the point of the bot (buying the dip and accumulating a position). Use sparingly and carefully.
-- new Type (`market`, `limit`) and Method (`cron`, `rebuy`, `resell`) columns in history logs
+- new Type (`MARKET`, `LIMIT`) and Method (`cron`, `rebuy`, `resell`) columns in history logs
 
   - running the `tools/adjust.apy.js` will recalculate everything and add these new header column names
   - NOTE: delete `data/fills\_\*.json` cache files if you want updated order history to use for this recalculation (probably a good idea)

@@ -95,7 +95,7 @@ describe('Backtest Engine', () => {
         memory.makerOrders = memory.makerOrders.filter(
           o => o.price < testMemory.high && o.price > testMemory.low
         );
-        memory.makerOrderIds = memory.makerOrders.map(o => o.id);
+        memory.makerOrderIds = memory.makerOrders.map(o => o.order_id);
         // console.log(
         //   `from ${memory.makerOrdersBackup.length} limits, found ${memory.makerOrders.length} limits between ${testMemory.low} and ${testMemory.high} that will fill`,
         //   memory.makerOrders
@@ -109,7 +109,7 @@ describe('Backtest Engine', () => {
       if (infiniteLimits) {
         memory.makerOrders = [
           ...[...memory.makerOrdersBackup, ...memory.makerOrders].filter(
-            o => !memory.makerOrderIds.includes(o.id)
+            o => !memory.makerOrderIds.includes(o.order_id)
           ),
         ];
       }

@@ -136,9 +136,9 @@ describe('Engine', () => {
 
   test('404 condition for limit order', async () => {
     memory.makerOrders.push({
-      id: '404',
+      order_id: '404',
       pair: config.productID,
-      side: 'buy',
+      side: 'BUY',
     });
     currentDate.setHours(currentDate.getHours() + 1);
     await checkLimits({ dateOverride: currentDate });
@@ -151,9 +151,9 @@ describe('Engine', () => {
   });
   test('Network failure during limit check', async () => {
     memory.makerOrders.push({
-      id: 'fail',
+      order_id: 'fail',
       pair: config.productID,
-      side: 'buy',
+      side: 'BUY',
     });
     currentDate.setHours(currentDate.getHours() + 1);
     await checkLimits({ dateOverride: currentDate });

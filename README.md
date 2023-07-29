@@ -163,7 +163,7 @@ If you start the app with a config of CPBB_REBUY_MAX greater than 0, it will inv
 
 1. Check status of existing limit orders, add any filled ones to the history, and cancel any unfilled ones
 2. Perform normal action (using latest history, which may have been modified by limit orders)
-3. If the action was a `sell`, set new limit orders
+3. If the action was a `SELL`, set new limit orders
 
 There are two sample configs that illustrate how this can be configured:
 
@@ -207,7 +207,7 @@ CPBB_REBUY_CANCEL: 60 * 24 * 3,
 CPBB_REBUY_REBUILD: 12
 ```
 
-The above config will cause the engine to attempt to set $50 worth of limit orders for the asset after each `sell` action. The orders will be placed as .0001 @ -2% drop, .0001 @ -4% drop, etc until the $50 spending threshold is met. If the remaining funds in the last order is too little to create an order (would create a size too low for the API to accept), those funds are added to the last valid order.
+The above config will cause the engine to attempt to set $50 worth of limit orders for the asset after each `SELL` action. The orders will be placed as .0001 @ -2% drop, .0001 @ -4% drop, etc until the $50 spending threshold is met. If the remaining funds in the last order is too little to create an order (would create a size too low for the API to accept), those funds are added to the last valid order.
 
 ### Resell Configuration
 

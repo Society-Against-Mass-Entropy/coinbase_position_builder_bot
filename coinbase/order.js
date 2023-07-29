@@ -12,9 +12,9 @@ module.exports = async (opts, retries = 0) => {
     // fake out a .5% fee subtraction (worst case tier)
     const converted = multiply(opts.funds, 0.995);
     return {
-      executed_value: Number(opts.funds),
+      filled_value: Number(opts.funds),
       filled_size: divide(converted, memory.price, 8),
-      fill_fees: multiply(opts.funds, 0.005),
+      total_fees: multiply(opts.funds, 0.005),
       settled: true,
     };
   }

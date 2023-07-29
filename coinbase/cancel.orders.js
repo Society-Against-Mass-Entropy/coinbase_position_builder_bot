@@ -8,7 +8,7 @@ module.exports = async ids => {
   const result = await request({
     requestPath: `/api/v3/brokerage/orders/batch_cancel`,
     method: 'POST',
-    body: ids, // array of strings
+    body: { order_ids: ids }, // array of strings
   });
 
   return result ? result.json.results : false;
