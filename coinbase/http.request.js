@@ -20,13 +20,20 @@ module.exports = params => {
         if (res.statusCode === 404) {
           return params.reject({ reason: res.statusCode, res });
         }
+        if (res.statusCode === 502) {
+          return params.reject({ reason: res.statusCode, res });
+        }
 
         const responseBody = Buffer.concat(body).toString();
         let json;
         try {
           json = JSON.parse(responseBody);
         } catch (e) {
-          // log.error('failed to parse response from API', e);
+          log.error(
+            'failed to parse response from API',
+            params.hostname,
+            responseBody
+          );
           params.reject({ reason: e.message, res });
         }
 

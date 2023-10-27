@@ -10,13 +10,14 @@ module.exports = async () => {
     // prevent rate limiting at startup and retries
     await sleep(config.sleep.product);
     if (retryCount) {
-      log.zap(`retry #${retryCount} on order #${productID}`);
+      log.zap(`retry #${retryCount} to get product info for #${productID}`);
     }
     const result = await request({
       requestPath: `/api/v3/brokerage/products/${productID}`,
       method: 'GET',
     });
     if (!result || !result.json) {
+      retryCount++;
       return getProduct();
     }
     return result.json;

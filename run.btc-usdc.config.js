@@ -13,7 +13,7 @@ module.exports = {
         CPBB_APISEC: apiKeys.CPBB_APISEC,
         CPBB_APY_DYNAMIC: '100@5000-10@1000000',
         CPBB_CURRENCY: 'USDC',
-        CPBB_FREQ: '38 7 * * *',
+        CPBB_FREQ: '38 5 * * *',
         CPBB_RANDOM_DELAY: 0,
         CPBB_REBUY_MAX: 100,
         CPBB_REBUY: '1@12',

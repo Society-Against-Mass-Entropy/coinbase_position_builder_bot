@@ -7,7 +7,7 @@
  *
  * or for a dynamic APY setting (bigger market cap = less volatility)
  * below sets dyanmic APY starting at 200% at or below $5K price and approaches 10% as prices reaches $1M
- * CPBB_TICKER=BTC CPBB_APY_DYNAMIC=200@5000-10@1000000 node adjust.apy.js
+ * CPBB_TICKER=BTC CPBB_APY_DYNAMIC=100@5000-3@1000000 node adjust.apy.js
  */
 const MS_PER_YEAR = 31556952000;
 const config = require('../config');
@@ -16,7 +16,7 @@ const fs = require('fs');
 const history = require('../lib/history');
 const { divide, multiply, subtract, add } = require('../lib/math');
 const log = require('../lib/log');
-const getFills = require('../coinbase/get.fills');
+// const getFills = require('../coinbase/get.fills');
 const map = require('lodash.map');
 log.bot(
   `Position Builder Engine Updater: Recalculating with ${
@@ -35,27 +35,28 @@ const all = history.all();
 all.sort((a, b) => (new Date(a.Time) < new Date(b.Time) ? -1 : 1));
 
 (async () => {
-  const fills = await getFills({ since: all[0].Time });
+  // const fills = await getFills({ since: all[0].Time });
   for (let i = 1; i < all.length; i++) {
     let last = all[i - 1];
     let current = all[i];
     // normalizing log vars to match API fill data for comparison
 
-    let fill = fills.find(f => f.order_id === current.ID);
+    // let fill = fills.find(f => f.order_id === current.ID);
 
-    if (!fill) {
-      fill = fills.find(f => f.created_at === current.Time);
-      if (fill) all[i].ID = fill.order_id;
-      // log.error(`fixing order id`, fill.order_id);
-    }
+    // if (!fill) {
+    //   fill = fills.find(f => f.created_at === current.Time);
+    //   if (fill) all[i].ID = fill.order_id;
+    //   // log.error(`fixing order id`, fill.order_id);
+    // }
 
     // if the fill data indicates that this was a Maker order (M) rather than a Taker (T)
     // then this transaction was made by a limit rebuy order
-    all[i].Type = fill && fill.liquidity === 'M' ? 'LIMIT' : 'MARKET';
-    let isRebuy = fill ? current.Funds > 0 && fill.liquidity === 'M' : false;
-    let isResell = fill ? current.Funds < 0 && fill.liquidity === 'M' : false;
-    all[i].Method = isRebuy ? 'rebuy' : isResell ? 'resell' : 'cron';
-
+    // all[i].Type = fill && fill.liquidity === 'M' ? 'LIMIT' : 'MARKET';
+    // let isRebuy = fill ? current.Funds > 0 && fill.liquidity === 'M' : false;
+    // let isResell = fill ? current.Funds < 0 && fill.liquidity === 'M' : false;
+    // all[i].Method = isRebuy ? 'rebuy' : isResell ? 'resell' : 'cron';
+    let isRebuy = all[i].Method === 'rebuy';
+    let isResell = all[i].Method === 'resell';
     all[i].TargetAPY = dynamicAPY(Number(current.Price));
 
     if (i === 1) {

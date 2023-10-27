@@ -7,3 +7,5 @@ data/maker.orders.*.json
 data/history.*.tsv
 coverage
 !test/data/*.log
+data/cash_app_report*
+data/uphold.csv

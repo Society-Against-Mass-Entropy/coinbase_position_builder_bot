@@ -83,8 +83,8 @@ const config = {
   reverse: false,
   // default ticker currency is BTC
   ticker: process.env.CPBB_TICKER || 'BTC',
-  // default home currency is USD
-  currency: process.env.CPBB_CURRENCY || 'USD',
+  // default home currency is USDC
+  currency: process.env.CPBB_CURRENCY || 'USDC',
   sleep: {
     product: testMode ? 0 : 500,
     limitCheck: testMode ? 0 : 1000,
