@@ -1,3 +1,7 @@
+# 5.0.1
+
+- now working with new coinbase advanced trade api
+
 # 4.2.0
 
 - `CPBB_APY_DYNAMIC` to set a dynamic range for APY targeting which will change as the price changes. Added because the most frequent manual update to the script that users still have to toy with is to adjust the APY setting as the market cap of Bitcoin increases and volitility declines. Smaller market cap assets are easier to shift by 10-50% rapidly by adding or removing a smaller amount of money to the system. As Bitcoin approaches and passes the market value of gold and other assets, it will stabilize in price so while a 100% APY might be a reasonable rate this year, a 50% APY might be a reasonable rate next year. This config takes the guess work out by setting a starting and final APY and mapping the current APY target to the current price. See `run.dynamic.btcusd.config.js` for an example.

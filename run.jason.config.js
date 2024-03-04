@@ -12,10 +12,10 @@ const baseConfigEnv = {
   CPBB_TICKER: 'TEST',
   CPBB_CURRENCY: 'USDC',
   CPBB_VOL: 10,
-  CPBB_APY: 5,
+  CPBB_APY: 15,
   CPBB_RESELL_MAX: 10,
   // resell up to 1000 units of asset @ +5% pump
-  CPBB_RESELL: '1000@5',
+  CPBB_RESELL: '1000@10',
   CPBB_REBUY_MAX: 10,
   // rebuy up to 1000 units of asset @ -20% dump
   CPBB_REBUY: '1000@20',
@@ -26,6 +26,20 @@ const baseConfigEnv = {
 };
 module.exports = {
   apps: [
+    // {
+    //   name: 'algo',
+    //   script,
+    //   watch: watch,
+    //   env: {
+    //     ...baseConfigEnv,
+    //     ...{
+    //       // CPBB_FREQ: '19 7 * * *',
+    //       CPBB_FREQ: '10 5 * * *',
+    //       CPBB_TICKER: 'ALGO',
+    //       CPBB_APY: 3,
+    //     },
+    //   },
+    // },
     {
       name: 'btc',
       script,
@@ -37,7 +51,7 @@ module.exports = {
         CPBB_REBUY_MAX: 100,
         CPBB_REBUY: '1@12',
         CPBB_RESELL_MAX: 100,
-        CPBB_RESELL: '1@8',
+        CPBB_RESELL: '1@10',
         CPBB_TICKER: 'BTC',
         CPBB_VOL: 100,
       },
@@ -51,12 +65,27 @@ module.exports = {
         ...{
           CPBB_RESELL: '1000@20',
           CPBB_REBUY: '1000@25',
+          CPBB_RANDOM_DELAY: 0,
           // CPBB_FREQ: '15 7 * * *',
-          CPBB_FREQ: '40 5 * * *',
+          CPBB_FREQ: '34 10 * * *',
           CPBB_TICKER: 'DOGE',
         },
       },
     },
+    // {
+    //   name: 'dot',
+    //   script,
+    //   watch: watch,
+    //   env: {
+    //     ...baseConfigEnv,
+    //     ...{
+    //       // CPBB_FREQ: '33 9 * * *',
+    //       CPBB_FREQ: '50 5 * * *',
+    //       CPBB_TICKER: 'DOT',
+    //       CPBB_APY: 3,
+    //     },
+    //   },
+    // },
     {
       name: 'eth',
       script,

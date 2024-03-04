@@ -1,6 +1,6 @@
 {
   "name": "coinbase_position_builder_bot",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Position Building Bot for Accumulating Bitcoin (or other assets) via Coinbase, while taking advantage of pumps",
   "jest": {
     "collectCoverageFrom": [
