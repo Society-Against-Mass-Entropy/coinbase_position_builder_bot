@@ -11,6 +11,8 @@ module.exports = nock(config.api)
   .persist()
   .post('/api/v3/brokerage/orders')
   .reply(200, (uri, order) => {
+    // console.log({ order });
+
     const order_id = uuid.v4();
     const isLimit =
       order.order_type === 'LIMIT' || order.order_configuration.limit_limit_gtc;
@@ -34,9 +36,14 @@ module.exports = nock(config.api)
             order.order_configuration.limit_limit_gtc.base_size,
             order.price
           )
-        : order.order_configuration.market_market_ioc.quote_size ||
-            order.order_configuration.market_market_ioc.base_size
+        : isBuy
+        ? order.order_configuration.market_market_ioc.quote_size
+        : multiply(
+            order.order_configuration.market_market_ioc.base_size,
+            order.price
+          )
     );
+
     const fees = multiply(funds, testConfig.feeRate);
     let executed = funds;
 
@@ -47,7 +54,7 @@ module.exports = nock(config.api)
     order.size = isLimit ? Number(order.size) : divide(funds, order.price);
 
     // if (!isBuy) console.log(`post nock order`, order);
-
+    // console.log({ order });
     const response = isLimit
       ? {
           order_configuration: order.order_configuration,
@@ -78,7 +85,7 @@ module.exports = nock(config.api)
           status: 'OPEN',
           time_in_force: 'GOOD_UNTIL_CANCELLED',
           total_fees: fees.toFixed(16),
-          total_value_after_fees: order.funds,
+          total_value_after_fees: subtract(funds, fees),
           trigger_status: 'INVALID_ORDER_TYPE',
           user_id: '1',
         }
@@ -90,7 +97,10 @@ module.exports = nock(config.api)
           completion_percentage: '100',
           created_time: new Date().toISOString(),
           fee: '',
-          filled_size: order.size.toFixed(memory.product.precision),
+          filled_size:
+            order.side === 'SELL'
+              ? order.order_configuration.market_market_ioc.base_size
+              : order.size.toFixed(memory.product.precision),
           filled_value: funds,
           is_liquidation: false,
           last_fill_time: new Date().toISOString(),
@@ -111,7 +121,7 @@ module.exports = nock(config.api)
           status: 'FILLED',
           time_in_force: 'IMMEDIATE_OR_CANCEL',
           total_fees: fees.toFixed(16),
-          total_value_after_fees: order.funds,
+          total_value_after_fees: subtract(funds, fees),
           trigger_status: 'INVALID_ORDER_TYPE',
           user_id: '1',
         };
