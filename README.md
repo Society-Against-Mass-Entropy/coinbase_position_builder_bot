@@ -52,7 +52,7 @@ npm run setup
 - there is no need to allow `transfers` (this script does not move money to/from your bank account)
 - recommended to limit the API keys to IP address restriction list
 
-8. Add the key and secret to your environment via environmental variables, or add them to the `./api.key.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
+8. Add the key and secret to your environment via environmental variables, or add them to the `./api.keys.js` file (BUT DO NOT COMMIT THIS FILE TO GIT OR PUBLISH ONLINE)
 9. Test all the configs in dry run mode at 1 minute intervals:
 
 ```
