@@ -1,11 +1,14 @@
 const fs = require('fs');
 
+const log = require('./lib/log');
 const apiKeys = require('./api.keys.js');
+const testMode = process.env.NODE_ENV === 'test' || process.env.CPBB_TEST;
 if (
-  !apiKeys.CPBB_APIKEY ||
-  !apiKeys.CPBB_APISEC ||
-  apiKeys.CPBB_APIKEY.includes('load your keys') ||
-  apiKeys.CPBB_APISEC.includes('load your keys')
+  !testMode &&
+  (!apiKeys.CPBB_APIKEY ||
+    !apiKeys.CPBB_APISEC ||
+    apiKeys.CPBB_APIKEY.includes('load your keys') ||
+    apiKeys.CPBB_APISEC.includes('load your keys'))
 ) {
   log.error(
     'API Keys are not correctly configured.\nPlease check the setup instructions and load your API keys into the environment before starting.\nHalting the app now.'
@@ -13,11 +16,9 @@ if (
   process.exit();
 }
 
-const log = require('./lib/log');
 const pjson = require('./package');
 
 const { divide, multiply } = require('./lib/math');
-const testMode = process.env.CPBB_TEST;
 const config = {
   ...apiKeys,
   api: testMode
